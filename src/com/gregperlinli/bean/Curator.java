@@ -72,4 +72,17 @@ public class Curator {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Curator{" +
+                "id=" + id +
+                ", curatorName='" + curatorName + '\'' +
+                ", uid=" + uid +
+                ", gender=" + gender +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
 }

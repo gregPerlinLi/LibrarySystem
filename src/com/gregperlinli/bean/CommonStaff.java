@@ -62,4 +62,15 @@ public class CommonStaff {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
+
+    @Override
+    public String toString() {
+        return "CommonStaff{" +
+                "id=" + id +
+                ", staffName='" + staffName + '\'' +
+                ", uid=" + uid +
+                ", gender=" + gender +
+                ", phoneNum='" + phoneNum + '\'' +
+                '}';
+    }
 }
