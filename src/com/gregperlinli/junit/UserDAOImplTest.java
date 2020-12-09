@@ -36,7 +36,7 @@ class UserDAOImplTest {
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnection();
-            User user = new User(1, "XFei", 20011, "XiaoFei", "abc123");
+            User user = new User(1, "XFei", 20012, "XiaoFei", "abc123");
             dao.insert(conn, user);
             System.out.println("Insert successful!!");
         } catch ( Exception e ) {

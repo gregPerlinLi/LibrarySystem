@@ -1,25 +1,26 @@
 package com.gregperlinli.dao;
 
-import com.gregperlinli.bean.User;
+import com.gregperlinli.bean.CommonStaff;
 
 import java.sql.Connection;
 import java.util.List;
 
 /**
- * @Description this interface is used to define the common operation of the "User" form
+ * @Description this interface is used to define the common operation of the "CommonStaff" form
  * @author gregperlinli
  */
-public interface UserDAO {
+public interface CommonStaffDAO {
+
     /**
-     * add object "user" to the database
+     * add object "commonStaff" to the database
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @param user the User object
+     * @param commonStaff the CommonStaff object
      * @throws Exception e
-     * @Description add object "user" to the database
+     * @Description add object "commonStaff" to the database
      */
-    void insert(Connection conn, User user) throws Exception;
+    void insert(Connection conn, CommonStaff commonStaff) throws Exception;
 
     /**
      * delete a record of the form by "id"
@@ -37,11 +38,11 @@ public interface UserDAO {
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @param user the User object
-     * @throws Exception e
+     * @param commonStaff the CommonStaff object
+     * @throws Exception
      * @Description update the record of the form by object "user" in the memory
      */
-    void update(Connection conn, User user) throws Exception;
+    void update(Connection conn, CommonStaff commonStaff) throws Exception;
 
     /**
      * query one data of the form by "id"
@@ -49,19 +50,19 @@ public interface UserDAO {
      * @author gregperlinli
      * @param conn connection of database
      * @param id the id of the user
-     * @return User object
+     * @return CommonStaff object
      * @Description query one data of the form by "id"
      */
-    User getUserById(Connection conn, int id);
+    CommonStaff getCommonStaffById(Connection conn, int id);
 
     /**
-     * get all of the User Object in a list
+     * get all of the CommonStaff Object in a list
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @return get all of the User Object in a list
+     * @return get all of the CommonStaff Object in a list
      */
-    List<User> getAll(Connection conn);
+    List<CommonStaff> getAll(Connection conn);
 
     /**
      * return the number of entry in the form

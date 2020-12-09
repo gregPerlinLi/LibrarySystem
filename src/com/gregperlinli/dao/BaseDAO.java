@@ -3,6 +3,8 @@ package com.gregperlinli.dao;
 import com.gregperlinli.util.JDBCUtills;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +18,25 @@ import java.util.List;
  * DAO: Data(base) Access Object
  * Packaged generic operation of data
  */
-public abstract class BaseDAO {
+public abstract class BaseDAO<T> {
+
+    private Class<T> clazz = null;
+
+    /**
+     * @Description gets the generic type in the superclass inherited by the subclass of the current BaseDAO
+     * @author gregperlinli
+     */
+    public BaseDAO() {
+        // TODO: Attention: "this" is mention to subclass object (such as User, Book) not BaseDAO object!!!
+        Type genericSuperclass = this.getClass().getGenericSuperclass();
+        ParameterizedType paramTypr = (ParameterizedType) genericSuperclass;
+
+        // get the generic parameters of the superclass
+        Type[] typeArguments = paramTypr.getActualTypeArguments();
+
+        // get the first parameter of the generic paradigm
+        clazz = (Class<T>) typeArguments[0];
+    }
 
     /**
      * @Description  Generic add, delete and update operation (version2.0) (Consider database transaction)
@@ -60,7 +80,6 @@ public abstract class BaseDAO {
      *              using PreparedStatement to realize the query operation by different form (version 2.0, consider to transaction)
      * @author gregperlinli
      * @param conn connection of database
-     * @param clazz the name of class(eg."ClassName.class")
      * @param sql sql format
      * @param args fill the placeholder(variable)
      * @param <T> reflect class
@@ -69,7 +88,7 @@ public abstract class BaseDAO {
      * How to output:
      * ClassName className = getQuery(conn, ClassName.class, sql, ...args);
      */
-    public <T> T getQuery(Connection conn, Class<T> clazz, String sql, Object...args) {
+    public T getQuery(Connection conn, String sql, Object...args) {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -116,7 +135,6 @@ public abstract class BaseDAO {
      *              using PreparedStatement to realize multi query operation by different form (version 2.0, consider to transaction)
      * @author gregperlinli
      * @param conn connection of database
-     * @param clazz the name of class(eg."ClassName.class")
      * @param sql sql format
      * @param args fill the placeholder(variable)
      * @param <T> reflect class
@@ -128,7 +146,7 @@ public abstract class BaseDAO {
      * How to print out:
      * listName.forEach(System.out::println);
      */
-    public <T> List<T> getMultiQuery(Connection conn, Class<T> clazz, String sql, Object...args) {
+    public List<T> getMultiQuery(Connection conn, String sql, Object...args) {
         PreparedStatement ps = null;
         ResultSet rs = null;
 

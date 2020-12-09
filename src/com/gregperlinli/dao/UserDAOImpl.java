@@ -6,9 +6,11 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
+ * @Description Implements of the interface "UserDAO"
+ *              used to define the common operation of the "User" form
  * @author gregperlinli
  */
-public class UserDAOImpl extends BaseDAO implements UserDAO {
+public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
 
     @Override
     public void insert(Connection conn, User user) throws Exception {
@@ -31,13 +33,13 @@ public class UserDAOImpl extends BaseDAO implements UserDAO {
     @Override
     public User getUserById(Connection conn, int id) {
         String sql = "select id, account, uid, userName, password from User where id = ?";
-        return getQuery(conn, User.class, sql, id);
+        return getQuery(conn, sql, id);
     }
 
     @Override
     public List<User> getAll(Connection conn) {
         String sql = "select id, account, uid, userName, password from User";
-        return getMultiQuery(conn, User.class, sql);
+        return getMultiQuery(conn, sql);
     }
 
     @Override
