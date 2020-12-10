@@ -82,7 +82,6 @@ public abstract class BaseDAO<T> {
      * @param conn connection of database
      * @param sql sql format
      * @param args fill the placeholder(variable)
-     * @param <T> reflect class
      * @return Class or null
      *
      * How to output:
@@ -137,7 +136,6 @@ public abstract class BaseDAO<T> {
      * @param conn connection of database
      * @param sql sql format
      * @param args fill the placeholder(variable)
-     * @param <T> reflect class
      * @return List or null
      *
      * How to output:
