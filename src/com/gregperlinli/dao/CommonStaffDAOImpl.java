@@ -13,12 +13,14 @@ import java.util.List;
 public class CommonStaffDAOImpl extends BaseDAO implements CommonStaffDAO {
     @Override
     public void insert(Connection conn, CommonStaff commonStaff) throws Exception {
-
+        String sql = "insert into CommonStaff(staffName, uid, gender, phoneNum)values(?,?,?,?)";
+        update(conn, sql, commonStaff.getStaffName(), commonStaff.getUid(), commonStaff.getGender(), commonStaff.getPhoneNum());
     }
 
     @Override
     public void deleteById(Connection conn, int id) throws Exception {
-
+        String sql = "delete into User where id = ?";
+        update(conn, sql, id);
     }
 
     @Override
