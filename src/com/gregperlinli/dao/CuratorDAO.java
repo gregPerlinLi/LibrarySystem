@@ -52,7 +52,18 @@ public interface CuratorDAO {
      * @return Curator object
      * @Description query one data of the form by "id"
      */
-    Curator getUserById(Connection conn, int id);
+    Curator getCuratorById(Connection conn, int id);
+
+    /**
+     * query one data of the form by "uid"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param uid the uid of the commonStaff
+     * @return Curator object
+     * @Description query one data of the form by "uid"
+     */
+    Curator getCuratorByUid(Connection conn, int uid);
 
     /**
      * get all of the Curator Object in a list

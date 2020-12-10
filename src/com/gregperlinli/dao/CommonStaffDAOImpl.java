@@ -10,7 +10,7 @@ import java.util.List;
  *              used to define the common operation of the "CommonStaff" form
  * @author gregperlinli
  */
-public class CommonStaffDAOImpl extends BaseDAO implements CommonStaffDAO {
+public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonStaffDAO {
     @Override
     public void insert(Connection conn, CommonStaff commonStaff) throws Exception {
         String sql = "insert into CommonStaff(staffName, uid, gender, phoneNum)values(?,?,?,?)";
@@ -31,6 +31,12 @@ public class CommonStaffDAOImpl extends BaseDAO implements CommonStaffDAO {
     @Override
     public CommonStaff getCommonStaffById(Connection conn, int id) {
         return null;
+    }
+
+    @Override
+    public CommonStaff getCommonStaffByUid(Connection conn, int uid) {
+        String sql = "select id, staffName, uid, gender, phoneNum from CommonStaff where uid = ?";
+        return getQuery(conn, sql, uid);
     }
 
     @Override

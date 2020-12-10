@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @author gregperlinli
  *
@@ -92,6 +90,20 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+    }
+
+    @Test
+    void getUserByUserName() {
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnection();
+
+            User user = dao.getUserByAccount(conn, "XMi");
+
+            System.out.println(user);
+        } catch ( Exception e ) {
             JDBCUtills.closeResource(conn, null);
         }
     }

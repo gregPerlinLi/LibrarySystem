@@ -4,14 +4,16 @@ package com.gregperlinli.bean;
  * @author gregperlinli
  */
 public class Curator {
+    public final int JURISDICTION = 100;
+
     private int id;
     private String curatorName;
     private int uid;
-    private char gender;
+    private String gender;
     private String phoneNum;
     private String email;
 
-    public Curator(int id, String curatorName, int uid, char gender, String phoneNum, String email) {
+    public Curator(int id, String curatorName, int uid, String gender, String phoneNum, String email) {
         super();
         this.id = id;
         this.curatorName = curatorName;
@@ -49,11 +51,11 @@ public class Curator {
         this.uid = uid;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

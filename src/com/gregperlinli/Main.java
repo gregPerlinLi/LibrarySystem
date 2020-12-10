@@ -1,15 +1,15 @@
 package com.gregperlinli;
 
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.view.ResetView;
 
-import java.sql.Connection;
-
+/**
+ * @author gregperlinli
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {
 	// write your code here
-        Connection conn = JDBCUtills.getConnection();
-
-
+        System.out.println("***************** Welcome to library manage system *********************");
+        ResetView.reset();
     }
 }

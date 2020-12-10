@@ -37,6 +37,12 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
     }
 
     @Override
+    public User getUserByAccount(Connection conn, String account) {
+        String sql = "select id, account, uid, userName, password from User where account = ?";
+        return getQuery(conn, sql, account);
+    }
+
+    @Override
     public List<User> getAll(Connection conn) {
         String sql = "select id, account, uid, userName, password from User";
         return getMultiQuery(conn, sql);

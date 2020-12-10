@@ -13,7 +13,7 @@ public class JDBCUtills {
     /**
      * @author gregPerlinLi
      * @Description Get the link of the database
-     * @return
+     * @return Connection
      * @throws Exception
      */
     public static Connection getConnection() throws Exception {

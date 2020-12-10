@@ -10,7 +10,7 @@ import java.util.List;
  *              used to define the common operation of the "Book" form
  * @author gregperlinli
  */
-public class BookDAOImpl extends BaseDAO implements BookDAO {
+public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
     @Override
     public void insert(Connection conn, Book book) throws Exception {
 

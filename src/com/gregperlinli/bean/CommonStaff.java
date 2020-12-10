@@ -4,13 +4,15 @@ package com.gregperlinli.bean;
  * @author gregperlinli
  */
 public class CommonStaff {
+    public final int JURISDICTION = 50;
+
     private int id;
     private String staffName;
     private int uid;
-    private char gender;
+    private String gender;
     private String phoneNum;
 
-    public CommonStaff(int id, String staffName, int uid, char gender, String phoneNum) {
+    public CommonStaff(int id, String staffName, int uid, String gender, String phoneNum) {
         super();
         this.id = id;
         this.staffName = staffName;
@@ -47,11 +49,11 @@ public class CommonStaff {
         this.uid = uid;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
  *              used to define the common operation of the "Curator" form
  * @author gregperlinli
  */
-public class CuratorDAOImpl extends BaseDAO implements CuratorDAO {
+public class CuratorDAOImpl extends BaseDAO<Curator> implements CuratorDAO {
     @Override
     public void insert(Connection conn, Curator curator) throws Exception {
 
@@ -27,8 +27,14 @@ public class CuratorDAOImpl extends BaseDAO implements CuratorDAO {
     }
 
     @Override
-    public Curator getUserById(Connection conn, int id) {
+    public Curator getCuratorById(Connection conn, int id) {
         return null;
+    }
+
+    @Override
+    public Curator getCuratorByUid(Connection conn, int uid) {
+        String sql = "select id, curatorName, uid, gender, phoneNum, email from Curator where uid = ?";
+        return getQuery(conn, sql, uid);
     }
 
     @Override
