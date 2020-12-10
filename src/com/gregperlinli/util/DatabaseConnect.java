@@ -11,17 +11,17 @@ import java.util.Properties;
 
 /**
  * @author gregperlinli
- * @return 取得数据库的连接
+ * @Description the connection of the database
  */
 public class DatabaseConnect {
 
     /**
      * Make a connection to the database
-     * @throws Exception
+     * @throws Exception e
      */
     @Test
     public static void databaseConnection() throws Exception {
-        // read basic informations from properties
+        // read basic information from properties
         InputStream is = DatabaseConnect.class.getClassLoader().getResourceAsStream("com/gregperlinli/util/jdbc.properties");
 
         Properties pros = new Properties();
@@ -35,9 +35,9 @@ public class DatabaseConnect {
         // load the Driver
         Class.forName(DRIVER_CLASS);
 
-        // get connecton
+        // get connection
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        System.out.println(conn);
+        // System.out.println(conn);
 
     }
 }

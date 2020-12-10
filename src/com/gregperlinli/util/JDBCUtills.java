@@ -14,7 +14,7 @@ public class JDBCUtills {
      * @author gregPerlinLi
      * @Description Get the link of the database
      * @return Connection
-     * @throws Exception
+     * @throws Exception e
      */
     public static Connection getConnection() throws Exception {
 
@@ -33,7 +33,7 @@ public class JDBCUtills {
 
         // get connecton
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        System.out.println("Connection status: " + conn);
+        // System.out.println("Connection status: " + conn);
 
         return conn;
     }
