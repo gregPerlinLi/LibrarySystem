@@ -38,7 +38,7 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
 
     @Override
     public User getUserByAccount(Connection conn, String account) {
-        String sql = "select id, account, uid, userName, password from User where account = ?";
+        String sql = "select id, account, uid, userName, password from User where binary account = ?";
         return getQuery(conn, sql, account);
     }
 

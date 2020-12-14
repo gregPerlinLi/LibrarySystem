@@ -1,5 +1,8 @@
 package com.gregperlinli.util;
 
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -9,6 +12,8 @@ import java.util.Properties;
  * @Description Tools for operating the database
  */
 public class JDBCUtills {
+
+    /* Database connection method */
 
     /**
      * @author gregPerlinLi
@@ -59,6 +64,40 @@ public class JDBCUtills {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /* TODO: Attention! the following connection method is using with database connection pools */
+
+    /**
+     * Using Druid database connection pool
+     * The database connection pool just one can be provided
+     */
+    private static DataSource source;
+    static {
+        try {
+            Properties pros = new Properties();
+            InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("./com/gregperlinli/util/druid.properties");
+            pros.load(is);
+            source = DruidDataSourceFactory.createDataSource(pros);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /* Close resource method */
+
+    /**
+     * @author gregperlinli
+     * @return connection with database connection pool "Druid"
+     * @throws Exception e
+     * @Description using c3p0 database connection pool to get connection
+     */
+    public static Connection getConnectionWithPool() throws Exception {
+        // return CPDS.getConnection();
+
+        return source.getConnection();
+
     }
 
     /**

@@ -82,7 +82,7 @@ class UserDAOImplTest {
     void getUserById() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtills.getConnectionWithPool();
 
             User user = dao.getUserById(conn, 11);
 

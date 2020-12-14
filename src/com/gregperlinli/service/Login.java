@@ -29,7 +29,7 @@ public class Login {
             String password = SCAN.nextLine();
 
             // Connect to JDBC server
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtills.getConnectionWithPool();
 
             // Get the uid from form User and CommonStaff
             User user = new UserDAOImpl().getUserByAccount(conn, account);
@@ -46,9 +46,9 @@ public class Login {
                     System.out.println("Login success!");
                     JDBCUtills.closeResource(conn, null);
                 } else {
-                    System.out.println("Your password is wrong, please try again!");
                     JDBCUtills.closeResource(conn, null);
                     ClearScreen.clear();
+                    System.out.println("Your password is wrong, please try again!");
                     ResetView.reset();
                 }
             }
@@ -72,7 +72,7 @@ public class Login {
             String password = SCAN.nextLine();
 
             // Connect to JDBC server
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtills.getConnectionWithPool();
 
             // Get the uid from form User and CommonStaff
             User user = new UserDAOImpl().getUserByAccount(conn, account);
@@ -90,9 +90,9 @@ public class Login {
                     System.out.println("Login success!");
                     JDBCUtills.closeResource(conn, null);
                 } else {
-                    System.out.println("Your password is wrong, please try again!");
                     JDBCUtills.closeResource(conn, null);
                     ClearScreen.clear();
+                    System.out.println("Your password is wrong, please try again!");
                     ResetView.reset();
                 }
             }
