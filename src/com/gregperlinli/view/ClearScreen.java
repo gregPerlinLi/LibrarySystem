@@ -1,4 +1,4 @@
-package com.gregperlinli.util;
+package com.gregperlinli.view;
 
 import java.awt.*;
 import java.awt.event.InputEvent;

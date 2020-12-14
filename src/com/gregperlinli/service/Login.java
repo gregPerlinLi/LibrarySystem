@@ -6,9 +6,10 @@ import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.dao.CuratorDAOImpl;
 import com.gregperlinli.dao.UserDAOImpl;
-import com.gregperlinli.util.ClearScreen;
+import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.view.CommonStaffDashboard;
 import com.gregperlinli.view.ResetView;
 
 import java.sql.Connection;
@@ -39,17 +40,26 @@ public class Login {
                 System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();
-                ResetView.reset();
+                ResetView.resetLogin();
             } else {
                 // Verify the password
                 if ( password.equals(user.getPassword()) ) {
-                    System.out.println("Login success!");
+                    System.out.println("\nLogin success!");
+                    System.out.println("Welcome " + user.getAccount() + "!");
                     JDBCUtills.closeResource(conn, null);
+                    try {
+                        Thread.sleep(1500);
+                    } catch ( Exception e ) {
+                        e.printStackTrace();
+                    }
+
+                    // Go to the commonStaff view
+                    ResetView.resetCommonStaff(user, cs);
                 } else {
                     JDBCUtills.closeResource(conn, null);
                     ClearScreen.clear();
                     System.out.println("Your password is wrong, please try again!");
-                    ResetView.reset();
+                    ResetView.resetLogin();
                 }
             }
 
@@ -59,7 +69,7 @@ public class Login {
             JDBCUtills.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The account is not exist!!");
-            ResetView.reset();
+            ResetView.resetLogin();
         }
         // System.out.println("UserName: " + userName + " Password: " + password);
     }
@@ -82,18 +92,26 @@ public class Login {
                 System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();
-                ResetView.reset();
+                ResetView.resetLogin();
             } else {
 
                 // Verify the password
                 if ( password.equals(user.getPassword()) ) {
-                    System.out.println("Login success!");
+                    System.out.println("\nLogin success!");
+                    System.out.println("Welcome " + user.getAccount() + "!");
                     JDBCUtills.closeResource(conn, null);
+                    try {
+                        Thread.sleep(1500);
+                    } catch ( Exception e ) {
+                        e.printStackTrace();
+                    }
+
+                    // Go to the Curator view
                 } else {
                     JDBCUtills.closeResource(conn, null);
                     ClearScreen.clear();
                     System.out.println("Your password is wrong, please try again!");
-                    ResetView.reset();
+                    ResetView.resetLogin();
                 }
             }
 
@@ -102,7 +120,7 @@ public class Login {
             JDBCUtills.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The account is not exist!!");
-            ResetView.reset();
+            ResetView.resetLogin();
         }
         // System.out.println("UserName: " + userName + " Password: " + password);
     }

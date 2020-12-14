@@ -10,6 +10,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
 	// write your code here
         System.out.println("***************** Welcome to library manage system *********************");
-        ResetView.reset();
+        ResetView.resetLogin();
     }
 }

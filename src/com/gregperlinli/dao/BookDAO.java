@@ -55,6 +55,16 @@ public interface BookDAO {
     Book getBookById(Connection conn, int id);
 
     /**
+     * query one data of the form by "isbm"
+     *
+     * @param conn connection of database
+     * @param isbm the isbm of the book
+     * @return Book object
+     * @Description query one data of the form by "isbm"
+     */
+    Book getBookByIsbm(Connection conn, int isbm);
+
+    /**
      * get all of the Book Object in a list
      *
      * @author gregperlinli

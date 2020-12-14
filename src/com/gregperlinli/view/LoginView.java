@@ -1,14 +1,15 @@
 package com.gregperlinli.view;
 
-import com.gregperlinli.util.ClearScreen;
-
 import java.util.Scanner;
 
 /**
  * @author gregperlinli
  */
 public class LoginView {
+    private static final int MINNUM = 0, MAXNUM = 5;
+
     public static int loginInterface() {
+
         /* System.out.println("***************** Welcome to library manage system *********************\n");*/
         System.out.println();
         try {
@@ -17,7 +18,7 @@ public class LoginView {
             e.printStackTrace();
         }
 
-        int identity = 0;
+        int identity;
         do {
             System.out.println("Please select your identity");
             System.out.println("1. Common staff");
@@ -26,14 +27,20 @@ public class LoginView {
             System.out.println("4. Close the system");
 
             Scanner scan = new Scanner(System.in);
-            identity = scan.nextInt();
 
-            if ( identity <= 0 || identity >= 5 ) {
-                ClearScreen.clear();
-                System.out.println("***************** Welcome to library manage system *********************\n");
-                System.out.println("The number you enter is invalid, please try again!\n");
+            try {
+                identity = scan.nextInt();
+            } catch ( Exception e ) {
+                e.printStackTrace();
+                identity = MINNUM;
             }
-        } while ( identity <= 0 || identity >= 5 );
+
+            if ( identity <= MINNUM || identity >= MAXNUM ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!\n");
+                System.out.println("***************** Welcome to library manage system *********************\n");
+            }
+        } while ( identity <= MINNUM || identity >= MAXNUM );
         return identity;
     }
 }

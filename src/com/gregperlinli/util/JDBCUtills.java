@@ -36,7 +36,7 @@ public class JDBCUtills {
         // load the Driver
         Class.forName(DRIVER_CLASS);
 
-        // get connecton
+        // get connection
         Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
         // System.out.println("Connection status: " + conn);
 
@@ -84,9 +84,6 @@ public class JDBCUtills {
         }
     }
 
-
-    /* Close resource method */
-
     /**
      * @author gregperlinli
      * @return connection with database connection pool "Druid"
@@ -99,6 +96,9 @@ public class JDBCUtills {
         return source.getConnection();
 
     }
+
+
+    /* Close resource method */
 
     /**
      * @author gregperlinli
