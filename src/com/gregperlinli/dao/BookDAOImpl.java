@@ -4,6 +4,7 @@ import com.gregperlinli.bean.Book;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.concurrent.DelayQueue;
 
 /**
  * @Description Implements of the interface "BookDAO"
@@ -38,8 +39,27 @@ public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
     }
 
     @Override
+    public Book getBookByName(Connection conn, String name) {
+        String sql = "select id, isbm, name, category, remainNum, price, author from Book where name = ?";
+        return getQuery(conn, sql, name);
+    }
+
+    @Override
+    public List<Book> getBookByCategory(Connection conn, String category) {
+        String sql = "select id, isbm, name, category, remainNum, price, author from Book where category = ?";
+        return getMultiQuery(conn, sql, category);
+    }
+
+    @Override
+    public List<Book> getBookByAuthor(Connection conn, String author) {
+        String sql = "select id, isbm, name, category, remainNum, price, author from Book where author = ?";
+        return getMultiQuery(conn, sql, author);
+    }
+
+    @Override
     public List<Book> getAll(Connection conn) {
-        return null;
+        String sql = "select id, isbm, name, category, remainNum, price, author from Book";
+        return getMultiQuery(conn, sql);
     }
 
     @Override

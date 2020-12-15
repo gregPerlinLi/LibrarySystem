@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class CommonStaffDashboard {
     private static final Scanner SCAN = new Scanner(System.in);
-    private static final int MINNUM = 0, MAXNUM = 6, MINMODE = 0, MAXMODE = 4;
+    private static final int MINNUM = 0, MAXNUM = 6, MINMODE = 0, MAXMODE = 7;
 
     public static int commonStaffView(User user, CommonStaff cs) {
         ClearScreen.clear();
@@ -54,7 +54,10 @@ public class CommonStaffDashboard {
             System.out.println("Please select a mode:");
             System.out.println("1. Query book by ISBM");
             System.out.println("2. Query book by name");
-            System.out.println("3. Quit");
+            System.out.println("3. Query books by category");
+            System.out.println("4. Query books by author");
+            System.out.println("5. Query all books");
+            System.out.println("6. Quit");
 
             try {
                 mode = SCAN.nextInt();

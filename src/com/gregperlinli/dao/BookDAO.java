@@ -65,11 +65,42 @@ public interface BookDAO {
     Book getBookByIsbm(Connection conn, String isbm);
 
     /**
+     * query one data of the form by "isbm"
+     *
+     * @param conn connection of database
+     * @param name the name of the book
+     * @return Book object
+     * @Description query one data of the form by "isbm"
+     */
+    Book getBookByName(Connection conn, String name);
+
+    /**
+     * query multi data of the form by "isbm"
+     *
+     * @param conn connection of database
+     * @param category the category of the book
+     * @return a list of Book object
+     * @Description query multi data of the form by "isbm"
+     */
+    List<Book> getBookByCategory(Connection conn, String category);
+
+    /**
+     * query multi data of the form by "isbm"
+     *
+     * @param conn connection of database
+     * @param author the author of the book
+     * @return a list of Book object
+     * @Description query multi data of the form by "isbm"
+     */
+    List<Book> getBookByAuthor(Connection conn, String author);
+
+    /**
      * get all of the Book Object in a list
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @return get all of the Book Object in a list
+     * @return a list of Book object
+     * @Description get all of the Book Object in a list
      */
     List<Book> getAll(Connection conn);
 
