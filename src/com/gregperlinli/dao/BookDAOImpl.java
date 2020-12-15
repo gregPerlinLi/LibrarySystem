@@ -32,7 +32,7 @@ public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
     }
 
     @Override
-    public Book getBookByIsbm(Connection conn, int isbm) {
+    public Book getBookByIsbm(Connection conn, String isbm) {
         String sql = "select id, isbm, name, category, remainNum, price, author from Book where isbm = ?";
         return getQuery(conn, sql, isbm);
     }

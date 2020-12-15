@@ -1,26 +1,29 @@
 package com.gregperlinli.bean;
 
+import java.math.BigDecimal;
+
 /**
  * @author gregperlinli
  */
 public class Book {
     private int id;
-    private String isbn;
+    private String isbm;
     private String name;
     private String category;
     private int remainNum;
-    private int price;
+    // private int price;
     private String author;
+    private BigDecimal price;
 
-    public Book(int id, String isbn, String name, String category, int remainNum, int price, String author) {
+    public Book(int id, String isbm, String name, String category, int remainNum, String author, BigDecimal price) {
         super();
         this.id = id;
-        this.isbn = isbn;
+        this.isbm = isbm;
         this.name = name;
         this.category = category;
         this.remainNum = remainNum;
-        this.price = price;
         this.author = author;
+        this.price = price;
     }
 
     public Book() {
@@ -35,12 +38,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getIsbm() {
+        return isbm;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setIsbm(String isbm) {
+        this.isbm = isbm;
     }
 
     public String getName() {
@@ -67,14 +70,6 @@ public class Book {
         this.remainNum = remainNum;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public String getAuthor() {
         return author;
     }
@@ -83,16 +78,24 @@ public class Book {
         this.author = author;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", isbn='" + isbn + '\'' +
+                ", isbn='" + isbm + '\'' +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", remainNum=" + remainNum +
-                ", price=" + price +
                 ", author='" + author + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
+import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
 import com.gregperlinli.view.CommonStaffDashboard;
 import com.gregperlinli.view.ResetView;
@@ -24,6 +25,13 @@ public class CommonStaffFunction {
         switch (mode) {
             case 1 -> {
                 Book book = queryBookWithIsbm();
+                System.out.println("Result:");
+                if ( EmptyUtil.isEmpty(book) ) {
+                    System.out.println("The book you want to query is not exist!\n");
+                } else {
+                    System.out.println(book + "\n");
+                }
+                selectMode(user, cs);
             } case 2 -> {
 
             } default -> {
@@ -39,7 +47,7 @@ public class CommonStaffFunction {
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            book = BOOK_DAO.getQuery(conn, isbm);
+            book = BOOK_DAO.getBookByIsbm(conn, isbm);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {

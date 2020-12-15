@@ -62,7 +62,7 @@ public interface BookDAO {
      * @return Book object
      * @Description query one data of the form by "isbm"
      */
-    Book getBookByIsbm(Connection conn, int isbm);
+    Book getBookByIsbm(Connection conn, String isbm);
 
     /**
      * get all of the Book Object in a list

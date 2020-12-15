@@ -13,8 +13,7 @@ public class EmptyUtil {
      * @return is null
      */
     @SuppressWarnings("rawtypes")
-    public static boolean isEmpty(Object obj)
-    {
+    public static boolean isEmpty(Object obj) {
         if (obj == null)
         {
             return true;
@@ -36,8 +35,7 @@ public class EmptyUtil {
      * @param obj object name
      * @return isn't null
      */
-    public static boolean isNotEmpty(Object obj)
-    {
+    public static boolean isNotEmpty(Object obj) {
         return !isEmpty(obj);
     }
 }
