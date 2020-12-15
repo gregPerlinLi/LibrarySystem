@@ -50,7 +50,7 @@ public class CommonStaffDashboard {
     public static int queryBookView() {
         int mode;
         do {
-            System.out.println("-------- Query book mode --------");
+            System.out.println("\n-------- Query book mode --------");
             System.out.println("Please select a mode:");
             System.out.println("1. Query book by ISBM");
             System.out.println("2. Query book by name");
