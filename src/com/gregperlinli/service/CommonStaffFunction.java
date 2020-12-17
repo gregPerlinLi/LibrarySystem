@@ -243,9 +243,14 @@ public class CommonStaffFunction {
             List<Book> list = BOOK_DAO.getAll(conn);
             list.forEach(System.out::println);
             System.out.println("-------------------------------------------------------------------------------");
-            System.out.println("Please enter the ID of the book you want to delete:");
+            System.out.println("Please enter the ID of the book you want to delete(if you want to cancel, please enter -1):");
             deleteBookId = SCAN.nextInt();
-            BOOK_DAO.deleteById(conn, deleteBookId);
+            if ( deleteBookId == -1 ) {
+                System.out.println("Delete canceled!");
+                selectUpdateMode(user, cs);
+            } else {
+                BOOK_DAO.deleteById(conn, deleteBookId);
+            }
         } catch ( InputMismatchException e ) {
             e.printStackTrace();
             ClearScreen.clear();
