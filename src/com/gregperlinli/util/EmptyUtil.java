@@ -62,11 +62,7 @@ public class EmptyUtil {
             System.out.println("Warning: The author you enter is empty!");
             ++wrongTimes;
         }
-        if (wrongTimes > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return wrongTimes > 0;
     }
 
     public static boolean isAddBookRepeat(Book book) {
@@ -91,10 +87,35 @@ public class EmptyUtil {
         } finally {
             JDBCUtills.closeResource(conn, null);
         }
-        if ( wrongTimes > 0 ) {
-            return true;
-        } else {
-            return false;
+        return wrongTimes > 0;
+    }
+
+    public static boolean isUpdateBookRepeat(Book book, boolean isNotIsbm, boolean isNotName ) {
+        final BookDAOImpl BOOK_DAO = new BookDAOImpl();
+        int wrongTimes = 0;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+
+            if ( !isNotIsbm ) {
+                Book currentBook = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+                if ( EmptyUtil.isNotEmpty(currentBook) ) {
+                    System.out.println("Warning: The ISBM you entered is already exist!");
+                    ++wrongTimes;
+                }
+            }
+            if ( !isNotName ) {
+                Book currentBook = BOOK_DAO.getBookByName(conn, book.getName());
+                if ( EmptyUtil.isNotEmpty(currentBook)) {
+                    System.out.println("Warning: The name you entered is already exist!");
+                    ++wrongTimes;
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
         }
+        return wrongTimes != 0;
     }
 }

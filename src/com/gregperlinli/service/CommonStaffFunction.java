@@ -13,6 +13,7 @@ import com.gregperlinli.view.ResetView;
 import com.mysql.cj.x.protobuf.MysqlxSession;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
@@ -148,6 +149,7 @@ public class CommonStaffFunction {
                 deleteBook(user, cs);
                 selectUpdateMode(user, cs);
             } case 3 -> {
+                updateBook(user, cs);
                 selectUpdateMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);
@@ -213,7 +215,7 @@ public class CommonStaffFunction {
         } else if ( confirm != 1 ) {
             selectUpdateMode(user, cs);
         }
-        System.out.println("Adding the book");
+        System.out.println("Adding the book...");
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnectionWithPool();
@@ -262,6 +264,7 @@ public class CommonStaffFunction {
         } finally {
             JDBCUtills.closeResource(conn, null);
         }
+
         System.out.println("Delete success!");
         System.out.println("Do you want to delete other books?\n1. Yes\n2. No");
         int isRepeat = 2;
@@ -275,6 +278,154 @@ public class CommonStaffFunction {
         }
         if ( isRepeat == 1 ) {
             deleteBook(user, cs);
+        } else {
+            selectUpdateMode(user, cs);
+        }
+    }
+
+    public static void updateBook(User user, CommonStaff cs) {
+        int updateBookId = 0;
+        Connection conn = null;
+        try {
+            System.out.println("\nThis is all the books in the library:");
+            System.out.println("-------------------------------------------------------------------------------");
+            conn = JDBCUtills.getConnectionWithPool();
+            List<Book> list = BOOK_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the book you want to update(if you want to cancel, please enter -1):");
+            updateBookId = SCAN.nextInt();
+            SCAN.nextLine();
+            if ( updateBookId == -1 ) {
+                System.out.println("Update canceled!");
+                selectUpdateMode(user, cs);
+            } else {
+                for (Book book : list) {
+                    if (book.getId() == updateBookId) {
+                        System.out.println("The book you select is follow: ");
+                        System.out.println(book + "\n");
+
+                        System.out.println("Please enter new ISBM (If you don't want to change, please empty)");
+                        String newIsbm = SCAN.nextLine();
+                        boolean isNotIsbm = false;
+                        if (newIsbm.isBlank()) {
+                            isNotIsbm = true;
+                        } else {
+                            book.setIsbm(newIsbm);
+                        }
+                        System.out.println("Please enter new name (If you don't want to change, please empty)");
+                        String newName = SCAN.nextLine();
+                        boolean isNotName = false;
+                        if (newName.isBlank()) {
+                            isNotName = true;
+                        } else {
+                            book.setName(newName);
+                        }
+                        System.out.println("Please enter new category (If you don't want to change, please empty)");
+                        String newCategory = SCAN.nextLine();
+                        boolean isNotCategory = false;
+                        if (newCategory.isBlank()) {
+                            isNotCategory = true;
+                        } else {
+                            book.setCategory(newCategory);
+                        }
+                        System.out.println("Please enter new remainNum (If you don't want to change, please empty)");
+                        String newRemainNum = SCAN.nextLine();
+                        boolean isNotRemainNum = false;
+                        if (newRemainNum.isBlank()) {
+                            isNotRemainNum = true;
+                        } else {
+                            book.setRemainNum(Integer.parseInt(newRemainNum));
+                        }
+                        System.out.println("Please enter new price (If you don't want to change, please empty)");
+                        String newPrice = SCAN.nextLine();
+                        boolean isNotPrice = false;
+                        if (newPrice.isBlank()) {
+                            isNotPrice = true;
+                        } else {
+                            BigDecimal newPriceByDec = new BigDecimal(newPrice);
+                            newPriceByDec = newPriceByDec.setScale(2, RoundingMode.HALF_UP);
+                            book.setPrice(newPriceByDec);
+                        }
+                        System.out.println("Please enter new author (If you don't want to change, please empty)");
+                        String newAuthor = SCAN.nextLine();
+                        boolean isNotAuthor = false;
+                        if (newAuthor.isBlank()) {
+                            isNotAuthor = true;
+                        } else {
+                            book.setAuthor(newAuthor);
+                        }
+
+                        // check
+                        int wrongTimes = 0;
+                        System.out.println("Inspecting the data you entered...");
+                        boolean isRepeat = EmptyUtil.isUpdateBookRepeat(book, isNotIsbm, isNotName);
+                        if (isRepeat) {
+                            System.out.println("\nThe book you want to update is wrong, please try again!\n");
+                            updateBook(user, cs);
+                        }
+                        System.out.println("Inspection passed, please correct the following information:");
+                        System.out.println(book);
+                        System.out.println("If correct, please enter 1. If there is something wrong, please enter 2. If you don't want to add anything, please enter another numbers.");
+                        int confirm;
+                        try {
+                            confirm = SCAN.nextInt();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            confirm = 3;
+                            SCAN.nextLine();
+                        }
+                        if (confirm == 2) {
+                            updateBook(user, cs);
+                        } else if (confirm != 1) {
+                            selectUpdateMode(user, cs);
+                        }
+                        System.out.println("Updating the book...");
+
+                        try {
+                            conn = JDBCUtills.getConnectionWithPool();
+                            BOOK_DAO.update(conn, book);
+                            System.out.println("Updating successful, the following is the book you have insert:");
+                            Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+                            System.out.println(bookHaveUpdated);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ClearScreen.clear();
+                            System.out.println("Update fail, please try again");
+                            JDBCUtills.closeResource(conn, null);
+                            updateBook(user, cs);
+                        } finally {
+                            JDBCUtills.closeResource(conn, null);
+                            selectUpdateMode(user, cs);
+                        }
+                    }
+                }
+            }
+        } catch ( InputMismatchException e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is valid, please try again!");
+            JDBCUtills.closeResource(conn, null);
+            updateBook(user, cs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+
+        System.out.println("Update success!");
+        System.out.println("Do you want to update other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectUpdateMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            updateBook(user, cs);
         } else {
             selectUpdateMode(user, cs);
         }

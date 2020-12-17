@@ -26,7 +26,8 @@ public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
 
     @Override
     public void update(Connection conn, Book book) throws Exception {
-
+        String sql = "update Book set isbm = ?, name = ?, category = ?, remainNum = ?, price = ?, author = ? where id = ?";
+        update(conn, sql, book.getIsbm(), book.getName(), book.getCategory(), book.getRemainNum(), book.getPrice(), book.getAuthor(), book.getId());
     }
 
     @Override
