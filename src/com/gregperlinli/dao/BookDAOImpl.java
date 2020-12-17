@@ -20,7 +20,8 @@ public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
 
     @Override
     public void deleteById(Connection conn, int id) throws Exception {
-
+        String sql = "delete from Book where id = ?";
+        update(conn, sql, id);
     }
 
     @Override

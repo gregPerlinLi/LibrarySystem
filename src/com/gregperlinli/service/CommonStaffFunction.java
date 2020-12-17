@@ -14,6 +14,8 @@ import com.mysql.cj.x.protobuf.MysqlxSession;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -143,6 +145,7 @@ public class CommonStaffFunction {
                 addBook(user, cs);
                 selectUpdateMode(user, cs);
             } case 2 -> {
+                deleteBook(user, cs);
                 selectUpdateMode(user, cs);
             } case 3 -> {
                 selectUpdateMode(user, cs);
@@ -230,4 +233,45 @@ public class CommonStaffFunction {
         }
     }
 
+    public static void deleteBook(User user, CommonStaff cs) {
+        int deleteBookId = 0;
+        Connection conn = null;
+        try {
+            System.out.println("\nThis is all the books in the library:");
+            System.out.println("-------------------------------------------------------------------------------");
+            conn = JDBCUtills.getConnectionWithPool();
+            List<Book> list = BOOK_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the book you want to delete:");
+            deleteBookId = SCAN.nextInt();
+            BOOK_DAO.deleteById(conn, deleteBookId);
+        } catch ( InputMismatchException e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is valid, please try again!");
+            JDBCUtills.closeResource(conn, null);
+            deleteBook(user, cs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Delete success!");
+        System.out.println("Do you want to delete other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectUpdateMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            deleteBook(user, cs);
+        } else {
+            selectUpdateMode(user, cs);
+        }
+    }
 }
