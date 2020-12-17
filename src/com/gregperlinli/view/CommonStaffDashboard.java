@@ -11,7 +11,9 @@ import java.util.Scanner;
  */
 public class CommonStaffDashboard {
     private static final Scanner SCAN = new Scanner(System.in);
-    private static final int MINNUM = 0, MAXNUM = 6, MINMODE = 0, MAXMODE = 7;
+    private static final int MIN_NUM = 0, MAX_NUM = 6,
+                             MIN_QUERY_MODE = 0, MAX_QUERY_MODE = 7,
+                             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5;
 
     public static int commonStaffView(User user, CommonStaff cs) {
         ClearScreen.clear();
@@ -33,15 +35,15 @@ public class CommonStaffDashboard {
                 function = SCAN.nextInt();
             } catch ( Exception e ) {
                 e.printStackTrace();
-                function = MINNUM;
+                function = MIN_NUM;
             }
 
-            if ( function <= MINNUM || function >= MAXNUM ) {
+            if ( function <= MIN_NUM || function >= MAX_NUM ) {
                 ClearScreen.clear();
                 System.out.println("The number you enter is invalid, please try again!\n");
             }
 
-        } while ( function <= MINNUM || function >= MAXNUM );
+        } while ( function <= MIN_NUM || function >= MAX_NUM );
 
         return function;
 
@@ -65,13 +67,37 @@ public class CommonStaffDashboard {
                 e.printStackTrace();
                 mode = 0;
             }
-            if ( mode <= MINMODE || mode >= MAXMODE ) {
+            if ( mode <= MIN_QUERY_MODE || mode >= MAX_QUERY_MODE ) {
                 ClearScreen.clear();
                 System.out.println("The number you enter is invalid, please try again!\n");
             }
-        } while ( mode <= MINMODE || mode >= MAXMODE );
+        } while ( mode <= MIN_QUERY_MODE || mode >= MAX_QUERY_MODE );
 
         return mode;
 
+    }
+
+    public static int updateBookView() {
+        int mode;
+        do {
+            System.out.println("\n-------- Update book mode --------");
+            System.out.println("Please select a mode:");
+            System.out.println("1. Add a book");
+            System.out.println("2. Delete a book");
+            System.out.println("3. Update a book");
+            System.out.println("4. Quit");
+
+            try {
+                mode = SCAN.nextInt();
+            } catch ( Exception e ) {
+                e.printStackTrace();
+                mode = 0;
+            }
+            if ( mode <= MIN_UPDATE_MODE || mode >= MAX_UPDATE_MODE ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!\n");
+            }
+        } while( mode <= MIN_UPDATE_MODE || mode >= MAX_UPDATE_MODE );
+        return mode;
     }
 }

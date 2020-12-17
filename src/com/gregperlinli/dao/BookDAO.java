@@ -57,6 +57,7 @@ public interface BookDAO {
     /**
      * query one data of the form by "isbm"
      *
+     * @author gregperlinli
      * @param conn connection of database
      * @param isbm the isbm of the book
      * @return Book object
@@ -67,6 +68,7 @@ public interface BookDAO {
     /**
      * query one data of the form by "isbm"
      *
+     * @author gregperlinli
      * @param conn connection of database
      * @param name the name of the book
      * @return Book object
@@ -77,6 +79,7 @@ public interface BookDAO {
     /**
      * query multi data of the form by "isbm"
      *
+     * @author gregperlinli
      * @param conn connection of database
      * @param category the category of the book
      * @return a list of Book object
@@ -87,6 +90,7 @@ public interface BookDAO {
     /**
      * query multi data of the form by "isbm"
      *
+     * @author gregperlinli
      * @param conn connection of database
      * @param author the author of the book
      * @return a list of Book object

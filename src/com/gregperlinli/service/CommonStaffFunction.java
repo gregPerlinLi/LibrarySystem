@@ -6,9 +6,13 @@ import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
 import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.view.CommonStaffDashboard;
+import com.gregperlinli.view.CommonStaffOutput;
 import com.gregperlinli.view.ResetView;
+import com.mysql.cj.x.protobuf.MysqlxSession;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
@@ -20,68 +24,30 @@ public class CommonStaffFunction {
     private static final Scanner SCAN = new Scanner(System.in);
     private static final BookDAOImpl BOOK_DAO = new BookDAOImpl();
 
-    public static void selectMode(User user, CommonStaff cs) {
+    public static void selectQueryMode(User user, CommonStaff cs) {
         int mode = CommonStaffDashboard.queryBookView();
         //noinspection AlibabaSwitchStatement
         switch (mode) {
             case 1 -> {
                 Book book = queryBookWithIsbm();
-                System.out.println("\nResult:");
-                System.out.println("--------------------------------------------------------------");
-                if ( EmptyUtil.isEmpty(book) ) {
-                    System.out.println("The book you want to query is not exist!");
-                } else {
-                    System.out.println(book);
-                }
-                System.out.println("--------------------------------------------------------------");
-                selectMode(user, cs);
+                CommonStaffOutput.queryOneOutput(book);
+                selectQueryMode(user, cs);
             } case 2 -> {
                 Book book = queryBookWithName();
-                System.out.println("\nResult:");
-                System.out.println("--------------------------------------------------------------");
-                if ( EmptyUtil.isEmpty(book) ) {
-                    System.out.println("The book you want to query is not exist!");
-                } else {
-                    System.out.println(book);
-                }
-                System.out.println("-------------------------------------------------------------\n");
-                selectMode(user, cs);
+                CommonStaffOutput.queryOneOutput(book);
+                selectQueryMode(user, cs);
             } case 3 -> {
                 List<Book> list = queryBookWithCategory();
-                System.out.println("\nResult:");
-                System.out.println("--------------------------------------------------------------");
-                if ( list == null || list.size() == 0 ) {
-                    System.out.println("There is no books!");
-                } else {
-                    list.forEach(System.out::println);
-                    System.out.println("\nThere are " + list.size() + " books with this category.");
-                }
-                System.out.println("--------------------------------------------------------------\n");
-                selectMode(user, cs);
+                CommonStaffOutput.queryMultiOutput(list, "category");
+                selectQueryMode(user, cs);
             } case 4 -> {
                 List<Book> list = queryBookWithAuthor();
-                System.out.println("\nResult:");
-                System.out.println("--------------------------------------------------------------");
-                if ( list == null || list.size() == 0 ) {
-                    System.out.println("There is no books!");
-                } else {
-                    list.forEach(System.out::println);
-                    System.out.println("\nThere are " + list.size() + " books with this author.");
-                }
-                System.out.println("--------------------------------------------------------------\n");
-                selectMode(user, cs);
+                CommonStaffOutput.queryMultiOutput(list, "author");
+                selectQueryMode(user, cs);
             } case 5 -> {
                 List<Book> list = queryAllBooks();
-                System.out.println("\nResult:");
-                System.out.println("--------------------------------------------------------------");
-                if ( list == null || list.size() == 0 ) {
-                    System.out.println("There is no books!");
-                } else {
-                    list.forEach(System.out::println);
-                    System.out.println("\nThere are " + list.size() + " books in the library.");
-                }
-                System.out.println("--------------------------------------------------------------\n");
-                selectMode(user, cs);
+                CommonStaffOutput.queryAllOutput(list);
+                selectQueryMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);
             }
@@ -167,6 +133,79 @@ public class CommonStaffFunction {
         }
 
         return list;
+    }
+
+    public static void selectUpdateMode(User user, CommonStaff cs) {
+        int mode = CommonStaffDashboard.updateBookView();
+        //noinspection AlibabaSwitchStatement
+        switch ( mode ) {
+            case 1 -> {
+                addBook();
+                selectUpdateMode(user, cs);
+            } case 2 -> {
+
+            } case 3 -> {
+
+            } default -> {
+                ResetView.resetCommonStaff(user, cs);
+            }
+        }
+    }
+
+    public static void addBook() {
+        Book book = new Book();
+        System.out.println("Please enter the ISBM:");
+        // TODO: Attention to absorb the return key
+        String isbm = SCAN.next();
+        isbm += SCAN.nextLine();
+        book.setIsbm(isbm);
+        System.out.println("Please enter the name:");
+        book.setName(SCAN.nextLine());
+        System.out.println("Please enter the category:");
+        book.setCategory(SCAN.nextLine());
+        System.out.println("Please enter the remainNum:");
+        book.setRemainNum(SCAN.nextInt());
+        System.out.println("Please enter the author:");
+        String author = SCAN.next();
+        author += SCAN.nextLine();
+        book.setAuthor(author);
+        System.out.println("Please enter the price:");
+        book.setPrice(SCAN.nextBigDecimal());
+
+        System.out.println("Inspecting the book you want to add...");
+        boolean isEmpty = EmptyUtil.isAddBookEmpty(book);
+        if ( isEmpty ) {
+            System.out.println("\nThe book you want to add is wrong, please try again!\n");
+            addBook();
+        }
+        boolean isRepeat = EmptyUtil.isAddBookRepeat(book);
+        if ( isRepeat ) {
+            System.out.println("\nThe book you want to add is wrong, please try again!\n");
+            addBook();
+        }
+        System.out.println("Inspection passed, please correct the following information:");
+        System.out.println(book + "\n");
+        System.out.println("If correct, please enter 1, if there is something wrong, please enter any numbers.");
+        if ( SCAN.nextInt() != 1 ) {
+            addBook();
+        }
+        System.out.println("Adding the book");
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            BOOK_DAO.insert(conn, book);
+            System.out.println("Adding successful, the following is the book you have insert:");
+            Book bookHaveAdded = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+            System.out.println(bookHaveAdded);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("Add fail, please try again");
+            JDBCUtills.closeResource(conn, null);
+            addBook();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
     }
 
 }

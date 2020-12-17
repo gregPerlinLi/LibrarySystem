@@ -36,9 +36,9 @@ public class ResetView {
         //noinspection AlibabaSwitchStatement
         switch (function) {
             case 1 -> {
-                CommonStaffFunction.selectMode(user, cs);
+                CommonStaffFunction.selectQueryMode(user, cs);
             } case 2 -> {
-                System.out.println("-------- Update book mode --------");
+                CommonStaffFunction.selectUpdateMode(user, cs);
             } case 3 -> {
                 System.out.println("-------- Lend book mode --------");
             } case 4 -> {

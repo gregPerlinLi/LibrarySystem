@@ -14,7 +14,8 @@ import java.util.concurrent.DelayQueue;
 public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
     @Override
     public void insert(Connection conn, Book book) throws Exception {
-
+        String sql = "insert into Book(isbm, name, category, remainNum, price, author)values(?,?,?,?,?,?)";
+        update(conn, sql, book.getIsbm(), book.getName(), book.getCategory(), book.getRemainNum(), book.getPrice(), book.getAuthor());
     }
 
     @Override
