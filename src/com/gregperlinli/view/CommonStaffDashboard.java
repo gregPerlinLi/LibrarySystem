@@ -36,6 +36,7 @@ public class CommonStaffDashboard {
             } catch ( Exception e ) {
                 e.printStackTrace();
                 function = MIN_NUM;
+                SCAN.nextLine();
             }
 
             if ( function <= MIN_NUM || function >= MAX_NUM ) {
@@ -66,6 +67,7 @@ public class CommonStaffDashboard {
             } catch ( Exception e ) {
                 e.printStackTrace();
                 mode = 0;
+                SCAN.nextLine();
             }
             if ( mode <= MIN_QUERY_MODE || mode >= MAX_QUERY_MODE ) {
                 ClearScreen.clear();
@@ -92,6 +94,7 @@ public class CommonStaffDashboard {
             } catch ( Exception e ) {
                 e.printStackTrace();
                 mode = 0;
+                SCAN.nextLine();
             }
             if ( mode <= MIN_UPDATE_MODE || mode >= MAX_UPDATE_MODE ) {
                 ClearScreen.clear();

@@ -140,54 +140,75 @@ public class CommonStaffFunction {
         //noinspection AlibabaSwitchStatement
         switch ( mode ) {
             case 1 -> {
-                addBook();
+                addBook(user, cs);
                 selectUpdateMode(user, cs);
             } case 2 -> {
-
+                selectUpdateMode(user, cs);
             } case 3 -> {
-
+                selectUpdateMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);
             }
         }
     }
 
-    public static void addBook() {
+    public static void addBook(User user, CommonStaff cs) {
         Book book = new Book();
-        System.out.println("Please enter the ISBM:");
-        // TODO: Attention to absorb the return key
-        String isbm = SCAN.next();
-        isbm += SCAN.nextLine();
-        book.setIsbm(isbm);
-        System.out.println("Please enter the name:");
-        book.setName(SCAN.nextLine());
-        System.out.println("Please enter the category:");
-        book.setCategory(SCAN.nextLine());
-        System.out.println("Please enter the remainNum:");
-        book.setRemainNum(SCAN.nextInt());
-        System.out.println("Please enter the author:");
-        String author = SCAN.next();
-        author += SCAN.nextLine();
-        book.setAuthor(author);
-        System.out.println("Please enter the price:");
-        book.setPrice(SCAN.nextBigDecimal());
+
+        try {
+            System.out.println("Please enter the ISBM:");
+            // TODO: Attention to absorb the return key
+            String isbm = SCAN.next();
+            isbm += SCAN.nextLine();
+            book.setIsbm(isbm);
+            System.out.println("Please enter the name:");
+            book.setName(SCAN.nextLine());
+            System.out.println("Please enter the category:");
+            book.setCategory(SCAN.nextLine());
+            System.out.println("Please enter the remainNum:");
+            book.setRemainNum(SCAN.nextInt());
+            System.out.println("Please enter the author:");
+            String author = SCAN.next();
+            author += SCAN.nextLine();
+            book.setAuthor(author);
+            System.out.println("Please enter the price:");
+            book.setPrice(SCAN.nextBigDecimal());
+
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The value you enter is invalid, please try again!\n");
+            SCAN.nextLine();
+            addBook(user, cs);
+
+        }
 
         System.out.println("Inspecting the book you want to add...");
         boolean isEmpty = EmptyUtil.isAddBookEmpty(book);
         if ( isEmpty ) {
             System.out.println("\nThe book you want to add is wrong, please try again!\n");
-            addBook();
+            addBook(user, cs);
         }
         boolean isRepeat = EmptyUtil.isAddBookRepeat(book);
         if ( isRepeat ) {
             System.out.println("\nThe book you want to add is wrong, please try again!\n");
-            addBook();
+            addBook(user, cs);
         }
         System.out.println("Inspection passed, please correct the following information:");
         System.out.println(book + "\n");
-        System.out.println("If correct, please enter 1, if there is something wrong, please enter any numbers.");
-        if ( SCAN.nextInt() != 1 ) {
-            addBook();
+        System.out.println("If correct, please enter 1. If there is something wrong, please enter 2. If you don't want to add anything, please enter another numbers.");
+        int confirm;
+        try {
+            confirm = SCAN.nextInt();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            confirm = 3;
+            SCAN.nextLine();
+        }
+        if ( confirm == 2 ) {
+            addBook(user, cs);
+        } else if ( confirm != 1 ) {
+            selectUpdateMode(user, cs);
         }
         System.out.println("Adding the book");
         Connection conn = null;
@@ -202,9 +223,10 @@ public class CommonStaffFunction {
             ClearScreen.clear();
             System.out.println("Add fail, please try again");
             JDBCUtills.closeResource(conn, null);
-            addBook();
+            addBook(user, cs);
         } finally {
             JDBCUtills.closeResource(conn, null);
+            selectUpdateMode(user, cs);
         }
     }
 
