@@ -3,8 +3,6 @@ package com.gregperlinli.service;
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.dao.BookDAOImpl;
 import com.gregperlinli.util.JDBCUtills;
-import com.gregperlinli.view.ClearScreen;
-import com.mysql.cj.jdbc.StatementImpl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -102,34 +100,35 @@ public class GenericFunction {
 
     public static void enterNewBookData(Book book) throws Exception {
 
-            System.out.println("Please enter the ISBM:");
-            // TODO: Attention to absorb the return key
-            String isbm = SCAN.next();
-            isbm += SCAN.nextLine();
-            book.setIsbm(isbm);
-            System.out.println("Please enter the name:");
-            book.setName(SCAN.nextLine());
-            System.out.println("Please enter the category:");
-            book.setCategory(SCAN.nextLine());
-            System.out.println("Please enter the remainNum:");
-            book.setRemainNum(SCAN.nextInt());
-            System.out.println("Please enter the author:");
-            String author = SCAN.next();
-            author += SCAN.nextLine();
-            book.setAuthor(author);
-            System.out.println("Please enter the price:");
-            book.setPrice(SCAN.nextBigDecimal());
-
+        System.out.println("Please enter the ISBM:");
+        // TODO: Attention to absorb the return key
+        String isbm = SCAN.next();
+        isbm += SCAN.nextLine();
+        book.setIsbm(isbm);
+        System.out.println("Please enter the name:");
+        book.setName(SCAN.nextLine());
+        System.out.println("Please enter the category:");
+        book.setCategory(SCAN.nextLine());
+        System.out.println("Please enter the remainNum:");
+        book.setRemainNum(SCAN.nextInt());
+        SCAN.nextLine();
+        System.out.println("Please enter the author:");
+        String author = SCAN.nextLine();
+        book.setAuthor(author);
+        System.out.println("Please enter the price:");
+        book.setPrice(SCAN.nextBigDecimal());
+        SCAN.nextLine();
     }
 
-    public static int enterDeleteBookData(int deleteBookId , Connection conn) throws Exception {
+    public static int enterDeleteBookData(Connection conn) throws Exception {
         System.out.println("\nThis is all the books in the library:");
         System.out.println("-------------------------------------------------------------------------------");
         List<Book> list = BOOK_DAO.getAll(conn);
         list.forEach(System.out::println);
         System.out.println("-------------------------------------------------------------------------------");
         System.out.println("Please enter the ID of the book you want to delete(if you want to cancel, please enter -1):");
-        deleteBookId = SCAN.nextInt();
+        int deleteBookId = SCAN.nextInt();
+        SCAN.nextLine();
         return deleteBookId;
     }
 
@@ -182,4 +181,14 @@ public class GenericFunction {
 
         return isNotList;
     }
+
+    public static boolean isEnoughBook(Book book) {
+        if ( book.getRemainNum() <= 0 ) {
+            System.out.println("The book you want to lend is empty, please try again in a later time!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

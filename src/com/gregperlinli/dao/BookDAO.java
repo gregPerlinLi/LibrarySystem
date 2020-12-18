@@ -44,6 +44,42 @@ public interface BookDAO {
     void update(Connection conn, Book book) throws Exception;
 
     /**
+     * lend the book by ID
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the Book object
+     * @param id the ID of the book
+     * @throws Exception e
+     * @Description lend the book by ID
+     */
+    void lendById(Connection conn, Book book, int id) throws Exception;
+
+    /**
+     * lend the book by ISBM
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the book object
+     * @param isbm the ISBM of the book
+     * @throws Exception e
+     * @Description lend the book by ISBM
+     */
+    void lendByIsbm(Connection conn, Book book, String isbm) throws Exception;
+
+    /**
+     * lend the book by name
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the book object
+     * @param name the name of the book
+     * @throws Exception e
+     * @Description lend the book by name
+     */
+    void lendByName(Connection conn, Book book, String name) throws Exception;
+
+    /**
      * query one data of the form by "id"
      *
      * @author gregperlinli
@@ -117,5 +153,4 @@ public interface BookDAO {
      * @Description return the number of entry in the form
      */
     Long getCount(Connection conn);
-
 }

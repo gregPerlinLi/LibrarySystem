@@ -6,13 +6,8 @@ import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
 import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
-import com.gregperlinli.view.ClearScreen;
-import com.gregperlinli.view.CommonStaffDashboard;
-import com.gregperlinli.view.CommonStaffOutput;
-import com.gregperlinli.view.ResetView;
+import com.gregperlinli.view.*;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -83,7 +78,6 @@ public class CommonStaffFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The value you enter is invalid, please try again!\n");
-            SCAN.nextLine();
             addBook(user, cs);
 
         }
@@ -105,10 +99,10 @@ public class CommonStaffFunction {
         int confirm;
         try {
             confirm = SCAN.nextInt();
+            SCAN.nextLine();
         } catch ( Exception e ) {
             e.printStackTrace();
             confirm = 3;
-            SCAN.nextLine();
         }
         if ( confirm == 2 ) {
             addBook(user, cs);
@@ -136,11 +130,11 @@ public class CommonStaffFunction {
     }
 
     public static void deleteBook(User user, CommonStaff cs) {
-        int deleteBookId = 0;
+        int deleteBookId;
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            deleteBookId = GenericFunction.enterDeleteBookData(deleteBookId, conn);
+            deleteBookId = GenericFunction.enterDeleteBookData(conn);
             if ( deleteBookId == -1 ) {
                 System.out.println("Delete canceled!");
                 selectUpdateMode(user, cs);
@@ -164,6 +158,7 @@ public class CommonStaffFunction {
         int isRepeat = 2;
         try {
             isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
         } catch ( Exception e ) {
             e.printStackTrace();
             ClearScreen.clear();
@@ -178,7 +173,7 @@ public class CommonStaffFunction {
     }
 
     public static void updateBook(User user, CommonStaff cs) {
-        int updateBookId = 0;
+        int updateBookId;
         Connection conn = null;
         try {
             System.out.println("\nThis is all the books in the library:");
@@ -196,14 +191,13 @@ public class CommonStaffFunction {
             } else {
                 for (Book book : list) {
                     if (book.getId() == updateBookId) {
-                        boolean isNotIsbm = false, isNotName = false;
+                        boolean isNotIsbm, isNotName;
 
                         boolean[] isNotList = GenericFunction.inputUpdateData(book);
                         isNotIsbm = isNotList[0];
                         isNotName = isNotList[1];
 
                         // check
-                        int wrongTimes = 0;
                         System.out.println("Inspecting the data you entered...");
                         boolean isRepeat = EmptyUtil.isUpdateBookRepeat(book, isNotIsbm, isNotName);
                         if (isRepeat) {
@@ -216,10 +210,10 @@ public class CommonStaffFunction {
                         int confirm;
                         try {
                             confirm = SCAN.nextInt();
+                            SCAN.nextLine();
                         } catch (Exception e) {
                             e.printStackTrace();
                             confirm = 3;
-                            SCAN.nextLine();
                         }
                         if (confirm == 2) {
                             updateBook(user, cs);
@@ -264,6 +258,7 @@ public class CommonStaffFunction {
         int isRepeat = 2;
         try {
             isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
         } catch ( Exception e ) {
             e.printStackTrace();
             ClearScreen.clear();
@@ -276,4 +271,173 @@ public class CommonStaffFunction {
             selectUpdateMode(user, cs);
         }
     }
+
+    public static void selectLendBookMode(User user, CommonStaff cs) {
+        int mode = CommonStaffDashboard.lendBookView();
+        //noinspection AlibabaSwitchStatement
+        switch ( mode ) {
+            case 1 -> {
+                lendBookById(user, cs);
+                selectLendBookMode(user, cs);
+            } case 2 -> {
+                lendBookByIsbm(user, cs);
+                selectLendBookMode(user, cs);
+            } case 3 -> {
+                lendBookByName(user, cs);
+                selectLendBookMode(user, cs);
+            } default -> {
+                ResetView.resetCommonStaff(user, cs);
+            }
+        }
+    }
+
+    public static void lendBookById(User user, CommonStaff cs) {
+        int lendBookId;
+        Connection conn = null;
+        try {
+            System.out.println("\nThis is all the books in the library:");
+            System.out.println("-------------------------------------------------------------------------------");
+            conn = JDBCUtills.getConnectionWithPool();
+            List<Book> list = BOOK_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the book you want to lend(if you want to cancel, please enter -1):");
+            lendBookId = SCAN.nextInt();
+            SCAN.nextLine();
+            if (lendBookId == -1) {
+                System.out.println("Lend canceled!");
+                selectLendBookMode(user, cs);
+            } else {
+                for ( Book book : list ) {
+                    if (book.getId() == lendBookId) {
+                        if ( GenericFunction.isEnoughBook(book) ) {
+                            BOOK_DAO.lendById(conn, book, lendBookId);
+                        } else {
+                            selectLendBookMode(user, cs);
+                        }
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("Lend fail, please try again!");
+            lendBookById(user, cs);
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Lend successful!");
+        System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectLendBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            lendBookById(user, cs);
+        } else {
+            selectLendBookMode(user, cs);
+        }
+    }
+
+    public static void lendBookByIsbm(User user, CommonStaff cs) {
+        String lendBookIsbm;
+        Connection conn = null;
+        Book book;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            System.out.println("Please enter the ISBM:(if you want to cancel, please enter -1)");
+            lendBookIsbm = SCAN.nextLine();
+            book = BOOK_DAO.getBookByIsbm(conn, lendBookIsbm);
+            if ( "-1".equals(lendBookIsbm) ) {
+                System.out.println("Lend canceled!");
+                selectLendBookMode(user, cs);
+            } else {
+                if ( GenericFunction.isEnoughBook(book) ) {
+                    BOOK_DAO.lendByIsbm(conn, book, lendBookIsbm);
+                } else {
+                    selectLendBookMode(user, cs);
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("The ISBM you enter is not exist, please try again!");
+            selectLendBookMode(user, cs);
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Lend successful!");
+        System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectLendBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            lendBookByIsbm(user, cs);
+        } else {
+            selectLendBookMode(user, cs);
+        }
+    }
+
+    public static void lendBookByName(User user, CommonStaff cs) {
+        String lendBookName;
+        Connection conn = null;
+        Book book;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            System.out.println("Please enter the name:(if you want to cancel, please enter -1)");
+            lendBookName = SCAN.nextLine();
+            book = BOOK_DAO.getBookByName(conn, lendBookName);
+            if ( "-1".equals(lendBookName) ) {
+                System.out.println("Lend canceled!");
+                selectLendBookMode(user, cs);
+            } else {
+                if ( GenericFunction.isEnoughBook(book) ) {
+                    BOOK_DAO.lendByName(conn, book, lendBookName);
+                } else {
+                    selectLendBookMode(user, cs);
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("The name you enter is not exist, please try again!");
+            selectLendBookMode(user, cs);e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Lend successful!");
+        System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectLendBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            lendBookByName(user, cs);
+        } else {
+            selectLendBookMode(user, cs);
+        }
+    }
+
 }

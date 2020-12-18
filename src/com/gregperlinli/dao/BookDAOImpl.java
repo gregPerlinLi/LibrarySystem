@@ -31,6 +31,24 @@ public class BookDAOImpl extends BaseDAO<Book> implements BookDAO {
     }
 
     @Override
+    public void lendById(Connection conn, Book book, int id) throws Exception {
+        String sql = "update Book set remainNum = ? where id = ?";
+        update(conn, sql, book.getRemainNum() - 1, id);
+    }
+
+    @Override
+    public void lendByIsbm(Connection conn, Book book, String isbm) throws Exception {
+        String sql = "update Book set remainNum = ? where isbm = ?";
+        update(conn, sql, book.getRemainNum() - 1, isbm);
+    }
+
+    @Override
+    public void lendByName(Connection conn, Book book, String name) throws Exception {
+        String sql = "update Book set remainNum = ? where name = ?";
+        update(conn, sql, book.getRemainNum() - 1, name);
+    }
+
+    @Override
     public Book getBookById(Connection conn, int id) {
         return null;
     }

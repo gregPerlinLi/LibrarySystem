@@ -40,7 +40,7 @@ public class ResetView {
             } case 2 -> {
                 CommonStaffFunction.selectUpdateMode(user, cs);
             } case 3 -> {
-                System.out.println("-------- Lend book mode --------");
+                CommonStaffFunction.selectLendBookMode(user, cs);
             } case 4 -> {
                 System.out.println("-------- Return book mode --------");
             } default -> {

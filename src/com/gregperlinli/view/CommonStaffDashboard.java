@@ -13,7 +13,8 @@ public class CommonStaffDashboard {
     private static final Scanner SCAN = new Scanner(System.in);
     private static final int MIN_NUM = 0, MAX_NUM = 6,
                              MIN_QUERY_MODE = 0, MAX_QUERY_MODE = 7,
-                             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5;
+                             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
+                             MIN_LEND_MODE = 0, MAX_LEND_MODE = 5;
 
     public static int commonStaffView(User user, CommonStaff cs) {
         ClearScreen.clear();
@@ -33,10 +34,10 @@ public class CommonStaffDashboard {
 
             try {
                 function = SCAN.nextInt();
+                SCAN.nextLine();
             } catch ( Exception e ) {
                 e.printStackTrace();
                 function = MIN_NUM;
-                SCAN.nextLine();
             }
 
             if ( function <= MIN_NUM || function >= MAX_NUM ) {
@@ -64,10 +65,10 @@ public class CommonStaffDashboard {
 
             try {
                 mode = SCAN.nextInt();
+                SCAN.nextLine();
             } catch ( Exception e ) {
                 e.printStackTrace();
                 mode = 0;
-                SCAN.nextLine();
             }
             if ( mode <= MIN_QUERY_MODE || mode >= MAX_QUERY_MODE ) {
                 ClearScreen.clear();
@@ -91,10 +92,10 @@ public class CommonStaffDashboard {
 
             try {
                 mode = SCAN.nextInt();
+                SCAN.nextLine();
             } catch ( Exception e ) {
                 e.printStackTrace();
                 mode = 0;
-                SCAN.nextLine();
             }
             if ( mode <= MIN_UPDATE_MODE || mode >= MAX_UPDATE_MODE ) {
                 ClearScreen.clear();
@@ -102,5 +103,30 @@ public class CommonStaffDashboard {
             }
         } while( mode <= MIN_UPDATE_MODE || mode >= MAX_UPDATE_MODE );
         return mode;
+    }
+
+    public static int lendBookView() {
+        int selectMode;
+        do {
+            System.out.println("\n-------- Lend book mode --------");
+            System.out.println("Please select a mode:");
+            System.out.println("1. Lend book by ID");
+            System.out.println("2. Lend book by ISBM");
+            System.out.println("3. Lend book by name");
+            System.out.println("4. Quit");
+            try {
+                selectMode = SCAN.nextInt();
+                SCAN.nextLine();
+            } catch (Exception e) {
+                e.printStackTrace();
+                selectMode = 0;
+            }
+            if ( selectMode <= MIN_LEND_MODE || selectMode >= MAX_LEND_MODE ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!");
+            }
+        } while ( selectMode <= MIN_LEND_MODE || selectMode >= MAX_LEND_MODE );
+
+        return selectMode;
     }
 }
