@@ -33,7 +33,7 @@ public class CuratorDAOImpl extends BaseDAO<Curator> implements CuratorDAO {
 
     @Override
     public Curator getCuratorByUid(Connection conn, int uid) {
-        String sql = "select id, curatorName, uid, gender, phoneNum, email from Curator where uid = ?";
+        String sql = "select id, curatorName, uid, gender, phoneNum, email, authority from Curator where uid = ?";
         return getQuery(conn, sql, uid);
     }
 

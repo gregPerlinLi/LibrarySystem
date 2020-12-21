@@ -24,7 +24,7 @@ public class CommonStaffDashboard {
         do {
             System.out.println("*************** Common staff dashboard ***************");
             System.out.println("Good " + GetTime.getMorAftEveNig() + "!");
-            System.out.printf("Account: %s     Uid: %d\n\n", cs.getStaffName(), user.getUid());
+            System.out.printf("Account: %s     Uid: %d     Authority: %d\n\n", cs.getStaffName(), user.getUid(), cs.getAuthority());
 
             System.out.println("Please select a function:");
             System.out.println("1. Query book information");

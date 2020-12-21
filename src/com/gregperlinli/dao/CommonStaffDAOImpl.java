@@ -35,7 +35,7 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public CommonStaff getCommonStaffByUid(Connection conn, int uid) {
-        String sql = "select id, staffName, uid, gender, phoneNum from CommonStaff where uid = ?";
+        String sql = "select id, staffName, uid, gender, phoneNum, authority from CommonStaff where uid = ?";
         return getQuery(conn, sql, uid);
     }
 
@@ -46,6 +46,7 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public Long getCount(Connection conn) {
-        return null;
+        String sql = "select count(*) from CommonStaff";
+        return getValue(conn, sql);
     }
 }

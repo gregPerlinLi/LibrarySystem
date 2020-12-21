@@ -4,21 +4,21 @@ package com.gregperlinli.bean;
  * @author gregperlinli
  */
 public class CommonStaff {
-    public final int JURISDICTION = 50;
-
     private int id;
     private String staffName;
     private int uid;
     private String gender;
     private String phoneNum;
+    private int authority;
 
-    public CommonStaff(int id, String staffName, int uid, String gender, String phoneNum) {
+    public CommonStaff(int id, String staffName, int uid, String gender, String phoneNum, int authority) {
         super();
         this.id = id;
         this.staffName = staffName;
         this.uid = uid;
         this.gender = gender;
         this.phoneNum = phoneNum;
+        this.authority = authority;
     }
 
     public CommonStaff() {
@@ -65,14 +65,23 @@ public class CommonStaff {
         this.phoneNum = phoneNum;
     }
 
+    public int getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(int authority) {
+        this.authority = authority;
+    }
+
     @Override
     public String toString() {
         return "CommonStaff{" +
                 "id=" + id +
                 ", staffName='" + staffName + '\'' +
                 ", uid=" + uid +
-                ", gender=" + gender +
+                ", gender='" + gender + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
+                ", authority=" + authority +
                 '}';
     }
 }

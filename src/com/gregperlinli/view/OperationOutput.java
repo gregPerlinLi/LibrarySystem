@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author gregperlinli
  */
-public class CommonStaffOutput {
+public class OperationOutput {
     public static void queryOneOutput(Book book) {
         System.out.println("\nResult:");
         System.out.println("--------------------------------------------------------------");

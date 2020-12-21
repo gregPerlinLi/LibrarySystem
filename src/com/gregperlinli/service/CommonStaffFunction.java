@@ -26,23 +26,23 @@ public class CommonStaffFunction {
         switch (mode) {
             case 1 -> {
                 Book book = GenericFunction.queryBookWithIsbm();
-                CommonStaffOutput.queryOneOutput(book);
+                OperationOutput.queryOneOutput(book);
                 selectQueryMode(user, cs);
             } case 2 -> {
                 Book book = GenericFunction.queryBookWithName();
-                CommonStaffOutput.queryOneOutput(book);
+                OperationOutput.queryOneOutput(book);
                 selectQueryMode(user, cs);
             } case 3 -> {
                 List<Book> list = GenericFunction.queryBookWithCategory();
-                CommonStaffOutput.queryMultiOutput(list, "category");
+                OperationOutput.queryMultiOutput(list, "category");
                 selectQueryMode(user, cs);
             } case 4 -> {
                 List<Book> list = GenericFunction.queryBookWithAuthor();
-                CommonStaffOutput.queryMultiOutput(list, "author");
+                OperationOutput.queryMultiOutput(list, "author");
                 selectQueryMode(user, cs);
             } case 5 -> {
                 List<Book> list = GenericFunction.queryAllBooks();
-                CommonStaffOutput.queryAllOutput(list);
+                OperationOutput.queryAllOutput(list);
                 selectQueryMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);
@@ -462,7 +462,7 @@ public class CommonStaffFunction {
                 returnBookByIsbm(user, cs);
                 selectReturnBookMode(user, cs);
             } case 3 -> {
-                lendBookByName(user, cs);
+                returnBookByName(user, cs);
                 selectReturnBookMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);
@@ -566,4 +566,53 @@ public class CommonStaffFunction {
             selectReturnBookMode(user, cs);
         }
     }
+
+    public static void returnBookByName(User user, CommonStaff cs) {
+        String returnBookName;
+        Connection conn = null;
+        Book book;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            System.out.println("Please enter the name:(if you want to cancel, please enter -1)");
+            returnBookName = SCAN.nextLine();
+            book = BOOK_DAO.getBookByName(conn, returnBookName);
+            if ( "-1".equals(returnBookName) ) {
+                System.out.println("Return canceled!");
+                selectReturnBookMode(user, cs);
+            } else {
+                if ( GenericFunction.isEnoughBook(book) ) {
+                    BOOK_DAO.returnByName(conn, book, returnBookName);
+                } else {
+                    selectReturnBookMode(user, cs);
+                }
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("The name you enter is not exist, please try again!");
+            selectReturnBookMode(user, cs);e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Return successful!");
+        System.out.println("Do you want to return other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectReturnBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            returnBookByName(user, cs);
+        } else {
+            selectReturnBookMode(user, cs);
+        }
+    }
+
 }

@@ -4,16 +4,15 @@ package com.gregperlinli.bean;
  * @author gregperlinli
  */
 public class Curator {
-    public final int JURISDICTION = 100;
-
     private int id;
     private String curatorName;
     private int uid;
     private String gender;
     private String phoneNum;
     private String email;
+    private int authority;
 
-    public Curator(int id, String curatorName, int uid, String gender, String phoneNum, String email) {
+    public Curator(int id, String curatorName, int uid, String gender, String phoneNum, String email, int authority) {
         super();
         this.id = id;
         this.curatorName = curatorName;
@@ -21,6 +20,7 @@ public class Curator {
         this.gender = gender;
         this.phoneNum = phoneNum;
         this.email = email;
+        this.authority = authority;
     }
 
     public Curator() {
@@ -75,15 +75,24 @@ public class Curator {
         this.email = email;
     }
 
+    public int getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(int authority) {
+        this.authority = authority;
+    }
+
     @Override
     public String toString() {
         return "Curator{" +
                 "id=" + id +
                 ", curatorName='" + curatorName + '\'' +
                 ", uid=" + uid +
-                ", gender=" + gender +
+                ", gender='" + gender + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
                 ", email='" + email + '\'' +
+                ", authority=" + authority +
                 '}';
     }
 

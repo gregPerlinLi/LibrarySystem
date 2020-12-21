@@ -4,6 +4,7 @@ import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.service.CommonStaffFunction;
+import com.gregperlinli.service.CuratorFunction;
 import com.gregperlinli.service.Login;
 
 /**
@@ -59,7 +60,37 @@ public class ResetView {
 
     }
 
-    public static void resetCurator(User user, Curator cur) {
+    public static void resetCurator(User user, Curator ct) {
+        int function = CuratorDashboard.curatorView(user, ct);
+        //noinspection AlibabaSwitchStatement
+        switch (function) {
+            case 1 -> {
+                CuratorFunction.selectQueryMode(user, ct);
+            } case 2 -> {
+                CuratorFunction.selectUpdateMode(user, ct);
+            } case 3 -> {
+                CuratorFunction.selectLendBookMode(user, ct);
+            } case 4 -> {
+                CuratorFunction.selectReturnBookMode(user, ct);
+            } case 5 -> {
+                // Add common staff
+            } case 6 -> {
+                // Delete common staff
+            } case 7 -> {
+                // Scheduling common staff
+            } default -> {
+                System.out.println("Cancellation success!!");
+                try {
+                    Thread.sleep(1500);
+                } catch ( Exception e ) {
+                    e.printStackTrace();
+                }
+                ClearScreen.clear();
+                System.out.println("***************** Welcome to library manage system *********************\n");
+                ResetView.resetLogin();
+            }
+
+        }
 
     }
 }

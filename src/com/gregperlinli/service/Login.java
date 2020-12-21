@@ -9,7 +9,6 @@ import com.gregperlinli.dao.UserDAOImpl;
 import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
-import com.gregperlinli.view.CommonStaffDashboard;
 import com.gregperlinli.view.ResetView;
 
 import java.sql.Connection;
@@ -107,6 +106,7 @@ public class Login {
                     }
 
                     // Go to the Curator view
+                    ResetView.resetCurator(user, ct);
                 } else {
                     JDBCUtills.closeResource(conn, null);
                     ClearScreen.clear();
