@@ -459,7 +459,7 @@ public class CommonStaffFunction {
                 returnBookById(user, cs);
                 selectReturnBookMode(user, cs);
             } case 2 -> {
-                lendBookByIsbm(user, cs);
+                returnBookByIsbm(user, cs);
                 selectReturnBookMode(user, cs);
             } case 3 -> {
                 lendBookByName(user, cs);
@@ -489,11 +489,7 @@ public class CommonStaffFunction {
             } else {
                 for ( Book book : list ) {
                     if (book.getId() == returnBookId) {
-                        if ( GenericFunction.isEnoughBook(book) ) {
-                            BOOK_DAO.returnById(conn, book, returnBookId);
-                        } else {
-                            selectReturnBookMode(user, cs);
-                        }
+                        BOOK_DAO.returnById(conn, book, returnBookId);
                     }
                 }
             }
@@ -522,6 +518,50 @@ public class CommonStaffFunction {
         }
         if ( isRepeat == 1 ) {
             returnBookById(user, cs);
+        } else {
+            selectReturnBookMode(user, cs);
+        }
+    }
+
+    public static void returnBookByIsbm(User user, CommonStaff cs) {
+        String returnBookIsbm;
+        Connection conn = null;
+        Book book;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            System.out.println("Please enter the ISBM:(if you want to cancel, please enter -1)");
+            returnBookIsbm = SCAN.nextLine();
+            book = BOOK_DAO.getBookByIsbm(conn, returnBookIsbm);
+            if ( "-1".equals(returnBookIsbm) ) {
+                System.out.println("Return canceled!");
+                selectReturnBookMode(user, cs);
+            } else {
+                    BOOK_DAO.returnByIsbm(conn, book, returnBookIsbm);
+            }
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("The ISBM you enter is not exist, please try again!");
+            selectReturnBookMode(user, cs);
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Return successful!");
+        System.out.println("Do you want to return other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectReturnBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            returnBookByIsbm(user, cs);
         } else {
             selectReturnBookMode(user, cs);
         }
