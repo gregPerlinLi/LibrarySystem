@@ -80,6 +80,42 @@ public interface BookDAO {
     void lendByName(Connection conn, Book book, String name) throws Exception;
 
     /**
+     * return the book by ID
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the Book object
+     * @param id the ID of the book
+     * @throws Exception e
+     * @Description return the book by ID
+     */
+    void returnById(Connection conn, Book book, int id) throws Exception;
+
+    /**
+     * return the book by ISBM
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the book object
+     * @param isbm the ISBM of the book
+     * @throws Exception e
+     * @Description return the book by ISBM
+     */
+    void returnByIsbm(Connection conn, Book book, String isbm) throws Exception;
+
+    /**
+     * return the book by name
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param book the book object
+     * @param name the name of the book
+     * @throws Exception e
+     * @Description return the book by name
+     */
+    void returnByName(Connection conn, Book book, String name) throws Exception;
+
+    /**
      * query one data of the form by "id"
      *
      * @author gregperlinli

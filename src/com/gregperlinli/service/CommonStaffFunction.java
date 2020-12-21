@@ -101,6 +101,7 @@ public class CommonStaffFunction {
             confirm = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             confirm = 3;
         }
@@ -142,6 +143,7 @@ public class CommonStaffFunction {
                 BOOK_DAO.deleteById(conn, deleteBookId);
             }
         } catch ( InputMismatchException e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is valid, please try again!");
@@ -160,6 +162,7 @@ public class CommonStaffFunction {
             isRepeat = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is invalid!");
@@ -212,6 +215,7 @@ public class CommonStaffFunction {
                             confirm = SCAN.nextInt();
                             SCAN.nextLine();
                         } catch (Exception e) {
+                            SCAN.nextLine();
                             e.printStackTrace();
                             confirm = 3;
                         }
@@ -242,6 +246,7 @@ public class CommonStaffFunction {
                 }
             }
         } catch ( InputMismatchException e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is valid, please try again!");
@@ -260,6 +265,7 @@ public class CommonStaffFunction {
             isRepeat = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is invalid!");
@@ -319,6 +325,7 @@ public class CommonStaffFunction {
                 }
             }
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             JDBCUtills.closeResource(conn, null);
             ClearScreen.clear();
@@ -334,6 +341,7 @@ public class CommonStaffFunction {
             isRepeat = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is invalid!");
@@ -381,6 +389,7 @@ public class CommonStaffFunction {
             isRepeat = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is invalid!");
@@ -428,6 +437,7 @@ public class CommonStaffFunction {
             isRepeat = SCAN.nextInt();
             SCAN.nextLine();
         } catch ( Exception e ) {
+            SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is invalid!");
@@ -440,4 +450,80 @@ public class CommonStaffFunction {
         }
     }
 
+
+    public static void selectReturnBookMode(User user, CommonStaff cs) {
+        int mode = CommonStaffDashboard.returnBookView();
+        //noinspection AlibabaSwitchStatement
+        switch ( mode ) {
+            case 1 -> {
+                returnBookById(user, cs);
+                selectReturnBookMode(user, cs);
+            } case 2 -> {
+                lendBookByIsbm(user, cs);
+                selectReturnBookMode(user, cs);
+            } case 3 -> {
+                lendBookByName(user, cs);
+                selectReturnBookMode(user, cs);
+            } default -> {
+                ResetView.resetCommonStaff(user, cs);
+            }
+        }
+    }
+
+    public static void returnBookById(User user, CommonStaff cs) {
+        int returnBookId;
+        Connection conn = null;
+        try {
+            System.out.println("\nThis is all the books in the library:");
+            System.out.println("-------------------------------------------------------------------------------");
+            conn = JDBCUtills.getConnectionWithPool();
+            List<Book> list = BOOK_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the book you want to return(if you want to cancel, please enter -1):");
+            returnBookId = SCAN.nextInt();
+            SCAN.nextLine();
+            if (returnBookId == -1) {
+                System.out.println("Return canceled!");
+                selectReturnBookMode(user, cs);
+            } else {
+                for ( Book book : list ) {
+                    if (book.getId() == returnBookId) {
+                        if ( GenericFunction.isEnoughBook(book) ) {
+                            BOOK_DAO.returnById(conn, book, returnBookId);
+                        } else {
+                            selectReturnBookMode(user, cs);
+                        }
+                    }
+                }
+            }
+        } catch ( Exception e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            JDBCUtills.closeResource(conn, null);
+            ClearScreen.clear();
+            System.out.println("Return fail, please try again!");
+            returnBookById(user, cs);
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("Return successful!");
+        System.out.println("Do you want to return other books?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectReturnBookMode(user, cs);
+        }
+        if ( isRepeat == 1 ) {
+            returnBookById(user, cs);
+        } else {
+            selectReturnBookMode(user, cs);
+        }
+    }
 }

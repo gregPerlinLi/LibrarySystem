@@ -42,7 +42,7 @@ public class ResetView {
             } case 3 -> {
                 CommonStaffFunction.selectLendBookMode(user, cs);
             } case 4 -> {
-                System.out.println("-------- Return book mode --------");
+                CommonStaffFunction.selectReturnBookMode(user, cs);
             } default -> {
                 System.out.println("Cancellation success!!");
                 try {
