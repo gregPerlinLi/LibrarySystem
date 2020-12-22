@@ -19,7 +19,8 @@ public class CuratorDashboard {
             MIN_QUERY_MODE = 0, MAX_QUERY_MODE = 7,
             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
             MIN_LEND_MODE = 0, MAX_LEND_MODE = 5,
-            MIN_RETURN_MODE = 0, MAX_RETURN_MODE = 5;
+            MIN_RETURN_MODE = 0, MAX_RETURN_MODE = 5,
+            MIN_SCHEDULE_MODE = 0, MAX_SCHEDULE_MODE = 5;
 
     public static int curatorView(User user, Curator ct) {
         final CommonStaffDAOImpl COMMON_STAFF_DAO = new CommonStaffDAOImpl();
@@ -49,8 +50,8 @@ public class CuratorDashboard {
             System.out.println("3. Lend books");
             System.out.println("4. Return books");
             System.out.println("-------- Common Staff Manage --------");
-            System.out.println("5. Add common staff");
-            System.out.println("6. Delete common staff");
+            System.out.println("5. Query common staff");
+            System.out.println("6. Manage common staff");
             System.out.println("7. Scheduling common staff");
             System.out.println("-------- Others --------");
             System.out.println("8. Cancellation account");
@@ -178,6 +179,32 @@ public class CuratorDashboard {
                 System.out.println("The number you enter is invalid, please try again!");
             }
         } while ( mode <= MIN_RETURN_MODE || mode >= MAX_RETURN_MODE );
+
+        return mode;
+    }
+
+    public static int scheduleView() {
+        int mode;
+        do {
+            System.out.println("\n-------- Schedule mode --------");
+            System.out.println("Please select a mode:");
+            System.out.println("1. Promotion");
+            System.out.println("2. Demotion");
+            System.out.println("3. Staff scheduling");
+            System.out.println("4. Quit");
+            try {
+                mode = SCAN.nextInt();
+                SCAN.nextLine();
+            } catch ( Exception e ) {
+                SCAN.nextLine();
+                e.printStackTrace();
+                mode = 0;
+            }
+            if ( mode <= MIN_SCHEDULE_MODE || mode >= MAX_SCHEDULE_MODE ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!");
+            }
+        } while ( mode <= MIN_SCHEDULE_MODE || mode >= MAX_SCHEDULE_MODE );
 
         return mode;
     }

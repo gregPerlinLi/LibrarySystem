@@ -1,10 +1,11 @@
-package com.gregperlinli.service;
+package com.gregperlinli.service.curator;
 
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
+import com.gregperlinli.service.GenericFunction;
 import com.gregperlinli.util.EmptyUtil;
 import com.gregperlinli.util.JDBCUtills;
 import com.gregperlinli.view.*;
@@ -17,7 +18,7 @@ import java.util.Scanner;
 /**
  * @author gregperlinli
  */
-public class CuratorFunction {
+public class CuratorBookFunction {
     private static final Scanner SCAN = new Scanner(System.in);
     private static final BookDAOImpl BOOK_DAO = new BookDAOImpl();
 

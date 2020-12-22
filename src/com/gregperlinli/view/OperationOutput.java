@@ -1,8 +1,12 @@
 package com.gregperlinli.view;
 
 import com.gregperlinli.bean.Book;
+import com.gregperlinli.bean.CommonStaff;
+import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.util.EmptyUtil;
+import com.gregperlinli.util.JDBCUtills;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -42,5 +46,32 @@ public class OperationOutput {
             System.out.println("\nThere are " + list.size() + " books in the library.");
         }
         System.out.println("--------------------------------------------------------------\n");
+    }
+
+    public static List<CommonStaff> listStaff() {
+        CommonStaffDAOImpl csDao = new CommonStaffDAOImpl();
+        List<CommonStaff> list = null;
+        Long countStaff = null;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            list = csDao.getAll(conn);
+            countStaff = csDao.getCount(conn);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+        System.out.println("The staffs in the library are as fallows:");
+        System.out.println("--------------------------------------------------------------");
+        if (list != null) {
+            list.forEach(System.out::println);
+        } else {
+            System.out.println("There are no staff in the library.");
+        }
+        System.out.println("--------------------------------------------------------------");
+        System.out.println("There are " + countStaff + " staffs in the library.\n");
+
+        return list;
     }
 }

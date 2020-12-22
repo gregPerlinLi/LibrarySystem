@@ -29,6 +29,12 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
     }
 
     @Override
+    public void promoteStaff(Connection conn, CommonStaff commonStaff) throws Exception {
+        String sql = "update CommonStaff set authority = ? where id = ?";
+        update(conn, sql, commonStaff.getAuthority() + 10, commonStaff.getId());
+    }
+
+    @Override
     public CommonStaff getCommonStaffById(Connection conn, int id) {
         return null;
     }
@@ -41,7 +47,8 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public List<CommonStaff> getAll(Connection conn) {
-        return null;
+        String sql = "select id, staffName, uid, gender, phoneNum, authority from CommonStaff";
+        return getMultiQuery(conn, sql);
     }
 
     @Override

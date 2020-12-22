@@ -4,8 +4,9 @@ import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.service.CommonStaffFunction;
-import com.gregperlinli.service.CuratorFunction;
+import com.gregperlinli.service.curator.CuratorBookFunction;
 import com.gregperlinli.service.Login;
+import com.gregperlinli.service.curator.CuratorStaffFunction;
 
 /**
  * @author gregperlinli
@@ -65,19 +66,19 @@ public class ResetView {
         //noinspection AlibabaSwitchStatement
         switch (function) {
             case 1 -> {
-                CuratorFunction.selectQueryMode(user, ct);
+                CuratorBookFunction.selectQueryMode(user, ct);
             } case 2 -> {
-                CuratorFunction.selectUpdateMode(user, ct);
+                CuratorBookFunction.selectUpdateMode(user, ct);
             } case 3 -> {
-                CuratorFunction.selectLendBookMode(user, ct);
+                CuratorBookFunction.selectLendBookMode(user, ct);
             } case 4 -> {
-                CuratorFunction.selectReturnBookMode(user, ct);
+                CuratorBookFunction.selectReturnBookMode(user, ct);
             } case 5 -> {
-                // Add common staff
+                // Query common staff
             } case 6 -> {
-                // Delete common staff
+                // Manage common staff
             } case 7 -> {
-                // Scheduling common staff
+                CuratorStaffFunction.selectScheduleMode(user, ct);
             } default -> {
                 System.out.println("Cancellation success!!");
                 try {

@@ -45,6 +45,17 @@ public interface CommonStaffDAO {
     void update(Connection conn, CommonStaff commonStaff) throws Exception;
 
     /**
+     * promote the authority of the staff
+     *
+     * @author gregperlinli
+     * @param conn connection of the database
+     * @param commonStaff the CommonStaff object
+     * @throws Exception e
+     * @Description promote the authority of the staff
+     */
+    void promoteStaff(Connection conn, CommonStaff commonStaff) throws Exception;
+
+    /**
      * query one data of the form by "id"
      *
      * @author gregperlinli
