@@ -30,9 +30,11 @@ public class CuratorStaffFunction {
                 promoteStaff(user, ct);
                 selectScheduleMode(user, ct);
             } case 2 -> {
-                // Demotion
+                demoteStaff(user, ct);
+                selectScheduleMode(user, ct);
             } case 3 -> {
-                // Schedule
+                System.out.println("This feature is not yet open!");
+                selectScheduleMode(user, ct);
             } default -> {
                 ResetView.resetCurator(user, ct);
             }
@@ -55,7 +57,7 @@ public class CuratorStaffFunction {
             for ( CommonStaff cs : list ) {
                 if ( cs.getId() == promoteStaffId ) {
                     if ( cs.getAuthority() >= 90 ) {
-                        System.out.println("Error: The staff" + cs.getStaffName() + "'s authority is 90, it's the max authority of the common staff!");
+                        System.out.println("Error: The staff " + cs.getStaffName() + "'s authority is 90, it's the max authority of the common staff!");
                         promoteStaff(user, ct);
                     }
                     COMMON_STAFF_DAO.promoteStaff(conn, cs);
@@ -91,6 +93,59 @@ public class CuratorStaffFunction {
         } else {
             selectScheduleMode(user, ct);
         }
+    }
 
+    public static void demoteStaff(User user, Curator ct) {
+        int demoteStaffId;
+        List<CommonStaff> list = OperationOutput.listStaff();
+        System.out.println("Please enter the id of the staff you want to demote(if you want to cancel, please enter -1)");
+        Connection conn = null;
+        try {
+            demoteStaffId = SCAN.nextInt();
+            SCAN.nextLine();
+            if ( demoteStaffId == -1 ) {
+                System.out.println("Demote canceled!");
+                selectScheduleMode(user, ct);
+            }
+            conn = JDBCUtills.getConnectionWithPool();
+            for ( CommonStaff cs : list ) {
+                if ( cs.getId() == demoteStaffId ) {
+                    if ( cs.getAuthority() <= 10 ) {
+                        System.out.println("Error: The staff " + cs.getStaffName() + "'s authority is 10, it's the min authority of the common staff!");
+                        demoteStaff(user, ct);
+                    }
+                    COMMON_STAFF_DAO.demoteStaff(conn, cs);
+                    System.out.println("Demote success, the authority of the staff " + cs.getStaffName() + " is " + ( cs.getAuthority() - 10 ) + ".\n");
+                }
+            }
+        } catch ( InputMismatchException e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid, please try again");
+            demoteStaff(user, ct);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+
+        System.out.println("Do you want to demote other staffs?\n1. Yes\n2. No");
+        int isRepeat = 2;
+        try {
+            isRepeat = SCAN.nextInt();
+            SCAN.nextLine();
+        } catch ( Exception e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you enter is invalid!");
+            selectScheduleMode(user, ct);
+        }
+        if ( isRepeat == 1 ) {
+            demoteStaff(user, ct);
+        } else {
+            selectScheduleMode(user, ct);
+        }
     }
 }

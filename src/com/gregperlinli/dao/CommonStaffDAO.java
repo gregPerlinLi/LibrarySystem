@@ -56,6 +56,17 @@ public interface CommonStaffDAO {
     void promoteStaff(Connection conn, CommonStaff commonStaff) throws Exception;
 
     /**
+     * demote the authority of the staff
+     *
+     * @author gregperlinli
+     * @param conn connection of the database
+     * @param commonStaff the CommonStaff object
+     * @throws Exception e
+     * @Description demote the authority of the staff
+     */
+    void demoteStaff(Connection conn, CommonStaff commonStaff) throws Exception;
+
+    /**
      * query one data of the form by "id"
      *
      * @author gregperlinli

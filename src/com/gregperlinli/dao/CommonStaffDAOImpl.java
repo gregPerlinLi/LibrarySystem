@@ -35,6 +35,12 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
     }
 
     @Override
+    public void demoteStaff(Connection conn, CommonStaff commonStaff) throws Exception {
+        String sql = "update CommonStaff set authority = ? where id = ?";
+        update(conn, sql, commonStaff.getAuthority() - 10, commonStaff.getId());
+    }
+
+    @Override
     public CommonStaff getCommonStaffById(Connection conn, int id) {
         return null;
     }
