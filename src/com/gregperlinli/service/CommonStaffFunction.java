@@ -138,14 +138,13 @@ public class CommonStaffFunction {
             if ( deleteBookId == -1 ) {
                 System.out.println("Delete canceled!");
                 selectUpdateMode(user, cs);
-            } else {
-                BOOK_DAO.deleteById(conn, deleteBookId);
             }
+            BOOK_DAO.deleteById(conn, deleteBookId);
         } catch ( InputMismatchException e ) {
             SCAN.nextLine();
             e.printStackTrace();
             ClearScreen.clear();
-            System.out.println("The number you enter is valid, please try again!");
+            System.out.println("The number you enter is invalid, please try again!");
             JDBCUtills.closeResource(conn, null);
             deleteBook(user, cs);
         } catch ( Exception e ) {

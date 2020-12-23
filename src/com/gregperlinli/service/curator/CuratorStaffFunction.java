@@ -49,7 +49,8 @@ public class CuratorStaffFunction {
                 addStaff(user, ct);
                 selectUpdateMode(user, ct);
             } case 2 -> {
-                //delete a staff
+                deleteStaff(user, ct);
+                selectUpdateMode(user, ct);
             } case 3 -> {
                 //update a staff
             } default -> {
@@ -98,8 +99,8 @@ public class CuratorStaffFunction {
             e.printStackTrace();
             try {
                 Objects.requireNonNull(conn).rollback();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
             }
             ClearScreen.clear();
             System.out.println("Add failed, please try again!");
@@ -162,6 +163,51 @@ public class CuratorStaffFunction {
                 newUser.setPassword(firPassword);
             }
         } while ( !isPasswordCorrect );
+    }
+
+    public static void deleteStaff(User user, Curator ct) {
+        int deleteStaffId;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            conn.setAutoCommit(false);
+
+            System.out.println("\nThis is all common staffs in the library:");
+            System.out.println("-------------------------------------------------------------------------------");
+            List<CommonStaff> list = COMMON_STAFF_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the staff you want to delete(if you want to cancel, please enter -1):");
+            deleteStaffId = SCAN.nextInt();;
+            SCAN.nextLine();
+
+            if ( deleteStaffId == -1 ) {
+                System.out.println("Delete cancelled!");
+                selectUpdateMode(user, ct);
+            }
+
+            CommonStaff deleteStaff = COMMON_STAFF_DAO.getCommonStaffById(conn, deleteStaffId);
+            COMMON_STAFF_DAO.deleteById(conn, deleteStaffId);
+            USER_DAO.deleteByUid(conn, deleteStaff.getUid());
+            conn.commit();
+            System.out.println("Delete success!");
+        } catch ( InputMismatchException e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you entered is invalid, please try again!");
+            JDBCUtills.closeResource(conn, null);
+            deleteStaff(user, ct);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            try {
+                Objects.requireNonNull(conn).rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
     }
 
     public static void selectScheduleMode(User user, Curator ct) {

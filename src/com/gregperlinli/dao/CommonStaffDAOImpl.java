@@ -19,7 +19,7 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public void deleteById(Connection conn, int id) throws Exception {
-        String sql = "delete into User where id = ?";
+        String sql = "delete from CommonStaff where id = ?";
         update(conn, sql, id);
     }
 
@@ -42,7 +42,8 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public CommonStaff getCommonStaffById(Connection conn, int id) {
-        return null;
+        String sql = "select id, staffName, uid, gender, phoneNum, authority from CommonStaff where id = ?";
+        return getQuery(conn, sql, id);
     }
 
     @Override

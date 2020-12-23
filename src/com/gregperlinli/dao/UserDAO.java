@@ -26,11 +26,22 @@ public interface UserDAO {
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @param id the id of the user
+     * @param id the ID of the user
      * @throws Exception e
      * @Description delete a record in the form by "id"
      */
     void deleteById(Connection conn, int id) throws Exception;
+
+    /**
+     * delete a record of the form by "uid"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param uid the UID of the user
+     * @throws Exception e
+     * @Description delete a record in the form by "uid"
+     */
+    void deleteByUid(Connection conn, int uid) throws Exception;
 
     /**
      * update the record of the form by object "user" in the memory

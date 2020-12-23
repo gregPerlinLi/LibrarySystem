@@ -25,6 +25,12 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
     }
 
     @Override
+    public void deleteByUid(Connection conn, int uid) throws Exception {
+        String sql = "delete from User where uid = ?";
+        update(conn, sql, uid);
+    }
+
+    @Override
     public void update(Connection conn, User user) throws Exception {
         String sql = "update User set account = ?, uid = ?, userName = ?, password = ? where id = ?";
         update(conn, sql, user.getAccount(), user.getUid(), user.getUserName(), user.getPassword(), user.getId());
