@@ -7,7 +7,7 @@ import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.dao.CuratorDAOImpl;
 import com.gregperlinli.dao.UserDAOImpl;
 import com.gregperlinli.view.ClearScreen;
-import com.gregperlinli.util.EmptyUtil;
+import com.gregperlinli.util.EmptyUtils;
 import com.gregperlinli.util.JDBCUtills;
 import com.gregperlinli.view.ResetView;
 
@@ -35,7 +35,7 @@ public class Login {
             User user = new UserDAOImpl().getUserByAccount(conn, account);
             CommonStaff cs = new CommonStaffDAOImpl().getCommonStaffByUid(conn, user.getUid());
 
-            if ( EmptyUtil.isEmpty(cs) ) {
+            if ( EmptyUtils.isEmpty(cs) ) {
                 System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();
@@ -87,7 +87,7 @@ public class Login {
             User user = new UserDAOImpl().getUserByAccount(conn, account);
             Curator ct = new CuratorDAOImpl().getCuratorByUid(conn, user.getUid());
 
-            if ( EmptyUtil.isEmpty(ct) ) {
+            if ( EmptyUtils.isEmpty(ct) ) {
                 System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();

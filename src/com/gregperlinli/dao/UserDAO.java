@@ -55,6 +55,17 @@ public interface UserDAO {
     User getUserById(Connection conn, int id);
 
     /**
+     * query one data of the form by "uid"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param uid the uid of the user
+     * @return User object
+     * @Description query one data of the form by "uid"
+     */
+    User getUserByUid(Connection conn, int uid);
+
+    /**
      * query one data of the form by "userName"
      *
      * @author gregperlinli
@@ -63,7 +74,18 @@ public interface UserDAO {
      * @return User object
      * @Description query one data of the form by "userName"
      */
-    User getUserByAccount(Connection conn, String userName);
+    User getUserByName(Connection conn, String userName);
+
+    /**
+     * query one data of the form by "account"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param account the account of the user
+     * @return User object
+     * @Description query one data of the form by "account"
+     */
+    User getUserByAccount(Connection conn, String account);
 
     /**
      * get all of the User Object in a list

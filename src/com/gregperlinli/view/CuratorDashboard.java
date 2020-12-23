@@ -20,6 +20,8 @@ public class CuratorDashboard {
             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
             MIN_LEND_MODE = 0, MAX_LEND_MODE = 5,
             MIN_RETURN_MODE = 0, MAX_RETURN_MODE = 5,
+            MIN_STAFF_QUERY_MODE = 0, MAX_STAFF_QUERY_MODE = 4,
+            MIN_STAFF_UPDATE_MODE = 0, MAX_STAFF_UPDATE_MODE = 5,
             MIN_SCHEDULE_MODE = 0, MAX_SCHEDULE_MODE = 5;
 
     public static int curatorView(User user, Curator ct) {
@@ -183,10 +185,61 @@ public class CuratorDashboard {
         return mode;
     }
 
+    public static int queryStaffView() {
+        int mode;
+        do {
+            System.out.println("\n-------- Query staff mode --------");
+            System.out.println("Please select a mode:");
+            System.out.println("1. Query staff by uid");
+            System.out.println("2. Query staff by name");
+            System.out.println("3. Quit");
+            try {
+                mode = SCAN.nextInt();
+                SCAN.nextLine();
+            } catch ( Exception e ) {
+                SCAN.nextLine();
+                e.printStackTrace();
+                mode = 0;
+            }
+            if ( mode <= MIN_STAFF_QUERY_MODE || mode >+ MAX_STAFF_QUERY_MODE ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!");
+            }
+        } while ( mode <= MIN_STAFF_QUERY_MODE || mode >+ MAX_STAFF_QUERY_MODE );
+
+        return mode;
+    }
+
+    public static int updateStaffView() {
+        int mode;
+        do {
+            System.out.println("\n-------- Update staff mode --------");
+            System.out.println("Please select a mode:");
+            System.out.println("1. Add a staff");
+            System.out.println("2. Delete a staff");
+            System.out.println("3. Update a staff");
+            System.out.println("4. Quit");
+            try {
+                mode = SCAN.nextInt();
+                SCAN.nextLine();
+            } catch ( Exception e ) {
+                SCAN.nextLine();
+                e.printStackTrace();
+                mode = 0;
+            }
+            if ( mode <= MIN_STAFF_UPDATE_MODE || mode >+ MAX_STAFF_UPDATE_MODE ) {
+                ClearScreen.clear();
+                System.out.println("The number you enter is invalid, please try again!");
+            }
+        } while ( mode <= MIN_STAFF_UPDATE_MODE || mode >+ MAX_STAFF_UPDATE_MODE );
+
+        return mode;
+    }
+
     public static int scheduleView() {
         int mode;
         do {
-            System.out.println("\n-------- Schedule mode --------");
+            System.out.println("\n-------- Schedule staff mode --------");
             System.out.println("Please select a mode:");
             System.out.println("1. Promotion");
             System.out.println("2. Demotion");

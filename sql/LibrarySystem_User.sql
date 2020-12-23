@@ -1,0 +1,13 @@
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (1, 'XMing', 20001, 'Xiaoming', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (2, 'XHong', 20002, 'Xiaohong', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (3, 'XJun', 20003, 'Xiaojun', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (4, 'XMi', 20004, 'Xiaomi', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (5, 'XBai', 20005, 'Xiaobai', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (6, 'XBing', 20006, 'Xiaobing', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (7, 'XLin', 20007, 'Xiaolin', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (8, 'XXin', 20008, 'Xiaoxin', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (9, 'XWang', 20009, 'Xiaowang', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (10, 'XLi', 20010, 'Xiaoli', '123456');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (11, 'gregPerlinLi', 10001, 'Liholin', '20011104');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (13, 'XQiang', 20011, 'Xiaoqiang', 'Qiang10086');
+INSERT INTO LibrarySystem.User (id, account, uid, userName, password) VALUES (15, 'XFei', 20012, 'Xiaofei', 'abc123');

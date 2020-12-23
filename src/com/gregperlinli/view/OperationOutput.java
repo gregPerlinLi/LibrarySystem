@@ -3,7 +3,7 @@ package com.gregperlinli.view;
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
-import com.gregperlinli.util.EmptyUtil;
+import com.gregperlinli.util.EmptyUtils;
 import com.gregperlinli.util.JDBCUtills;
 
 import java.sql.Connection;
@@ -16,7 +16,7 @@ public class OperationOutput {
     public static void queryOneOutput(Book book) {
         System.out.println("\nResult:");
         System.out.println("--------------------------------------------------------------");
-        if ( EmptyUtil.isEmpty(book) ) {
+        if ( EmptyUtils.isEmpty(book) ) {
             System.out.println("The book you want to query is not exist!");
         } else {
             System.out.println(book);

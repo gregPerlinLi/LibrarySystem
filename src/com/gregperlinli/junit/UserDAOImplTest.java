@@ -100,7 +100,7 @@ class UserDAOImplTest {
         try {
             conn = JDBCUtills.getConnection();
 
-            User user = dao.getUserByAccount(conn, "XMi");
+            User user = dao.getUserByName(conn, "XMi");
 
             System.out.println(user);
         } catch ( Exception e ) {

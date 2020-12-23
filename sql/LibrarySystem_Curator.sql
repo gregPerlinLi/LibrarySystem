@@ -1,0 +1,1 @@
+INSERT INTO LibrarySystem.Curator (id, curatorName, uid, gender, phoneNum, email, authority) VALUES (1, 'Lihaolin', 10001, 'M', '18319448827', 'lihaolin13@outlook.com', 100);

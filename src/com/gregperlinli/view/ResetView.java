@@ -74,9 +74,9 @@ public class ResetView {
             } case 4 -> {
                 CuratorBookFunction.selectReturnBookMode(user, ct);
             } case 5 -> {
-                // Query common staff
+                CuratorStaffFunction.selectQueryMode(user, ct);
             } case 6 -> {
-                // Manage common staff
+                CuratorStaffFunction.selectUpdateMode(user, ct);
             } case 7 -> {
                 CuratorStaffFunction.selectScheduleMode(user, ct);
             } default -> {

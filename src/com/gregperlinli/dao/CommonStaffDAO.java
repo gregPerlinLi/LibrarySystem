@@ -89,6 +89,17 @@ public interface CommonStaffDAO {
     CommonStaff getCommonStaffByUid(Connection conn, int uid);
 
     /**
+     * query one data of the form by "staffName"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param staffName the name of the commonStaff
+     * @return CommonStaff object
+     * @Description query one data of the form by "staffName"
+     */
+    CommonStaff getCommonStaffByName(Connection conn, String staffName);
+
+    /**
      * get all of the CommonStaff Object in a list
      *
      * @author gregperlinli

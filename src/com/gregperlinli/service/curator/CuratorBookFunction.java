@@ -1,12 +1,11 @@
 package com.gregperlinli.service.curator;
 
 import com.gregperlinli.bean.Book;
-import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
 import com.gregperlinli.service.GenericFunction;
-import com.gregperlinli.util.EmptyUtil;
+import com.gregperlinli.util.EmptyUtils;
 import com.gregperlinli.util.JDBCUtills;
 import com.gregperlinli.view.*;
 
@@ -85,12 +84,12 @@ public class CuratorBookFunction {
         }
 
         System.out.println("Inspecting the book you want to add...");
-        boolean isEmpty = EmptyUtil.isAddBookEmpty(book);
+        boolean isEmpty = EmptyUtils.isAddBookEmpty(book);
         if ( isEmpty ) {
             System.out.println("\nThe book you want to add is wrong, please try again!\n");
             addBook(user, ct);
         }
-        boolean isRepeat = EmptyUtil.isAddBookRepeat(book);
+        boolean isRepeat = EmptyUtils.isAddBookRepeat(book);
         if ( isRepeat ) {
             System.out.println("\nThe book you want to add is wrong, please try again!\n");
             addBook(user, ct);
@@ -204,7 +203,7 @@ public class CuratorBookFunction {
 
                         // check
                         System.out.println("Inspecting the data you entered...");
-                        boolean isRepeat = EmptyUtil.isUpdateBookRepeat(book, isNotIsbm, isNotName);
+                        boolean isRepeat = EmptyUtils.isUpdateBookRepeat(book, isNotIsbm, isNotName);
                         if (isRepeat) {
                             System.out.println("\nThe book you want to update is wrong, please try again!\n");
                             updateBook(user, ct);
