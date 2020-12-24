@@ -189,57 +189,52 @@ public class CommonStaffFunction {
             if ( updateBookId == -1 ) {
                 System.out.println("Update canceled!");
                 selectUpdateMode(user, cs);
-            } else {
-                for (Book book : list) {
-                    if (book.getId() == updateBookId) {
-                        boolean isNotIsbm, isNotName;
-
-                        boolean[] isNotList = GenericFunction.inputUpdateData(book);
-                        isNotIsbm = isNotList[0];
-                        isNotName = isNotList[1];
-
-                        // check
-                        System.out.println("Inspecting the data you entered...");
-                        boolean isRepeat = EmptyUtils.isUpdateBookRepeat(book, isNotIsbm, isNotName);
-                        if (isRepeat) {
-                            System.out.println("\nThe book you want to update is wrong, please try again!\n");
-                            updateBook(user, cs);
-                        }
-                        System.out.println("Inspection passed, please correct the following information:");
-                        System.out.println(book);
-                        System.out.println("If correct, please enter 1. If there is something wrong, please enter 2. If you don't want to add anything, please enter another numbers.");
-                        int confirm;
-                        try {
-                            confirm = SCAN.nextInt();
-                            SCAN.nextLine();
-                        } catch (Exception e) {
-                            SCAN.nextLine();
-                            e.printStackTrace();
-                            confirm = 3;
-                        }
-                        if (confirm == 2) {
-                            updateBook(user, cs);
-                        } else if (confirm != 1) {
-                            selectUpdateMode(user, cs);
-                        }
-                        System.out.println("Updating the book...");
-
-                        try {
-                            conn = JDBCUtills.getConnectionWithPool();
-                            BOOK_DAO.update(conn, book);
-                            System.out.println("Updating successful, the following is the book you have insert:");
-                            Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
-                            System.out.println(bookHaveUpdated);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            ClearScreen.clear();
-                            System.out.println("Update fail, please try again");
-                            JDBCUtills.closeResource(conn, null);
-                            updateBook(user, cs);
-                        } finally {
-                            JDBCUtills.closeResource(conn, null);
-                            selectUpdateMode(user, cs);
-                        }
+            }
+            for (Book book : list) {
+                if (book.getId() == updateBookId) {
+                    boolean isNotIsbm, isNotName;
+                    boolean[] isNotList = GenericFunction.inputUpdateData(book);
+                    isNotIsbm = isNotList[0];
+                    isNotName = isNotList[1];
+                    // check
+                    System.out.println("Inspecting the data you entered...");
+                    boolean isRepeat = EmptyUtils.isUpdateBookRepeat(book, isNotIsbm, isNotName);
+                    if (isRepeat) {
+                        System.out.println("\nThe book you want to update is wrong, please try again!\n");
+                        updateBook(user, cs);
+                    }
+                    System.out.println("Inspection passed, please correct the following information:");
+                    System.out.println(book);
+                    System.out.println("If correct, please enter 1. If there is something wrong, please enter 2. If you don't want to add anything, please enter another numbers.");
+                    int confirm;
+                    try {
+                        confirm = SCAN.nextInt();
+                        SCAN.nextLine();
+                    } catch (Exception e) {
+                        SCAN.nextLine();
+                        e.printStackTrace();
+                        confirm = 3;
+                    }
+                    if (confirm == 2) {
+                        updateBook(user, cs);
+                    } else if (confirm != 1) {
+                        selectUpdateMode(user, cs);
+                    }
+                    System.out.println("Updating the book...");
+                    try {
+                        conn = JDBCUtills.getConnectionWithPool();
+                        BOOK_DAO.update(conn, book);
+                        System.out.println("Updating successful, the following is the book you have insert:");
+                        Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+                        System.out.println(bookHaveUpdated);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        ClearScreen.clear();
+                        System.out.println("Update fail, please try again");
+                        JDBCUtills.closeResource(conn, null);
+                        updateBook(user, cs);
+                    } finally {
+                        JDBCUtills.closeResource(conn, null);
                     }
                 }
             }

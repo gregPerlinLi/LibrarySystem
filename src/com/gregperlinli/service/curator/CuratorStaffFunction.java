@@ -52,7 +52,8 @@ public class CuratorStaffFunction {
                 deleteStaff(user, ct);
                 selectUpdateMode(user, ct);
             } case 3 -> {
-                //update a staff
+                updateStaff(user, ct);
+                selectUpdateMode(user, ct);
             } default -> {
                 ResetView.resetCurator(user, ct);
             }
@@ -64,7 +65,7 @@ public class CuratorStaffFunction {
         User newUser = new User();
 
         try{
-            enterStaffInform(user, ct, newUser, newCs);
+            enterStaffData(user, ct, newUser, newCs);
         } catch ( Exception e ) {
             e.printStackTrace();
             ClearScreen.clear();
@@ -94,7 +95,7 @@ public class CuratorStaffFunction {
 
             conn.commit();
 
-            System.out.println("Adding successful!");
+            System.out.println("Add successful!");
         } catch ( Exception e ) {
             e.printStackTrace();
             try {
@@ -111,7 +112,7 @@ public class CuratorStaffFunction {
         }
     }
 
-    public static void enterStaffInform(User user, Curator ct ,User newUser, CommonStaff newCs) throws Exception {
+    public static void enterStaffData(User user, Curator ct , User newUser, CommonStaff newCs) throws Exception {
         final String MALE = "M", FEMALE = "F";
 
         System.out.println("Please enter the UID (e.g 2XXXX, if you don't want to add, please enter '-1'):");
@@ -178,7 +179,7 @@ public class CuratorStaffFunction {
             list.forEach(System.out::println);
             System.out.println("-------------------------------------------------------------------------------");
             System.out.println("Please enter the ID of the staff you want to delete(if you want to cancel, please enter -1):");
-            deleteStaffId = SCAN.nextInt();;
+            deleteStaffId = SCAN.nextInt();
             SCAN.nextLine();
 
             if ( deleteStaffId == -1 ) {
@@ -208,6 +209,155 @@ public class CuratorStaffFunction {
         } finally {
             JDBCUtills.closeResource(conn, null);
         }
+    }
+
+    public static void updateStaff(User user, Curator ct) {
+        int updateStaffId;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            conn.setAutoCommit(false);
+
+            System.out.println("\nThis is all common staffs in the library:");;
+            System.out.println("-------------------------------------------------------------------------------");
+            List<CommonStaff> list = COMMON_STAFF_DAO.getAll(conn);
+            list.forEach(System.out::println);
+            System.out.println("-------------------------------------------------------------------------------");
+            System.out.println("Please enter the ID of the staff you want to update(if you want to cancel, please enter -1):");
+            updateStaffId = SCAN.nextInt();
+            SCAN.nextLine();
+
+            if ( updateStaffId == -1 ) {
+                System.out.println("Update cancelled!");
+                selectUpdateMode(user, ct);
+            }
+
+            User staffUser;
+            for ( CommonStaff cs : list ) {
+                if ( cs.getId() == updateStaffId ) {
+                    staffUser = USER_DAO.getUserByUid(conn, cs.getUid());
+                    // int oldUid = staffUser.getUid();
+                    boolean isNotName,isNotUid,  isNotAccount, isNotPassword;
+                    boolean[] isNotList = enterUpdateData(staffUser, cs);
+                    isNotName = isNotList[0];
+                    isNotUid = isNotList[1];
+                    isNotAccount = isNotList[2];
+                    // check
+                    System.out.println("Inspecting the data you entered...");
+                    boolean isRepeat = EmptyUtils.isUpdateStaffRepeat(conn, staffUser, cs, isNotName, isNotUid, isNotAccount);
+                    if ( isRepeat ) {
+                        System.out.println("\nThe staff you want to update is wrong, please try again!\n");
+                        updateStaff(user, ct);
+                    }
+
+                    System.out.println("Inspection passed, now updating the staff...");
+
+                    USER_DAO.update(conn, staffUser);
+                    COMMON_STAFF_DAO.update(conn, cs);
+                    conn.commit();
+
+                    System.out.println("Update successful");
+                }
+            }
+        } catch ( InputMismatchException e ) {
+            SCAN.nextLine();
+            e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("The number you entered is invalid, please try again!");
+            JDBCUtills.closeResource(conn, null);
+            updateStaff(user, ct);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            try {
+                Objects.requireNonNull(conn).rollback();
+            } catch ( SQLException e1 ) {
+                e.printStackTrace();
+            }
+            ClearScreen.clear();
+            System.out.println("Update fail, please try again!");
+            JDBCUtills.closeResource(conn, null);
+            updateStaff(user, ct);
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+    }
+
+    public static boolean[] enterUpdateData(User staffUser, CommonStaff cs) {
+        final String MALE = "M", FEMALE = "F";
+
+        System.out.println("The staff you select is follow:");
+        System.out.println(staffUser);
+        System.out.println(cs + "\n");
+
+        boolean[] isNotList = new boolean[4];
+        // 0:isNotName, 1:isNotUid, 2:isNotAccount, 3:isNotPassword
+        for ( int i = 0; i < isNotList.length; i++ ) {
+            isNotList[i] = false;
+        }
+
+        System.out.println("Please enter new name (If you don't want to change, please empty):");
+        String newName = SCAN.nextLine();
+        if ( newName.isBlank() ) {
+            isNotList[0] = true;
+        } else {
+            staffUser.setUserName(newName);
+            cs.setStaffName(newName);
+        }
+        System.out.println("Please enter new UID (If you don't want to change, please empty):");
+        String newUid = SCAN.nextLine();
+        if ( newUid.isBlank() ) {
+            isNotList[1] = true;
+        } else {
+            staffUser.setUid(Integer.parseInt(newUid));
+            cs.setUid(Integer.parseInt(newUid));
+        }
+        System.out.println("Please enter new Account (If you don't want to change, please empty):");
+        String newAccount = SCAN.nextLine();
+        if ( newAccount.isBlank() ) {
+            isNotList[2] = true;
+        } else {
+            staffUser.setAccount(newAccount);
+        }
+        boolean isPasswordCorrect = false;
+        do {
+            System.out.println("Please enter new password (If you don't want to change, please empty):");
+            String newFirPassword = SCAN.nextLine();
+            if ( newFirPassword.isBlank() ) {
+                break;
+            }
+            System.out.println("Please confirm the password again:");
+            String newSecPassword = SCAN.nextLine();
+            if ( !newFirPassword.equals(newSecPassword) ) {
+                System.out.println("The two password you entered are incorrect, please try again!");
+            }
+            if ( newFirPassword.equals(newSecPassword) ) {
+                isPasswordCorrect = true;
+                staffUser.setPassword(newFirPassword);
+            }
+        } while ( !isPasswordCorrect );
+        boolean isGenderCorrect = false;
+        do {
+            System.out.println("Please enter new gender (If you don't want to change, please empty):\nif male, please enter M; if female, please enter F");
+            String newGender = SCAN.nextLine();
+            if ( newGender.isBlank() ) {
+                break;
+            }
+            if ( !MALE.equals(newGender) && !FEMALE.equals(newGender) ) {
+                System.out.println("The gender you entered is invalid, please try again!");
+                isGenderCorrect = false;
+            }
+            if ( MALE.equals(newGender) || FEMALE.equals(newGender) ) {
+                isGenderCorrect = true;
+                cs.setGender(newGender);
+            }
+        } while ( !isGenderCorrect );
+        System.out.println("Please enter new phone number (If you don't want to change, please empty):");
+        String newPhoneNum = SCAN.nextLine();
+        if ( !newPhoneNum.isBlank() ) {
+            cs.setPhoneNum(newPhoneNum);
+        }
+
+        return isNotList;
     }
 
     public static void selectScheduleMode(User user, Curator ct) {

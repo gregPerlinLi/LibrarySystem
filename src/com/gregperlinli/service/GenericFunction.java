@@ -141,39 +141,38 @@ public class GenericFunction {
         isNotList[0] = false;
         isNotList[1] = false;
 
-        boolean isNotIsbm = false, isNotName = false;
-        System.out.println("Please enter new ISBM (If you don't want to change, please empty)");
+        System.out.println("Please enter new ISBM (If you don't want to change, please empty):");
         String newIsbm = SCAN.nextLine();
         if (newIsbm.isBlank()) {
             isNotList[0] = true;
         } else {
             book.setIsbm(newIsbm);
         }
-        System.out.println("Please enter new name (If you don't want to change, please empty)");
+        System.out.println("Please enter new name (If you don't want to change, please empty):");
         String newName = SCAN.nextLine();
         if (newName.isBlank()) {
             isNotList[1] = true;
         } else {
             book.setName(newName);
         }
-        System.out.println("Please enter new category (If you don't want to change, please empty)");
+        System.out.println("Please enter new category (If you don't want to change, please empty):");
         String newCategory = SCAN.nextLine();
         if ( !newCategory.isBlank() ) {
             book.setCategory(newCategory);
         }
-        System.out.println("Please enter new remainNum (If you don't want to change, please empty)");
+        System.out.println("Please enter new remainNum (If you don't want to change, please empty):");
         String newRemainNum = SCAN.nextLine();
         if ( !newRemainNum.isBlank() ) {
             book.setRemainNum(Integer.parseInt(newRemainNum));
         }
-        System.out.println("Please enter new price (If you don't want to change, please empty)");
+        System.out.println("Please enter new price (If you don't want to change, please empty:");
         String newPrice = SCAN.nextLine();
         if ( !newPrice.isBlank() ) {
             BigDecimal newPriceByDec = new BigDecimal(newPrice);
             newPriceByDec = newPriceByDec.setScale(2, RoundingMode.HALF_UP);
             book.setPrice(newPriceByDec);
         }
-        System.out.println("Please enter new author (If you don't want to change, please empty)");
+        System.out.println("Please enter new author (If you don't want to change, please empty):");
         String newAuthor = SCAN.nextLine();
         if ( !newAuthor.isBlank() ) {
             book.setAuthor(newAuthor);

@@ -25,7 +25,8 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
 
     @Override
     public void update(Connection conn, CommonStaff commonStaff) throws Exception {
-
+        String sql = "update CommonStaff set staffName = ?, uid = ?, gender = ?, phoneNum = ? where id = ?";
+        update(conn, sql, commonStaff.getStaffName(), commonStaff.getUid(), commonStaff.getGender(), commonStaff.getPhoneNum(), commonStaff.getId());
     }
 
     @Override

@@ -32,7 +32,7 @@ public class EmptyUtils {
         }
         if ((obj instanceof String))
         {
-            return ((String) obj).trim().equals("");
+            return "".equals(((String) obj).trim());
         }
         return false;
     }
@@ -178,5 +178,37 @@ public class EmptyUtils {
             JDBCUtills.closeResource(conn, null);
         }
         return wrongTimes > 0;
+    }
+
+    public static boolean isUpdateStaffRepeat(Connection conn, User staffUser, CommonStaff cs, boolean isNotName, boolean isNotUid, boolean isNotAccount) throws Exception {
+        final UserDAOImpl USER_DAO = new UserDAOImpl();
+        final CommonStaffDAOImpl COMMON_STAFF_DAO = new CommonStaffDAOImpl();
+        int wrongTimes = 0;
+
+        if (!isNotName) {
+            User currentUser = USER_DAO.getUserByName(conn, staffUser.getUserName());
+            CommonStaff currentStaff = COMMON_STAFF_DAO.getCommonStaffByName(conn, cs.getStaffName());
+            if (EmptyUtils.isNotEmpty(currentUser) || EmptyUtils.isNotEmpty(currentStaff)) {
+                System.out.println("Warning: The name you entered is already exist!");
+                ++wrongTimes;
+            }
+        }
+        if (!isNotUid) {
+            User currentUser = USER_DAO.getUserByUid(conn, staffUser.getUid());
+            CommonStaff currentStaff = COMMON_STAFF_DAO.getCommonStaffByUid(conn, cs.getUid());
+            if (EmptyUtils.isNotEmpty(currentUser) || EmptyUtils.isNotEmpty(currentStaff)) {
+                System.out.println("Warning: The UID you entered is already exist!");
+                ++wrongTimes;
+            }
+        }
+        if (!isNotAccount) {
+            User currentUser = USER_DAO.getUserByAccount(conn, staffUser.getAccount());
+            if (EmptyUtils.isNotEmpty(currentUser)) {
+                System.out.println("Warning! The account you entered is already exist!");
+                ++wrongTimes;
+            }
+        }
+
+        return wrongTimes != 0;
     }
 }
