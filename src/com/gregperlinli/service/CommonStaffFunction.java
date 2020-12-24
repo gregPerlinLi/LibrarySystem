@@ -198,7 +198,7 @@ public class CommonStaffFunction {
                     isNotName = isNotList[1];
                     // check
                     System.out.println("Inspecting the data you entered...");
-                    boolean isRepeat = EmptyUtils.isUpdateBookRepeat(book, isNotIsbm, isNotName);
+                    boolean isRepeat = EmptyUtils.isUpdateBookRepeat(conn, book, isNotIsbm, isNotName);
                     if (isRepeat) {
                         System.out.println("\nThe book you want to update is wrong, please try again!\n");
                         updateBook(user, cs);
@@ -221,21 +221,11 @@ public class CommonStaffFunction {
                         selectUpdateMode(user, cs);
                     }
                     System.out.println("Updating the book...");
-                    try {
-                        conn = JDBCUtills.getConnectionWithPool();
-                        BOOK_DAO.update(conn, book);
-                        System.out.println("Updating successful, the following is the book you have insert:");
-                        Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
-                        System.out.println(bookHaveUpdated);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        ClearScreen.clear();
-                        System.out.println("Update fail, please try again");
-                        JDBCUtills.closeResource(conn, null);
-                        updateBook(user, cs);
-                    } finally {
-                        JDBCUtills.closeResource(conn, null);
-                    }
+
+                    BOOK_DAO.update(conn, book);
+                    System.out.println("Updating successful, the following is the book you have insert:");
+                    Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+                    System.out.println(bookHaveUpdated);
                 }
             }
         } catch ( InputMismatchException e ) {
@@ -247,6 +237,10 @@ public class CommonStaffFunction {
             updateBook(user, cs);
         } catch ( Exception e ) {
             e.printStackTrace();
+            ClearScreen.clear();
+            System.out.println("Update fail, please try again");
+            JDBCUtills.closeResource(conn, null);
+            updateBook(user, cs);
         } finally {
             JDBCUtills.closeResource(conn, null);
         }

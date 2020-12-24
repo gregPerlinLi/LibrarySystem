@@ -95,7 +95,7 @@ public class Book {
                 ", category='" + category + '\'' +
                 ", remainNum=" + remainNum +
                 ", author='" + author + '\'' +
-                ", price=" + price +
+                ", price=" + "¥" + price +
                 '}';
     }
 }

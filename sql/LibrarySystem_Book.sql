@@ -60,4 +60,4 @@ INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, auth
 INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, author) VALUES (60, '9787518901432', 'Brief course of College Physics', 'Physics', 9, 43.00, 'FanYangcai');
 INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, author) VALUES (61, '9787559630612', 'Quantum Physics', 'Physics', 2, 59.80, 'CaoTianyuan');
 INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, author) VALUES (62, '9787547835975', 'The art of insight in science and engineering mastering complexity', 'Physics', 2, 78.00, 'SanjoyMahajan');
-INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, author) VALUES (74, '9888888888888', 'Fucj!!!', 'Test', 4, 12.40, 'gregperlinli');
+INSERT INTO LibrarySystem.Book (id, isbm, name, category, remainNum, price, author) VALUES (74, '9787566635477', 'F**K!', 'Test', 4, 199.99, 'gregperlinli');

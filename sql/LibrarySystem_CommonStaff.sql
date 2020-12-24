@@ -10,3 +10,4 @@ INSERT INTO LibrarySystem.CommonStaff (id, staffName, uid, gender, phoneNum, aut
 INSERT INTO LibrarySystem.CommonStaff (id, staffName, uid, gender, phoneNum, authority) VALUES (11, 'Xiaoli', 20010, 'F', '13566789972', 10);
 INSERT INTO LibrarySystem.CommonStaff (id, staffName, uid, gender, phoneNum, authority) VALUES (12, 'Xiaoqiang', 20011, 'M', '19788657732', 10);
 INSERT INTO LibrarySystem.CommonStaff (id, staffName, uid, gender, phoneNum, authority) VALUES (13, 'Xiaofei', 20012, 'M', '14655932232', 10);
+INSERT INTO LibrarySystem.CommonStaff (id, staffName, uid, gender, phoneNum, authority) VALUES (17, 'TestStaff', 20013, 'M', '13622887499', 10);
