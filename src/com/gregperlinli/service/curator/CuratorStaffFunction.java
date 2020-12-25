@@ -14,10 +14,7 @@ import com.gregperlinli.view.ResetView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @author gregperlinli
@@ -32,12 +29,131 @@ public class CuratorStaffFunction {
         //noinspection AlibabaSwitchStatement
         switch (mode) {
             case 1 -> {
-                //query by uid
+                queryByUid();
+                selectQueryMode(user, ct);
             } case 2 -> {
-                //query by name
+                queryByName();
+                selectQueryMode(user, ct);
+            } case 3 -> {
+                queryByAccount();
+                selectQueryMode(user, ct);
+            } case 4 -> {
+                queryByGender();
+                selectQueryMode(user, ct);
+            } case 5 -> {
+                queryAll();
+                selectQueryMode(user, ct);
             } default -> {
                 ResetView.resetCurator(user, ct);
             }
+        }
+    }
+
+    public static void queryByUid() {
+        System.out.println("Please enter the UID:");
+        int uid = SCAN.nextInt();
+        SCAN.nextLine();
+        User staffUser;
+        CommonStaff cs;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            staffUser = USER_DAO.getUserByUid(conn, uid);
+            cs = COMMON_STAFF_DAO.getCommonStaffByUid(conn, uid);
+            OperationOutput.queryOneStaffOutput(staffUser, cs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+    }
+
+    public static void queryByName() {
+        System.out.println("Please enter the name:");
+        String name = SCAN.nextLine();
+        User staffUser;
+        CommonStaff cs;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            staffUser = USER_DAO.getUserByName(conn, name);
+            cs = COMMON_STAFF_DAO.getCommonStaffByName(conn, name);
+            OperationOutput.queryOneStaffOutput(staffUser, cs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+    }
+
+    public static void queryByAccount() {
+        System.out.println("Please enter the account:");
+        String account = SCAN.nextLine();
+        User staffUser;
+        CommonStaff cs;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            staffUser = USER_DAO.getUserByAccount(conn, account);
+            cs = COMMON_STAFF_DAO.getCommonStaffByUid(conn, staffUser.getUid());
+            OperationOutput.queryOneStaffOutput(staffUser, cs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+    }
+
+    public static void queryByGender() {
+        final String MALE = "M", FEMALE = "F";
+        String gender;
+        boolean isGenderCorrect = false;
+        do {
+            System.out.println("Please enter the gender(if male, please enter M; if female, please enter F)");
+            gender = SCAN.nextLine();
+            if ( !MALE.equals(gender) && !FEMALE.equals(gender) ) {
+                System.out.println("The gender you entered is invalid, please try again!");
+                isGenderCorrect = false;
+            }
+            if ( MALE.equals(gender) || FEMALE.equals(gender) ) {
+                isGenderCorrect = true;
+            }
+        } while ( !isGenderCorrect );
+        List<User> listStaffUser = new ArrayList<>();
+        List<CommonStaff> listCs;
+        Connection conn = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            listCs = COMMON_STAFF_DAO.getCommonStaffsByGender(conn, gender);
+            for ( CommonStaff cs : listCs ) {
+                User staffUser = USER_DAO.getUserByUid(conn, cs.getUid());
+                listStaffUser.add(staffUser);
+            }
+            OperationOutput.queryMultiStaffsOutput(listStaffUser, listCs, gender);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
+        }
+
+    }
+
+    public static void queryAll() {
+        Connection conn = null;
+        List<User> listStaffUser = new ArrayList<>();
+        List<CommonStaff> listCs = null;
+        try {
+            conn = JDBCUtills.getConnectionWithPool();
+            listCs = COMMON_STAFF_DAO.getAll(conn);
+            for ( CommonStaff cs : listCs ) {
+                User staffUser = USER_DAO.getUserByUid(conn, cs.getUid());
+                listStaffUser.add(staffUser);
+            }
+            OperationOutput.queryAllStaffsOutput(listStaffUser, listCs);
+        } catch ( Exception e ) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtills.closeResource(conn, null);
         }
     }
 

@@ -26,23 +26,23 @@ public class CommonStaffFunction {
         switch (mode) {
             case 1 -> {
                 Book book = GenericFunction.queryBookWithIsbm();
-                OperationOutput.queryOneOutput(book);
+                OperationOutput.queryOneBookOutput(book);
                 selectQueryMode(user, cs);
             } case 2 -> {
                 Book book = GenericFunction.queryBookWithName();
-                OperationOutput.queryOneOutput(book);
+                OperationOutput.queryOneBookOutput(book);
                 selectQueryMode(user, cs);
             } case 3 -> {
                 List<Book> list = GenericFunction.queryBookWithCategory();
-                OperationOutput.queryMultiOutput(list, "category");
+                OperationOutput.queryMultiBooksOutput(list, "category");
                 selectQueryMode(user, cs);
             } case 4 -> {
                 List<Book> list = GenericFunction.queryBookWithAuthor();
-                OperationOutput.queryMultiOutput(list, "author");
+                OperationOutput.queryMultiBooksOutput(list, "author");
                 selectQueryMode(user, cs);
             } case 5 -> {
                 List<Book> list = GenericFunction.queryAllBooks();
-                OperationOutput.queryAllOutput(list);
+                OperationOutput.queryAllBooksOutput(list);
                 selectQueryMode(user, cs);
             } default -> {
                 ResetView.resetCommonStaff(user, cs);

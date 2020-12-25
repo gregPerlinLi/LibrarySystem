@@ -27,23 +27,23 @@ public class CuratorBookFunction {
         switch (mode) {
             case 1 -> {
                 Book book = GenericFunction.queryBookWithIsbm();
-                OperationOutput.queryOneOutput(book);
+                OperationOutput.queryOneBookOutput(book);
                 selectQueryMode(user, ct);
             } case 2 -> {
                 Book book = GenericFunction.queryBookWithName();
-                OperationOutput.queryOneOutput(book);
+                OperationOutput.queryOneBookOutput(book);
                 selectQueryMode(user, ct);
             } case 3 -> {
                 List<Book> list = GenericFunction.queryBookWithCategory();
-                OperationOutput.queryMultiOutput(list, "category");
+                OperationOutput.queryMultiBooksOutput(list, "category");
                 selectQueryMode(user, ct);
             } case 4 -> {
                 List<Book> list = GenericFunction.queryBookWithAuthor();
-                OperationOutput.queryMultiOutput(list, "author");
+                OperationOutput.queryMultiBooksOutput(list, "author");
                 selectQueryMode(user, ct);
             } case 5 -> {
                 List<Book> list = GenericFunction.queryAllBooks();
-                OperationOutput.queryAllOutput(list);
+                OperationOutput.queryAllBooksOutput(list);
                 selectQueryMode(user, ct);
             } default -> {
                 ResetView.resetCurator(user, ct);
@@ -214,7 +214,6 @@ public class CuratorBookFunction {
                         confirm = SCAN.nextInt();
                         SCAN.nextLine();
                     } catch (Exception e) {
-                        SCAN.nextLine();
                         e.printStackTrace();
                         confirm = 3;
                     }

@@ -20,7 +20,7 @@ public class CuratorDashboard {
             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
             MIN_LEND_MODE = 0, MAX_LEND_MODE = 5,
             MIN_RETURN_MODE = 0, MAX_RETURN_MODE = 5,
-            MIN_STAFF_QUERY_MODE = 0, MAX_STAFF_QUERY_MODE = 4,
+            MIN_STAFF_QUERY_MODE = 0, MAX_STAFF_QUERY_MODE = 7,
             MIN_STAFF_UPDATE_MODE = 0, MAX_STAFF_UPDATE_MODE = 5,
             MIN_SCHEDULE_MODE = 0, MAX_SCHEDULE_MODE = 5;
 
@@ -192,7 +192,10 @@ public class CuratorDashboard {
             System.out.println("Please select a mode:");
             System.out.println("1. Query staff by uid");
             System.out.println("2. Query staff by name");
-            System.out.println("3. Quit");
+            System.out.println("3. Query staff by account");
+            System.out.println("4. Query staff by gender");
+            System.out.println("5. Query all");
+            System.out.println("6. Quit");
             try {
                 mode = SCAN.nextInt();
                 SCAN.nextLine();

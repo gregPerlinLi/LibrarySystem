@@ -60,6 +60,12 @@ public class CommonStaffDAOImpl extends BaseDAO<CommonStaff> implements CommonSt
     }
 
     @Override
+    public List<CommonStaff> getCommonStaffsByGender(Connection conn, String gender) {
+        String sql = "select id, staffName, uid, gender, phoneNum, authority from CommonStaff where binary gender = ?";
+        return getMultiQuery(conn, sql, gender);
+    }
+
+    @Override
     public List<CommonStaff> getAll(Connection conn) {
         String sql = "select id, staffName, uid, gender, phoneNum, authority from CommonStaff";
         return getMultiQuery(conn, sql);

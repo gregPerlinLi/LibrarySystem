@@ -100,11 +100,23 @@ public interface CommonStaffDAO {
     CommonStaff getCommonStaffByName(Connection conn, String staffName);
 
     /**
+     * query multi data of the form by "gender"
+     *
+     * @author gregperlinli
+     * @param conn connection of database
+     * @param gender the gender of the commonStaff
+     * @return get multi CommonStaff Object in a list
+     * @Description query multi data of the form by "gender"
+     */
+    List<CommonStaff> getCommonStaffsByGender(Connection conn, String gender);
+
+    /**
      * get all of the CommonStaff Object in a list
      *
      * @author gregperlinli
      * @param conn connection of database
      * @return get all of the CommonStaff Object in a list
+     * @Description get all of the CommonStaff Object in a list
      */
     List<CommonStaff> getAll(Connection conn);
 
