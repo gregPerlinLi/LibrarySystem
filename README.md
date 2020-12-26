@@ -8,7 +8,7 @@
 
 ### Project requirements
 
-​      Through JavaSE, we develop and design a library management system on the offline environment. In this system, we can realize the functions of library information management and library staff management. The system is oriented to the staff of the library, and it is required to complete the basic management operation in the system.
+​     Through JavaSE, we develop and design a library management system on the offline environment. In this system, we can realize the functions of library information management and library staff management. The system is oriented to the staff of the library, and it is required to complete the basic management operation in the system.
 
 ### Description of the packages:
 
@@ -52,7 +52,7 @@
 
 ### Configurate database:
 
-JDBC configure
+JDBC configure:  `.src/com/gregperlinli/util/jdbc.properties`
 
 ```properties
 # get basic information
@@ -70,7 +70,7 @@ url=jdbc:mysql://localhost:3306/LibrarySystem?rewriteBatchedStatements=true
 driverClass=com.mysql.cj.jdbc.Driver
 ```
 
-Druid configure
+Druid configure:  `.src/com/gregperlinli/util/druid.properties`
 
 ```properties
 # Provide four basic information to get the connection
@@ -98,6 +98,13 @@ maxActive=10
     - Manage the staff information
     - Schedule the staffs (under construction)
 3. *Administrator(Under construction):*
+
+### Other functions
+
+- Staff and curator can query the book by `ISBM`, `name`, `category` and `author`
+- Cuator can query the staffs by `ID`, `UID`, `name`, `account` and `gender`
+- After login, curator can see the number of common staffs and users in the dashboard
+- Displays the current time in dashboard (`morning`, `noon`, `afternoon`, `evening` and `night`)
 
 ### Data interaction
 
@@ -248,5 +255,29 @@ public int update(Connection conn, String sql, Object ...args) throws Exception 
   }
 ```
 
-Note: This function are universal, so you can use it in anywhere
+**Note:** These function are universal, so you can use it in anywhere
+
+---
+
+## Bugs
+
+1. Sometimes after enter the `String` text, you need to press enter twice before the program can respond
+2. When making a database connection, Druid will always pop up some infos or warnings
+
+---
+
+## Future goals
+
+- [ ] Optimize code format(simplify the code, encapsulate reusable code and add some explanatory notes)
+- [ ] Beautify the data output format
+- [ ] Realize the staff scheduling function
+- [ ] Allow employees to change passwords in their own account, not in the curator account
+- [ ] Perfecting the mechanism of borrowing and returning books
+- [ ] Add categories management (category form and category staff)
+- [ ] Add adminstrator account
+- [ ] Strengthen the security of the passwords
+- [ ] Realize the authority functions
+- [ ] Add library form
+- [ ] Add the log function
+- [ ] Using JavaFx to replace the common line
 
