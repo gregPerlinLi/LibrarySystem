@@ -1,4 +1,4 @@
-# **Library System Manager**
+# **Library System**
 
 ## **A commonline based library manage system with Java & MySQL**
 
@@ -107,6 +107,8 @@ maxActive=10
 - Displays the current time in dashboard (`morning`, `noon`, `afternoon`, `evening` and `night`)
 
 ### Data interaction
+
+`./src/com/gregperlinli/dao/BaseDAO.java`
 
 #### Update the data in the database (create, update and delete)
 

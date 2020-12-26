@@ -7,3 +7,7 @@
 *.iml
 out
 gen
+src/META-INF
+.DS_Store
+sql/.DS_Store
+src/.DS_Store
