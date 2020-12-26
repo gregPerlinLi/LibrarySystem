@@ -36,9 +36,9 @@ public class Login {
             CommonStaff cs = new CommonStaffDAOImpl().getCommonStaffByUid(conn, user.getUid());
 
             if ( EmptyUtils.isEmpty(cs) ) {
-                System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();
+                System.out.println("The account is not exist!!");
                 ResetView.resetLogin();
             } else {
                 // Verify the password
@@ -88,9 +88,9 @@ public class Login {
             Curator ct = new CuratorDAOImpl().getCuratorByUid(conn, user.getUid());
 
             if ( EmptyUtils.isEmpty(ct) ) {
-                System.out.println("The account is not exist!!");
                 JDBCUtills.closeResource(conn, null);
                 ClearScreen.clear();
+                System.out.println("The account is not exist!!");
                 ResetView.resetLogin();
             } else {
 
