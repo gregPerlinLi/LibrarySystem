@@ -8,7 +8,7 @@
 
 ### Project requirements
 
-​		A library management system is designed under the offline environment by Java & MySQL, in which the functions of library information management and library staff management can be realized
+​        A library management system is designed under the offline environment by Java & MySQL, in which the functions of library information management and library staff management can be realized
 
 ### Description of the packages:
 
