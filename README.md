@@ -1,14 +1,8 @@
 # **Library System Manager**
 
----
-
 ## **A commonline based library manage system with Java & MySQL**
 
----
-
 ## By: gregPerlinLi
-
----
 
 ## Project Description
 
