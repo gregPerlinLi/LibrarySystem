@@ -281,5 +281,5 @@ public int update(Connection conn, String sql, Object ...args) throws Exception 
 - [ ] Realize the authority functions
 - [ ] Add library form
 - [ ] Add the log function
-- [ ] Using JavaFx to replace the common line
+- [ ] Using JavaFx to replace the command line
 
