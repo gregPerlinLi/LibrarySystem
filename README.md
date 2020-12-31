@@ -101,7 +101,7 @@ maxActive=10
 
 ### Other functions
 
-- Staff and curator can query the book by `ISBM`, `name`, `category` and `author`
+- Staff and curator can query the book by `ISBN`, `name`, `category` and `author`
 - Cuator can query the staffs by `ID`, `UID`, `name`, `account` and `gender`
 - After login, curator can see the number of common staffs and users in the dashboard
 - Displays the current time in dashboard (`morning`, `noon`, `afternoon`, `evening` and `night`)

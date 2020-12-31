@@ -49,8 +49,8 @@ public class EmptyUtils {
 
     public static boolean isAddBookEmpty(Book book) {
         int wrongTimes = 0;
-        if (book.getIsbm().isBlank()) {
-            System.out.println("Warning: The ISBM you enter is empty!");
+        if (book.getIsbn().isBlank()) {
+            System.out.println("Warning: The ISBN you enter is empty!");
             ++wrongTimes;
         }
         if (book.getName().isBlank()) {
@@ -74,10 +74,10 @@ public class EmptyUtils {
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            Book currentBookByIsbm = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+            Book currentBookByIsbn = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
             Book currentBookByName = BOOK_DAO.getBookByName(conn, book.getName());
-            if ( isNotEmpty(currentBookByIsbm) ) {
-                System.out.println("Warning: The ISBM you entered is already exist!");
+            if ( isNotEmpty(currentBookByIsbn) ) {
+                System.out.println("Warning: The ISBN you entered is already exist!");
                 ++wrongTimes;
             }
             if ( isNotEmpty(currentBookByName) ) {
@@ -93,16 +93,16 @@ public class EmptyUtils {
         return wrongTimes > 0;
     }
 
-    public static boolean isUpdateBookRepeat(Connection conn, Book book, boolean isNotIsbm, boolean isNotName ) throws Exception {
+    public static boolean isUpdateBookRepeat(Connection conn, Book book, boolean isNotIsbn, boolean isNotName ) throws Exception {
         final BookDAOImpl BOOK_DAO = new BookDAOImpl();
         int wrongTimes = 0;
 
         conn = JDBCUtills.getConnectionWithPool();
 
-        if ( !isNotIsbm ) {
-            Book currentBook = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+        if ( !isNotIsbn ) {
+            Book currentBook = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
             if ( EmptyUtils.isNotEmpty(currentBook) ) {
-                System.out.println("Warning: The ISBM you entered is already exist!");
+                System.out.println("Warning: The ISBN you entered is already exist!");
                 ++wrongTimes;
             }
         }

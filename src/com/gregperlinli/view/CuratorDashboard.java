@@ -82,7 +82,7 @@ public class CuratorDashboard {
         do {
             System.out.println("\n-------- Query book mode --------");
             System.out.println("Please select a mode:");
-            System.out.println("1. Query book by ISBM");
+            System.out.println("1. Query book by ISBN");
             System.out.println("2. Query book by name");
             System.out.println("3. Query books by category");
             System.out.println("4. Query books by author");
@@ -139,7 +139,7 @@ public class CuratorDashboard {
             System.out.println("\n-------- Lend book mode --------");
             System.out.println("Please select a mode:");
             System.out.println("1. Lend book by ID");
-            System.out.println("2. Lend book by ISBM");
+            System.out.println("2. Lend book by ISBN");
             System.out.println("3. Lend book by name");
             System.out.println("4. Quit");
             try {
@@ -165,7 +165,7 @@ public class CuratorDashboard {
             System.out.println("\n-------- Return book mode --------");
             System.out.println("Please select a mode:");
             System.out.println("1. Return book by ID");
-            System.out.println("2. Return book by ISBM");
+            System.out.println("2. Return book by ISBN");
             System.out.println("3. Return book by name");
             System.out.println("4. Quit");
             try {

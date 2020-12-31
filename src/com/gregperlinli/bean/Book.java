@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class Book {
     private int id;
-    private String isbm;
+    private String isbn;
     private String name;
     private String category;
     private int remainNum;
@@ -15,10 +15,10 @@ public class Book {
     private String author;
     private BigDecimal price;
 
-    public Book(int id, String isbm, String name, String category, int remainNum, String author, BigDecimal price) {
+    public Book(int id, String isbn, String name, String category, int remainNum, String author, BigDecimal price) {
         super();
         this.id = id;
-        this.isbm = isbm;
+        this.isbn = isbn;
         this.name = name;
         this.category = category;
         this.remainNum = remainNum;
@@ -38,12 +38,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getIsbm() {
-        return isbm;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setIsbm(String isbm) {
-        this.isbm = isbm;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getName() {
@@ -90,7 +90,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", isbn='" + isbm + '\'' +
+                ", isbn='" + isbn + '\'' +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", remainNum=" + remainNum +

@@ -25,7 +25,7 @@ public class CommonStaffFunction {
         //noinspection AlibabaSwitchStatement
         switch (mode) {
             case 1 -> {
-                Book book = GenericFunction.queryBookWithIsbm();
+                Book book = GenericFunction.queryBookWithIsbn();
                 OperationOutput.queryOneBookOutput(book);
                 selectQueryMode(user, cs);
             } case 2 -> {
@@ -116,7 +116,7 @@ public class CommonStaffFunction {
             conn = JDBCUtills.getConnectionWithPool();
             BOOK_DAO.insert(conn, book);
             System.out.println("Adding successful, the following is the book you have insert:");
-            Book bookHaveAdded = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+            Book bookHaveAdded = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
             System.out.println(bookHaveAdded);
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -192,13 +192,13 @@ public class CommonStaffFunction {
             }
             for (Book book : list) {
                 if (book.getId() == updateBookId) {
-                    boolean isNotIsbm, isNotName;
+                    boolean isNotIsbn, isNotName;
                     boolean[] isNotList = GenericFunction.inputUpdateData(book);
-                    isNotIsbm = isNotList[0];
+                    isNotIsbn = isNotList[0];
                     isNotName = isNotList[1];
                     // check
                     System.out.println("Inspecting the data you entered...");
-                    boolean isRepeat = EmptyUtils.isUpdateBookRepeat(conn, book, isNotIsbm, isNotName);
+                    boolean isRepeat = EmptyUtils.isUpdateBookRepeat(conn, book, isNotIsbn, isNotName);
                     if (isRepeat) {
                         System.out.println("\nThe book you want to update is wrong, please try again!\n");
                         updateBook(user, cs);
@@ -224,7 +224,7 @@ public class CommonStaffFunction {
 
                     BOOK_DAO.update(conn, book);
                     System.out.println("Updating successful, the following is the book you have insert:");
-                    Book bookHaveUpdated = BOOK_DAO.getBookByIsbm(conn, book.getIsbm());
+                    Book bookHaveUpdated = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
                     System.out.println(bookHaveUpdated);
                 }
             }
@@ -273,7 +273,7 @@ public class CommonStaffFunction {
                 lendBookById(user, cs);
                 selectLendBookMode(user, cs);
             } case 2 -> {
-                lendBookByIsbm(user, cs);
+                lendBookByIsbn(user, cs);
                 selectLendBookMode(user, cs);
             } case 3 -> {
                 lendBookByName(user, cs);
@@ -341,21 +341,21 @@ public class CommonStaffFunction {
         }
     }
 
-    public static void lendBookByIsbm(User user, CommonStaff cs) {
-        String lendBookIsbm;
+    public static void lendBookByIsbn(User user, CommonStaff cs) {
+        String lendBookIsbn;
         Connection conn = null;
         Book book;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            System.out.println("Please enter the ISBM:(if you want to cancel, please enter -1)");
-            lendBookIsbm = SCAN.nextLine();
-            book = BOOK_DAO.getBookByIsbm(conn, lendBookIsbm);
-            if ( "-1".equals(lendBookIsbm) ) {
+            System.out.println("Please enter the ISBN:(if you want to cancel, please enter -1)");
+            lendBookIsbn = SCAN.nextLine();
+            book = BOOK_DAO.getBookByIsbn(conn, lendBookIsbn);
+            if ( "-1".equals(lendBookIsbn) ) {
                 System.out.println("Lend canceled!");
                 selectLendBookMode(user, cs);
             } else {
                 if ( GenericFunction.isEnoughBook(book) ) {
-                    BOOK_DAO.lendByIsbm(conn, book, lendBookIsbm);
+                    BOOK_DAO.lendByIsbn(conn, book, lendBookIsbn);
                 } else {
                     selectLendBookMode(user, cs);
                 }
@@ -364,7 +364,7 @@ public class CommonStaffFunction {
             e.printStackTrace();
             JDBCUtills.closeResource(conn, null);
             ClearScreen.clear();
-            System.out.println("The ISBM you enter is not exist, please try again!");
+            System.out.println("The ISBN you enter is not exist, please try again!");
             selectLendBookMode(user, cs);
         } finally {
             JDBCUtills.closeResource(conn, null);
@@ -383,7 +383,7 @@ public class CommonStaffFunction {
             selectLendBookMode(user, cs);
         }
         if ( isRepeat == 1 ) {
-            lendBookByIsbm(user, cs);
+            lendBookByIsbn(user, cs);
         } else {
             selectLendBookMode(user, cs);
         }
@@ -446,7 +446,7 @@ public class CommonStaffFunction {
                 returnBookById(user, cs);
                 selectReturnBookMode(user, cs);
             } case 2 -> {
-                returnBookByIsbm(user, cs);
+                returnBookByIsbn(user, cs);
                 selectReturnBookMode(user, cs);
             } case 3 -> {
                 returnBookByName(user, cs);
@@ -510,26 +510,26 @@ public class CommonStaffFunction {
         }
     }
 
-    public static void returnBookByIsbm(User user, CommonStaff cs) {
-        String returnBookIsbm;
+    public static void returnBookByIsbn(User user, CommonStaff cs) {
+        String returnBookIsbn;
         Connection conn = null;
         Book book;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            System.out.println("Please enter the ISBM:(if you want to cancel, please enter -1)");
-            returnBookIsbm = SCAN.nextLine();
-            book = BOOK_DAO.getBookByIsbm(conn, returnBookIsbm);
-            if ( "-1".equals(returnBookIsbm) ) {
+            System.out.println("Please enter the ISBN:(if you want to cancel, please enter -1)");
+            returnBookIsbn = SCAN.nextLine();
+            book = BOOK_DAO.getBookByIsbn(conn, returnBookIsbn);
+            if ( "-1".equals(returnBookIsbn) ) {
                 System.out.println("Return canceled!");
                 selectReturnBookMode(user, cs);
             } else {
-                    BOOK_DAO.returnByIsbm(conn, book, returnBookIsbm);
+                    BOOK_DAO.returnByIsbn(conn, book, returnBookIsbn);
             }
         } catch ( Exception e ) {
             e.printStackTrace();
             JDBCUtills.closeResource(conn, null);
             ClearScreen.clear();
-            System.out.println("The ISBM you enter is not exist, please try again!");
+            System.out.println("The ISBN you enter is not exist, please try again!");
             selectReturnBookMode(user, cs);
         } finally {
             JDBCUtills.closeResource(conn, null);
@@ -548,7 +548,7 @@ public class CommonStaffFunction {
             selectReturnBookMode(user, cs);
         }
         if ( isRepeat == 1 ) {
-            returnBookByIsbm(user, cs);
+            returnBookByIsbn(user, cs);
         } else {
             selectReturnBookMode(user, cs);
         }

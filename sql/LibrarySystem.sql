@@ -24,15 +24,15 @@ DROP TABLE IF EXISTS `Book`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Book` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `isbm` varchar(20) NOT NULL,
+  `isbn` varchar(20) NOT NULL,
   `name` varchar(100) NOT NULL,
   `category` varchar(50) DEFAULT NULL,
   `remainNum` int NOT NULL DEFAULT '1',
   `price` decimal(5,2) DEFAULT '0.00',
   `author` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `Book_isbm_uindex` (`isbm`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `Book_isbm_uindex` (`isbn`)
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-26 20:39:50
+-- Dump completed on 2020-12-31  9:34:20

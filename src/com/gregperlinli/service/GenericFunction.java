@@ -17,14 +17,14 @@ public class GenericFunction {
     private static final Scanner SCAN = new Scanner(System.in);
     private static final BookDAOImpl BOOK_DAO = new BookDAOImpl();
 
-    public static Book queryBookWithIsbm() {
-        System.out.println("Please enter the ISBM: ");
-        String isbm = SCAN.nextLine();
+    public static Book queryBookWithIsbn() {
+        System.out.println("Please enter the ISBN: ");
+        String isbn = SCAN.nextLine();
         Book book = null;
         Connection conn = null;
         try {
             conn = JDBCUtills.getConnectionWithPool();
-            book = BOOK_DAO.getBookByIsbm(conn, isbm);
+            book = BOOK_DAO.getBookByIsbn(conn, isbn);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
@@ -100,11 +100,11 @@ public class GenericFunction {
 
     public static void enterNewBookData(Book book) throws Exception {
 
-        System.out.println("Please enter the ISBM:");
+        System.out.println("Please enter the ISBN:");
         // TODO: Attention to absorb the return key
-        String isbm = SCAN.next();
-        isbm += SCAN.nextLine();
-        book.setIsbm(isbm);
+        String isbn = SCAN.next();
+        isbn += SCAN.nextLine();
+        book.setIsbn(isbn);
         System.out.println("Please enter the name:");
         book.setName(SCAN.nextLine());
         System.out.println("Please enter the category:");
@@ -137,16 +137,16 @@ public class GenericFunction {
         System.out.println(book + "\n");
 
         boolean[] isNotList = new boolean[2];
-        // 0:isNotIsbm, 1:isNotName
+        // 0:isNotIsbn, 1:isNotName
         isNotList[0] = false;
         isNotList[1] = false;
 
-        System.out.println("Please enter new ISBM (If you don't want to change, please empty):");
-        String newIsbm = SCAN.nextLine();
-        if (newIsbm.isBlank()) {
+        System.out.println("Please enter new ISBN (If you don't want to change, please empty):");
+        String newIsbn = SCAN.nextLine();
+        if (newIsbn.isBlank()) {
             isNotList[0] = true;
         } else {
-            book.setIsbm(newIsbm);
+            book.setIsbn(newIsbn);
         }
         System.out.println("Please enter new name (If you don't want to change, please empty):");
         String newName = SCAN.nextLine();

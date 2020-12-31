@@ -56,16 +56,16 @@ public interface BookDAO {
     void lendById(Connection conn, Book book, int id) throws Exception;
 
     /**
-     * lend the book by ISBM
+     * lend the book by ISBN
      *
      * @author gregperlinli
      * @param conn connection of database
      * @param book the book object
-     * @param isbm the ISBM of the book
+     * @param isbn the ISBN of the book
      * @throws Exception e
-     * @Description lend the book by ISBM
+     * @Description lend the book by ISBN
      */
-    void lendByIsbm(Connection conn, Book book, String isbm) throws Exception;
+    void lendByIsbn(Connection conn, Book book, String isbn) throws Exception;
 
     /**
      * lend the book by name
@@ -92,16 +92,16 @@ public interface BookDAO {
     void returnById(Connection conn, Book book, int id) throws Exception;
 
     /**
-     * return the book by ISBM
+     * return the book by ISBN
      *
      * @author gregperlinli
      * @param conn connection of database
      * @param book the book object
-     * @param isbm the ISBM of the book
+     * @param isbn the ISBN of the book
      * @throws Exception e
-     * @Description return the book by ISBM
+     * @Description return the book by ISBN
      */
-    void returnByIsbm(Connection conn, Book book, String isbm) throws Exception;
+    void returnByIsbn(Connection conn, Book book, String isbn) throws Exception;
 
     /**
      * return the book by name
@@ -127,46 +127,46 @@ public interface BookDAO {
     Book getBookById(Connection conn, int id);
 
     /**
-     * query one data of the form by "isbm"
+     * query one data of the form by "isbn"
      *
      * @author gregperlinli
      * @param conn connection of database
-     * @param isbm the isbm of the book
+     * @param isbn the isbn of the book
      * @return Book object
-     * @Description query one data of the form by "isbm"
+     * @Description query one data of the form by "isbn"
      */
-    Book getBookByIsbm(Connection conn, String isbm);
+    Book getBookByIsbn(Connection conn, String isbn);
 
     /**
-     * query one data of the form by "isbm"
+     * query one data of the form by "isbn"
      *
      * @author gregperlinli
      * @param conn connection of database
      * @param name the name of the book
      * @return Book object
-     * @Description query one data of the form by "isbm"
+     * @Description query one data of the form by "isbn"
      */
     Book getBookByName(Connection conn, String name);
 
     /**
-     * query multi data of the form by "isbm"
+     * query multi data of the form by "isbn"
      *
      * @author gregperlinli
      * @param conn connection of database
      * @param category the category of the book
      * @return a list of Book object
-     * @Description query multi data of the form by "isbm"
+     * @Description query multi data of the form by "isbn"
      */
     List<Book> getBookByCategory(Connection conn, String category);
 
     /**
-     * query multi data of the form by "isbm"
+     * query multi data of the form by "isbn"
      *
      * @author gregperlinli
      * @param conn connection of database
      * @param author the author of the book
      * @return a list of Book object
-     * @Description query multi data of the form by "isbm"
+     * @Description query multi data of the form by "isbn"
      */
     List<Book> getBookByAuthor(Connection conn, String author);
 
