@@ -4,6 +4,8 @@ import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.util.GetTime;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -23,6 +25,9 @@ public class CommonStaffDashboard {
         int function;
         do {
             System.out.println("*************** Common staff dashboard ***************");
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
+            System.out.print(formatter.format(date) + "\t\t");
             System.out.println("Good " + GetTime.getMorAftEveNig() + "!");
             System.out.printf("Account: %s     Uid: %d     Authority: %d\n\n", cs.getStaffName(), user.getUid(), cs.getAuthority());
 

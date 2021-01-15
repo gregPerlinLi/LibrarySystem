@@ -8,6 +8,8 @@ import com.gregperlinli.util.GetTime;
 import com.gregperlinli.util.JDBCUtills;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -33,6 +35,9 @@ public class CuratorDashboard {
         int function;
         do {
             System.out.println("***************** Curator dashboard *****************");
+            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+            Date date = new Date(System.currentTimeMillis());
+            System.out.print(formatter.format(date) + "\t\t");
             System.out.println("Good " + GetTime.getMorAftEveNig() + "!");
             System.out.printf("Account: %s     Uid: %d     Authority: %d\n", ct.getCuratorName(), user.getUid(), ct.getAuthority());
             Connection conn = null;
