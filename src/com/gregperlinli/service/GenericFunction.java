@@ -94,7 +94,7 @@ public class GenericFunction {
         } finally {
             JDBCUtills.closeResource(conn, null);
         }
-
+                                      
         return list;
     }
 
