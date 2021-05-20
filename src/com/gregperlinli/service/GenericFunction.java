@@ -6,11 +6,14 @@ import com.gregperlinli.dao.impl.BookDAOImpl;
 import com.gregperlinli.dao.UserDAO;
 import com.gregperlinli.dao.impl.UserDAOImpl;
 import com.gregperlinli.utils.JDBCUtils;
+import com.gregperlinli.utils.MD5Encrypt;
+import com.gregperlinli.view.ClearScreen;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -190,6 +193,47 @@ public class GenericFunction {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public static void changePassword(User user) {
+        ClearScreen.clear();
+        System.out.println("Please enter the current password:");
+        String curPassword = SCAN.nextLine();
+        if (Objects.equals(MD5Encrypt.stringMD5(curPassword), user.getPassword())) {
+            Connection conn = null;
+            boolean isPasswordCorrect = false;
+            try {
+                conn = JDBCUtils.getConnectionWithPool();
+                do {
+                    System.out.println("Please enter the new password:");
+                    String newFirPassword = SCAN.nextLine();
+                    System.out.println("Please confirm you password again:");
+                    String newSecPassword = SCAN.nextLine();
+                    if ( !newFirPassword.equals(newSecPassword) ) {
+                        System.out.println("The two password you entered are incorrect, please try again!");
+                    }
+                    if ( newFirPassword.equals(newSecPassword) ) {
+                        isPasswordCorrect = true;
+                        user.setPassword(MD5Encrypt.stringMD5(newFirPassword));
+                        UserDAO userDAO = new UserDAOImpl();
+                        userDAO.update(conn, user);
+                        System.out.println("Tha password have been changed!");
+                    }
+                } while ( !isPasswordCorrect );
+            } catch ( Exception e ) {
+                e.printStackTrace();
+            } finally {
+                JDBCUtils.closeResource(conn, null);
+            }
+
+        } else {
+            System.out.println("Your password is wrong, please try again!");
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

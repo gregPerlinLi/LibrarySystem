@@ -4,6 +4,7 @@ import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.service.CommonStaffFunction;
+import com.gregperlinli.service.GenericFunction;
 import com.gregperlinli.service.curator.CuratorBookFunction;
 import com.gregperlinli.service.Login;
 import com.gregperlinli.service.curator.CuratorStaffFunction;
@@ -45,7 +46,11 @@ public class ResetView {
                 CommonStaffFunction.selectLendBookMode(user, cs);
             } case 4 -> {
                 CommonStaffFunction.selectReturnBookMode(user, cs);
-            } default -> {
+            } case 5 -> {
+                GenericFunction.changePassword(user);
+                resetCommonStaff(user, cs);
+            }
+            default -> {
                 System.out.println("Cancellation success!!");
                 try {
                     Thread.sleep(1500);
@@ -79,6 +84,9 @@ public class ResetView {
                 CuratorStaffFunction.selectUpdateMode(user, ct);
             } case 7 -> {
                 CuratorStaffFunction.selectScheduleMode(user, ct);
+            } case 8 -> {
+                GenericFunction.changePassword(user);
+                resetCurator(user, ct);
             } default -> {
                 System.out.println("Cancellation success!!");
                 try {

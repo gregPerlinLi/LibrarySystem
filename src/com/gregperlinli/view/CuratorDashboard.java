@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class CuratorDashboard {
     private static final Scanner SCAN = new Scanner(System.in);
-    private static final int MIN_NUM = 0, MAX_NUM = 9,
+    private static final int MIN_NUM = 0, MAX_NUM = 10,
             MIN_QUERY_MODE = 0, MAX_QUERY_MODE = 7,
             MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
             MIN_LEND_MODE = 0, MAX_LEND_MODE = 5,
@@ -61,7 +61,8 @@ public class CuratorDashboard {
             System.out.println("6. Manage common staff");
             System.out.println("7. Scheduling common staff");
             System.out.println("-------- Others --------");
-            System.out.println("8. Cancellation account");
+            System.out.println("8. Change password");
+            System.out.println("9. Cancellation account");
 
             try {
                 function = SCAN.nextInt();

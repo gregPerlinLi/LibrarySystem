@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class CommonStaffDashboard {
     private static final Scanner SCAN = new Scanner(System.in);
-    private static final int MIN_NUM = 0, MAX_NUM = 6,
+    private static final int MIN_NUM = 0, MAX_NUM = 7,
                              MIN_QUERY_MODE = 0, MAX_QUERY_MODE = 7,
                              MIN_UPDATE_MODE = 0, MAX_UPDATE_MODE = 5,
                              MIN_LEND_MODE = 0, MAX_LEND_MODE = 5,
@@ -32,11 +32,14 @@ public class CommonStaffDashboard {
             System.out.printf("Username: %s     Uid: %d     Authority: %d\n\n", cs.getStaffName(), user.getUid(), cs.getAuthority());
 
             System.out.println("Please select a function:");
+            System.out.println("-------- Book Manage --------");
             System.out.println("1. Query book information");
             System.out.println("2. Manage book information");
             System.out.println("3. Lend books");
             System.out.println("4. Return books");
-            System.out.println("5. Cancellation account");
+            System.out.println("-------- Others --------");
+            System.out.println("5. Change password");
+            System.out.println("6. Cancellation account");
 
             try {
                 function = SCAN.nextInt();
