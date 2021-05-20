@@ -1,4 +1,4 @@
-package com.gregperlinli.util;
+package com.gregperlinli.utils;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
@@ -11,7 +11,7 @@ import java.util.Properties;
  * @author gregperlinli
  * @Description Tools for operating the database
  */
-public class JDBCUtills {
+public class JDBCUtils {
 
     /* Database connection method */
 

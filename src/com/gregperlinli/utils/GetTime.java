@@ -1,4 +1,4 @@
-package com.gregperlinli.util;
+package com.gregperlinli.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

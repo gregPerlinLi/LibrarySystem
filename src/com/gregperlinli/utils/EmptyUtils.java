@@ -1,4 +1,4 @@
-package com.gregperlinli.util;
+package com.gregperlinli.utils;
 
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
@@ -73,7 +73,7 @@ public class EmptyUtils {
         int wrongTimes = 0;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             Book currentBookByIsbn = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
             Book currentBookByName = BOOK_DAO.getBookByName(conn, book.getName());
             if ( isNotEmpty(currentBookByIsbn) ) {
@@ -88,7 +88,7 @@ public class EmptyUtils {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         return wrongTimes > 0;
     }
@@ -97,7 +97,7 @@ public class EmptyUtils {
         final BookDAOImpl BOOK_DAO = new BookDAOImpl();
         int wrongTimes = 0;
 
-        conn = JDBCUtills.getConnectionWithPool();
+        conn = JDBCUtils.getConnectionWithPool();
 
         if ( !isNotIsbn ) {
             Book currentBook = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
@@ -145,7 +145,7 @@ public class EmptyUtils {
         int wrongTimes = 0;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
 
             User currentUserByAccount = USER_DAO.getUserByAccount(conn, newUser.getAccount());
             User currentUserByName = USER_DAO.getUserByName(conn, newUser.getUserName());
@@ -170,7 +170,7 @@ public class EmptyUtils {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         return wrongTimes > 0;
     }
