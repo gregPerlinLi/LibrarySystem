@@ -75,13 +75,13 @@ public class CommonStaff {
 
     @Override
     public String toString() {
-        return "CommonStaff{" +
+        return /*"CommonStaff{" +*/
                 "id=" + id +
-                ", staffName='" + staffName + '\'' +
-                ", uid=" + uid +
-                ", gender='" + gender + '\'' +
-                ", phoneNum='" + phoneNum + '\'' +
-                ", authority=" + authority +
-                '}';
+                ",\t staffName='" + staffName + '\'' +
+                ",\t uid=" + uid +
+                ",\t gender='" + gender + '\'' +
+                ",\t phoneNum='" + phoneNum + '\'' +
+                ",\t authority=" + authority /*+
+                '}'*/;
     }
 }

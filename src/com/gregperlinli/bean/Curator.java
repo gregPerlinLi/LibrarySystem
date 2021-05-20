@@ -85,15 +85,15 @@ public class Curator {
 
     @Override
     public String toString() {
-        return "Curator{" +
+        return /*"Curator{" +*/
                 "id=" + id +
-                ", curatorName='" + curatorName + '\'' +
-                ", uid=" + uid +
-                ", gender='" + gender + '\'' +
-                ", phoneNum='" + phoneNum + '\'' +
-                ", email='" + email + '\'' +
-                ", authority=" + authority +
-                '}';
+                ",\t curatorName='" + curatorName + '\'' +
+                ",\t uid=" + uid +
+                ",\t gender='" + gender + '\'' +
+                ",\t phoneNum='" + phoneNum + '\'' +
+                ",\t email='" + email + '\'' +
+                ",\t authority=" + authority /*+
+                '}'*/;
     }
 
 }
