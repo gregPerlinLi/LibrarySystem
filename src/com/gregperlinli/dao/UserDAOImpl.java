@@ -1,6 +1,7 @@
 package com.gregperlinli.dao;
 
 import com.gregperlinli.bean.User;
+import com.gregperlinli.utils.MD5Encrypt;
 
 import java.sql.Connection;
 import java.util.List;
@@ -15,7 +16,7 @@ public class UserDAOImpl extends BaseDAO<User> implements UserDAO {
     @Override
     public void insert(Connection conn, User user) throws Exception {
         String sql = "insert into User(account, uid, userName, password)values(?,?,?,?)";
-        update(conn, sql, user.getAccount(), user.getUid(), user.getUserName(), user.getPassword());
+        update(conn, sql, user.getAccount(), user.getUid(), user.getUserName(), MD5Encrypt.stringMD5(user.getPassword()));
     }
 
     @Override

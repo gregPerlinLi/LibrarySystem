@@ -6,6 +6,8 @@ import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.dao.CuratorDAOImpl;
 import com.gregperlinli.dao.UserDAOImpl;
+import com.gregperlinli.utils.JDBCUtils;
+import com.gregperlinli.utils.MD5Encrypt;
 import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.utils.EmptyUtils;
 import com.gregperlinli.view.ResetView;
@@ -41,7 +43,9 @@ public class Login {
                 ResetView.resetLogin();
             } else {
                 // Verify the password
-                if ( password.equals(user.getPassword()) ) {
+                String encryptedPassword = MD5Encrypt.stringMD5(password);
+
+                if ( encryptedPassword.equals(user.getPassword()) ) {
                     System.out.println("\nLogin success!");
                     System.out.println("Welcome " + user.getAccount() + "!");
                     JDBCUtils.closeResource(conn, null);
@@ -94,7 +98,9 @@ public class Login {
             } else {
 
                 // Verify the password
-                if ( password.equals(user.getPassword()) ) {
+                String encryptedPassword = MD5Encrypt.stringMD5(password);
+
+                if ( encryptedPassword.equals(user.getPassword()) ) {
                     System.out.println("\nLogin success!");
                     System.out.println("Welcome " + user.getAccount() + "!");
                     JDBCUtils.closeResource(conn, null);
