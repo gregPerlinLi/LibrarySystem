@@ -2,7 +2,7 @@ package com.gregperlinli.junit;
 
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.UserDAOImpl;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.JDBCUtils;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.List;
  * Test module:
  *         Connection conn = null;
  *         try {
- *             conn = JDBCUtills.getConnection();
+ *             conn = JDBCUtils.getConnection();
  *
  *
  *
@@ -22,7 +22,7 @@ import java.util.List;
  *         } catch ( Exception e ) {
  *             e.printStackTrace();
  *         } finally {
- *             JDBCUtills.closeResource(conn, null);
+ *             JDBCUtils.closeResource(conn, null);
  *         }
  */
 class UserDAOImplTest {
@@ -33,14 +33,14 @@ class UserDAOImplTest {
     void insert() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
             User user = new User(1, "XFei", 20012, "XiaoFei", "abc123");
             dao.insert(conn, user);
             System.out.println("Insert successful!!");
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
     }
@@ -49,7 +49,7 @@ class UserDAOImplTest {
     void deleteById() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
 
             dao.deleteById(conn, 12);
 
@@ -57,7 +57,7 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -65,7 +65,7 @@ class UserDAOImplTest {
     void update() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
             User user = new User(13, "XQiang", 20011, "XiaoQiang", "Qiang10086");
 
             dao.update(conn, user);
@@ -74,7 +74,7 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -82,7 +82,7 @@ class UserDAOImplTest {
     void getUserById() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
 
             User user = dao.getUserById(conn, 11);
 
@@ -90,7 +90,7 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -98,13 +98,13 @@ class UserDAOImplTest {
     void getUserByUserName() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
 
             User user = dao.getUserByName(conn, "XMi");
 
             System.out.println(user);
         } catch ( Exception e ) {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -112,7 +112,7 @@ class UserDAOImplTest {
     void getAll() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
 
             List<User> list = dao.getAll(conn);
             list.forEach(System.out::println);
@@ -121,7 +121,7 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -129,7 +129,7 @@ class UserDAOImplTest {
     void getCount() {
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnection();
+            conn = JDBCUtils.getConnection();
 
             Long cout = dao.getCount(conn);
 
@@ -137,7 +137,7 @@ class UserDAOImplTest {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 }
