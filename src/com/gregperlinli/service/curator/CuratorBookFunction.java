@@ -3,7 +3,7 @@ package com.gregperlinli.service.curator;
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
-import com.gregperlinli.dao.BookDAOImpl;
+import com.gregperlinli.dao.impl.BookDAOImpl;
 import com.gregperlinli.service.GenericFunction;
 import com.gregperlinli.utils.EmptyUtils;
 import com.gregperlinli.utils.JDBCUtils;
