@@ -52,7 +52,7 @@
 
 ### Configurate database:
 
-JDBC configure:  `.src/com/gregperlinli/util/jdbc.properties`
+JDBC configure:  `.src/com/gregperlinli/prop/jdbc.properties`
 
 ```properties
 # get basic information
@@ -70,7 +70,7 @@ url=jdbc:mysql://localhost:3306/LibrarySystem?rewriteBatchedStatements=true
 driverClass=com.mysql.cj.jdbc.Driver
 ```
 
-Druid configure:  `.src/com/gregperlinli/util/druid.properties`
+Druid configure:  `.src/com/gregperlinli/prop/druid.properties`
 
 ```properties
 # Provide four basic information to get the connection
