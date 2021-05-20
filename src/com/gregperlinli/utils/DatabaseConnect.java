@@ -22,7 +22,7 @@ public class DatabaseConnect {
     @Test
     public static void databaseConnection() throws Exception {
         // read basic information from properties
-        InputStream is = DatabaseConnect.class.getClassLoader().getResourceAsStream("com/gregperlinli/util/jdbc.properties");
+        InputStream is = DatabaseConnect.class.getClassLoader().getResourceAsStream("com/gregperlinli/prop/jdbc.properties");
 
         Properties pros = new Properties();
         pros.load(is);
