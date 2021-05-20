@@ -4,8 +4,8 @@ import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
-import com.gregperlinli.util.EmptyUtils;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.EmptyUtils;
+import com.gregperlinli.utils.JDBCUtils;
 
 import java.sql.Connection;
 import java.util.List;
@@ -56,13 +56,13 @@ public class OperationOutput {
         Long countStaff = null;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             list = csDao.getAll(conn);
             countStaff = csDao.getCount(conn);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("The staffs in the library are as fallows:");
         System.out.println("--------------------------------------------------------------");

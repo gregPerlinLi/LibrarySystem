@@ -2,7 +2,7 @@ package com.gregperlinli.service;
 
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.dao.BookDAOImpl;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.JDBCUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,12 +23,12 @@ public class GenericFunction {
         Book book = null;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             book = BOOK_DAO.getBookByIsbn(conn, isbn);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         return book;
     }
@@ -39,12 +39,12 @@ public class GenericFunction {
         Book book = null;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             book = BOOK_DAO.getBookByName(conn, name);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         return book;
     }
@@ -55,12 +55,12 @@ public class GenericFunction {
         List<Book> list = null;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             list = BOOK_DAO.getBookByCategory(conn, category);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         return list;
@@ -72,12 +72,12 @@ public class GenericFunction {
         List<Book> list = null;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             list = BOOK_DAO.getBookByAuthor(conn, author);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         return list;
@@ -87,12 +87,12 @@ public class GenericFunction {
         Connection conn = null;
         List<Book> list = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             list = BOOK_DAO.getAll(conn);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
                                       
         return list;

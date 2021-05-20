@@ -5,8 +5,8 @@ import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.dao.UserDAOImpl;
-import com.gregperlinli.util.EmptyUtils;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.EmptyUtils;
+import com.gregperlinli.utils.JDBCUtils;
 import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.view.CuratorDashboard;
 import com.gregperlinli.view.OperationOutput;
@@ -57,14 +57,14 @@ public class CuratorStaffFunction {
         CommonStaff cs;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             staffUser = USER_DAO.getUserByUid(conn, uid);
             cs = COMMON_STAFF_DAO.getCommonStaffByUid(conn, uid);
             OperationOutput.queryOneStaffOutput(staffUser, cs);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -75,14 +75,14 @@ public class CuratorStaffFunction {
         CommonStaff cs;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             staffUser = USER_DAO.getUserByName(conn, name);
             cs = COMMON_STAFF_DAO.getCommonStaffByName(conn, name);
             OperationOutput.queryOneStaffOutput(staffUser, cs);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -93,14 +93,14 @@ public class CuratorStaffFunction {
         CommonStaff cs;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             staffUser = USER_DAO.getUserByAccount(conn, account);
             cs = COMMON_STAFF_DAO.getCommonStaffByUid(conn, staffUser.getUid());
             OperationOutput.queryOneStaffOutput(staffUser, cs);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -123,7 +123,7 @@ public class CuratorStaffFunction {
         List<CommonStaff> listCs;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             listCs = COMMON_STAFF_DAO.getCommonStaffsByGender(conn, gender);
             for ( CommonStaff cs : listCs ) {
                 User staffUser = USER_DAO.getUserByUid(conn, cs.getUid());
@@ -133,7 +133,7 @@ public class CuratorStaffFunction {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
     }
@@ -143,7 +143,7 @@ public class CuratorStaffFunction {
         List<User> listStaffUser = new ArrayList<>();
         List<CommonStaff> listCs = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             listCs = COMMON_STAFF_DAO.getAll(conn);
             for ( CommonStaff cs : listCs ) {
                 User staffUser = USER_DAO.getUserByUid(conn, cs.getUid());
@@ -153,7 +153,7 @@ public class CuratorStaffFunction {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -203,7 +203,7 @@ public class CuratorStaffFunction {
         System.out.println("Inspection passed, now adding the staff...");
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             conn.setAutoCommit(false);
 
             USER_DAO.insert(conn, newUser);
@@ -221,10 +221,10 @@ public class CuratorStaffFunction {
             }
             ClearScreen.clear();
             System.out.println("Add failed, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             addStaff(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -286,7 +286,7 @@ public class CuratorStaffFunction {
         int deleteStaffId;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             conn.setAutoCommit(false);
 
             System.out.println("\nThis is all common staffs in the library:");
@@ -313,7 +313,7 @@ public class CuratorStaffFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you entered is invalid, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             deleteStaff(user, ct);
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -323,7 +323,7 @@ public class CuratorStaffFunction {
                 e1.printStackTrace();
             }
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -331,7 +331,7 @@ public class CuratorStaffFunction {
         int updateStaffId;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             conn.setAutoCommit(false);
 
             System.out.println("\nThis is all common staffs in the library:");;
@@ -380,7 +380,7 @@ public class CuratorStaffFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you entered is invalid, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             updateStaff(user, ct);
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -391,10 +391,10 @@ public class CuratorStaffFunction {
             }
             ClearScreen.clear();
             System.out.println("Update fail, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             updateStaff(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
     }
 
@@ -507,7 +507,7 @@ public class CuratorStaffFunction {
                 System.out.println("Promote canceled!");
                 selectScheduleMode(user, ct);
             }
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             for ( CommonStaff cs : list ) {
                 if ( cs.getId() == promoteStaffId ) {
                     if ( cs.getAuthority() >= 90 ) {
@@ -527,7 +527,7 @@ public class CuratorStaffFunction {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         System.out.println("Do you want to promote other staffs?\n1. Yes\n2. No");
@@ -561,7 +561,7 @@ public class CuratorStaffFunction {
                 System.out.println("Demote canceled!");
                 selectScheduleMode(user, ct);
             }
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             for ( CommonStaff cs : list ) {
                 if ( cs.getId() == demoteStaffId ) {
                     if ( cs.getAuthority() <= 10 ) {
@@ -581,7 +581,7 @@ public class CuratorStaffFunction {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         System.out.println("Do you want to demote other staffs?\n1. Yes\n2. No");

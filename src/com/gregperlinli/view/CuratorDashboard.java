@@ -4,8 +4,8 @@ import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.CommonStaffDAOImpl;
 import com.gregperlinli.dao.UserDAOImpl;
-import com.gregperlinli.util.GetTime;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.GetTime;
+import com.gregperlinli.utils.JDBCUtils;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -42,12 +42,12 @@ public class CuratorDashboard {
             System.out.printf("Account: %s     Uid: %d     Authority: %d\n", ct.getCuratorName(), user.getUid(), ct.getAuthority());
             Connection conn = null;
             try {
-                conn = JDBCUtills.getConnectionWithPool();
+                conn = JDBCUtils.getConnectionWithPool();
                 System.out.printf("There are %d common staffs and %d users in the library\n\n", COMMON_STAFF_DAO.getCount(conn), USER_DAO.getCount(conn));
             } catch ( Exception e ) {
                 e.printStackTrace();
             } finally {
-                JDBCUtills.closeResource(conn, null);
+                JDBCUtils.closeResource(conn, null);
             }
 
             System.out.println("Please select a function:");

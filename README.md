@@ -16,7 +16,7 @@
 - **`com.gregperlinli.bean`**: Entity class corresponding to database table one by one (the properties of the class correspond to the keys of the table in the database one by one)
 - **`com.gregperlinli.dao`**: **Database Acess Object** Place database or file crud **(create, retrieve, update and delete)** code
 - **`com.gregperlinli.service`**: Place the code to process the transaction logic and isolate the Dao layer from the view layer
-- **`com.gregperlinli.util`**: Utilities class, place the common code for all projects which has nothing to do with transaction logic
+- **`com.gregperlinli.utils`**: Utilities class, place the common code for all projects which has nothing to do with transaction logic
 - **`com.gregperlinli.view`**: Place interface related code
 - **`com.gregperlinli.junit`**: Using to debug DAO service, if you want to use it, please add the library `JUnit` (Minium version is **5.4**)
 

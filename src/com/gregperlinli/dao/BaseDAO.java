@@ -1,6 +1,6 @@
 package com.gregperlinli.dao;
 
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.JDBCUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -29,10 +29,10 @@ public abstract class BaseDAO<T> {
     public BaseDAO() {
         // TODO: Attention: "this" is mention to subclass object (such as User, Book) not BaseDAO object!!!
         Type genericSuperclass = this.getClass().getGenericSuperclass();
-        ParameterizedType paramTypr = (ParameterizedType) genericSuperclass;
+        ParameterizedType paramType = (ParameterizedType) genericSuperclass;
 
         // get the generic parameters of the superclass
-        Type[] typeArguments = paramTypr.getActualTypeArguments();
+        Type[] typeArguments = paramType.getActualTypeArguments();
 
         // get the first parameter of the generic paradigm
         clazz = (Class<T>) typeArguments[0];
@@ -68,7 +68,7 @@ public abstract class BaseDAO<T> {
             e.printStackTrace();
         } finally {
             // close the resource
-            JDBCUtills.closeResource(null, ps);
+            JDBCUtils.closeResource(null, ps);
         }
 
         return 0;
@@ -124,7 +124,7 @@ public abstract class BaseDAO<T> {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(null, ps, rs);
+            JDBCUtils.closeResource(null, ps, rs);
         }
         return null;
     }
@@ -187,7 +187,7 @@ public abstract class BaseDAO<T> {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(null, ps, rs);
+            JDBCUtils.closeResource(null, ps, rs);
         }
         return null;
     }
@@ -225,7 +225,7 @@ public abstract class BaseDAO<T> {
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(null, ps, rs);
+            JDBCUtils.closeResource(null, ps, rs);
         }
         return null;
     }

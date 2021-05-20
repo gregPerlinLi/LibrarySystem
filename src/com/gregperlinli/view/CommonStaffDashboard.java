@@ -2,7 +2,7 @@ package com.gregperlinli.view;
 
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
-import com.gregperlinli.util.GetTime;
+import com.gregperlinli.utils.GetTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -5,8 +5,8 @@ import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.BookDAOImpl;
 import com.gregperlinli.service.GenericFunction;
-import com.gregperlinli.util.EmptyUtils;
-import com.gregperlinli.util.JDBCUtills;
+import com.gregperlinli.utils.EmptyUtils;
+import com.gregperlinli.utils.JDBCUtils;
 import com.gregperlinli.view.*;
 
 import java.sql.Connection;
@@ -114,7 +114,7 @@ public class CuratorBookFunction {
         System.out.println("Adding the book...");
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             BOOK_DAO.insert(conn, book);
             System.out.println("Adding successful, the following is the book you have insert:");
             Book bookHaveAdded = BOOK_DAO.getBookByIsbn(conn, book.getIsbn());
@@ -123,10 +123,10 @@ public class CuratorBookFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("Add fail, please try again");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             addBook(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             selectUpdateMode(user, ct);
         }
     }
@@ -135,7 +135,7 @@ public class CuratorBookFunction {
         int deleteBookId;
         Connection conn = null;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             deleteBookId = GenericFunction.enterDeleteBookData(conn);
             if ( deleteBookId == -1 ) {
                 System.out.println("Delete canceled!");
@@ -148,12 +148,12 @@ public class CuratorBookFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is valid, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             deleteBook(user, ct);
         } catch ( Exception e ) {
             e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         System.out.println("Delete success!");
@@ -182,7 +182,7 @@ public class CuratorBookFunction {
         try {
             System.out.println("\nThis is all the books in the library:");
             System.out.println("-------------------------------------------------------------------------------");
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             List<Book> list = BOOK_DAO.getAll(conn);
             list.forEach(System.out::println);
             System.out.println("-------------------------------------------------------------------------------");
@@ -235,16 +235,16 @@ public class CuratorBookFunction {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("The number you enter is valid, please try again!");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             updateBook(user, ct);
         } catch ( Exception e ) {
             e.printStackTrace();
             ClearScreen.clear();
             System.out.println("Update fail, please try again");
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             updateBook(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
 
         System.out.println("Update success!");
@@ -292,7 +292,7 @@ public class CuratorBookFunction {
         try {
             System.out.println("\nThis is all the books in the library:");
             System.out.println("-------------------------------------------------------------------------------");
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             List<Book> list = BOOK_DAO.getAll(conn);
             list.forEach(System.out::println);
             System.out.println("-------------------------------------------------------------------------------");
@@ -316,12 +316,12 @@ public class CuratorBookFunction {
         } catch ( Exception e ) {
             SCAN.nextLine();
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("Lend fail, please try again!");
             lendBookById(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Lend successful!");
         System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
@@ -348,7 +348,7 @@ public class CuratorBookFunction {
         Connection conn = null;
         Book book;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             System.out.println("Please enter the ISBN:(if you want to cancel, please enter -1)");
             lendBookIsbn = SCAN.nextLine();
             book = BOOK_DAO.getBookByIsbn(conn, lendBookIsbn);
@@ -364,12 +364,12 @@ public class CuratorBookFunction {
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The ISBN you enter is not exist, please try again!");
             selectLendBookMode(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Lend successful!");
         System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
@@ -396,7 +396,7 @@ public class CuratorBookFunction {
         Connection conn = null;
         Book book;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             System.out.println("Please enter the name:(if you want to cancel, please enter -1)");
             lendBookName = SCAN.nextLine();
             book = BOOK_DAO.getBookByName(conn, lendBookName);
@@ -412,12 +412,12 @@ public class CuratorBookFunction {
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The name you enter is not exist, please try again!");
             selectLendBookMode(user, ct);e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Lend successful!");
         System.out.println("Do you want to lend other books?\n1. Yes\n2. No");
@@ -464,7 +464,7 @@ public class CuratorBookFunction {
         try {
             System.out.println("\nThis is all the books in the library:");
             System.out.println("-------------------------------------------------------------------------------");
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             List<Book> list = BOOK_DAO.getAll(conn);
             list.forEach(System.out::println);
             System.out.println("-------------------------------------------------------------------------------");
@@ -484,12 +484,12 @@ public class CuratorBookFunction {
         } catch ( Exception e ) {
             SCAN.nextLine();
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("Return fail, please try again!");
             returnBookById(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Return successful!");
         System.out.println("Do you want to return other books?\n1. Yes\n2. No");
@@ -516,7 +516,7 @@ public class CuratorBookFunction {
         Connection conn = null;
         Book book;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             System.out.println("Please enter the ISBN:(if you want to cancel, please enter -1)");
             returnBookIsbn = SCAN.nextLine();
             book = BOOK_DAO.getBookByIsbn(conn, returnBookIsbn);
@@ -528,12 +528,12 @@ public class CuratorBookFunction {
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The ISBN you enter is not exist, please try again!");
             selectReturnBookMode(user, ct);
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Return successful!");
         System.out.println("Do you want to return other books?\n1. Yes\n2. No");
@@ -560,7 +560,7 @@ public class CuratorBookFunction {
         Connection conn = null;
         Book book;
         try {
-            conn = JDBCUtills.getConnectionWithPool();
+            conn = JDBCUtils.getConnectionWithPool();
             System.out.println("Please enter the name:(if you want to cancel, please enter -1)");
             returnBookName = SCAN.nextLine();
             book = BOOK_DAO.getBookByName(conn, returnBookName);
@@ -576,12 +576,12 @@ public class CuratorBookFunction {
             }
         } catch ( Exception e ) {
             e.printStackTrace();
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
             ClearScreen.clear();
             System.out.println("The name you enter is not exist, please try again!");
             selectReturnBookMode(user, ct);e.printStackTrace();
         } finally {
-            JDBCUtills.closeResource(conn, null);
+            JDBCUtils.closeResource(conn, null);
         }
         System.out.println("Return successful!");
         System.out.println("Do you want to return other books?\n1. Yes\n2. No");
