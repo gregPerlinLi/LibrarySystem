@@ -1,6 +1,8 @@
-package com.gregperlinli.dao;
+package com.gregperlinli.dao.impl;
 
 import com.gregperlinli.bean.Book;
+import com.gregperlinli.dao.BaseDAO;
+import com.gregperlinli.dao.BookDAO;
 
 import java.sql.Connection;
 import java.util.List;

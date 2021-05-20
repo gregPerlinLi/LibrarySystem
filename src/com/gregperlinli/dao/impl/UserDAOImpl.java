@@ -1,7 +1,8 @@
-package com.gregperlinli.dao;
+package com.gregperlinli.dao.impl;
 
 import com.gregperlinli.bean.User;
-import com.gregperlinli.utils.MD5Encrypt;
+import com.gregperlinli.dao.BaseDAO;
+import com.gregperlinli.dao.UserDAO;
 
 import java.sql.Connection;
 import java.util.List;

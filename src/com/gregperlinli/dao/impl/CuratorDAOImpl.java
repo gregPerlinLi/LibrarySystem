@@ -1,6 +1,8 @@
-package com.gregperlinli.dao;
+package com.gregperlinli.dao.impl;
 
 import com.gregperlinli.bean.Curator;
+import com.gregperlinli.dao.BaseDAO;
+import com.gregperlinli.dao.CuratorDAO;
 
 import java.sql.Connection;
 import java.util.List;
