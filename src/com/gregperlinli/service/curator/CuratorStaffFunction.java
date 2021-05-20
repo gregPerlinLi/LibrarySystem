@@ -7,6 +7,7 @@ import com.gregperlinli.dao.impl.CommonStaffDAOImpl;
 import com.gregperlinli.dao.impl.UserDAOImpl;
 import com.gregperlinli.utils.EmptyUtils;
 import com.gregperlinli.utils.JDBCUtils;
+import com.gregperlinli.utils.MD5Encrypt;
 import com.gregperlinli.view.ClearScreen;
 import com.gregperlinli.view.CuratorDashboard;
 import com.gregperlinli.view.OperationOutput;
@@ -277,7 +278,7 @@ public class CuratorStaffFunction {
             }
             if ( firPassword.equals(secPassword) ) {
                 isPasswordCorrect = true;
-                newUser.setPassword(firPassword);
+                newUser.setPassword(MD5Encrypt.stringMD5(firPassword));
             }
         } while ( !isPasswordCorrect );
     }
@@ -334,7 +335,7 @@ public class CuratorStaffFunction {
             conn = JDBCUtils.getConnectionWithPool();
             conn.setAutoCommit(false);
 
-            System.out.println("\nThis is all common staffs in the library:");;
+            System.out.println("\nThis is all common staffs in the library:");
             System.out.println("-------------------------------------------------------------------------------");
             List<CommonStaff> list = COMMON_STAFF_DAO.getAll(conn);
             list.forEach(System.out::println);
@@ -406,7 +407,7 @@ public class CuratorStaffFunction {
         System.out.println(cs + "\n");
 
         boolean[] isNotList = new boolean[4];
-        // 0:isNotName, 1:isNotUid, 2:isNotAccount, 3:isNotPassword
+        //TODO: 0:isNotName, 1:isNotUid, 2:isNotAccount, 3:isNotPassword
         for ( int i = 0; i < isNotList.length; i++ ) {
             isNotList[i] = false;
         }
@@ -448,7 +449,7 @@ public class CuratorStaffFunction {
             }
             if ( newFirPassword.equals(newSecPassword) ) {
                 isPasswordCorrect = true;
-                staffUser.setPassword(newFirPassword);
+                staffUser.setPassword(MD5Encrypt.stringMD5(newFirPassword));
             }
         } while ( !isPasswordCorrect );
         boolean isGenderCorrect = false;
