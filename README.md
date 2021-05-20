@@ -48,7 +48,7 @@
 
 ### Environment configuration
 
-- Run `.sql/LibrarySystem.sql` to import the database
+- Run `.resource/db/LibrarySystem.sql` to import the database
 
 ### Configurate database:
 
