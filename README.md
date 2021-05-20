@@ -271,13 +271,13 @@ public int update(Connection conn, String sql, Object ...args) throws Exception 
 ## Future goals
 
 - [ ] Optimize code format(simplify the code, encapsulate reusable code and add some explanatory notes)
-- [ ] Beautify the data output format
+- [x] Beautify the data output format
 - [ ] Realize the staff scheduling function
 - [ ] Allow employees to change passwords in their own account, not in the curator account
 - [ ] Perfecting the mechanism of borrowing and returning books
 - [ ] Add categories management (category form and category staff)
 - [ ] Add adminstrator account
-- [ ] Strengthen the security of the passwords
+- [x] Strengthen the security of the passwords
 - [ ] Realize the authority functions
 - [ ] Add library form
 - [ ] Add the log function
