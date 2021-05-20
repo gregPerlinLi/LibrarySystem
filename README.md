@@ -18,7 +18,7 @@
 - **`com.gregperlinli.service`**: Place the code to process the transaction logic and isolate the Dao layer from the view layer
 - **`com.gregperlinli.utils`**: Utilities class, place the common code for all projects which has nothing to do with transaction logic
 - **`com.gregperlinli.view`**: Place interface related code
-- **`com.gregperlinli.junit`**: Using to debug DAO service, if you want to use it, please add the library `JUnit` (Minium version is **5.4**)
+- **`com.gregperlinli.test`**: Using to debug DAO service, if you want to use it, please add the library `JUnit` (Minium version is **5.4**)
 
 ### MySQL table structure
 

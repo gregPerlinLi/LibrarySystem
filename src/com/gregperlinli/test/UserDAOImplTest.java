@@ -1,4 +1,4 @@
-package com.gregperlinli.junit;
+package com.gregperlinli.test;
 
 import com.gregperlinli.bean.User;
 import com.gregperlinli.dao.UserDAOImpl;
