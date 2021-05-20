@@ -1,7 +1,10 @@
 package com.gregperlinli.service;
 
 import com.gregperlinli.bean.Book;
-import com.gregperlinli.dao.BookDAOImpl;
+import com.gregperlinli.bean.User;
+import com.gregperlinli.dao.impl.BookDAOImpl;
+import com.gregperlinli.dao.UserDAO;
+import com.gregperlinli.dao.impl.UserDAOImpl;
 import com.gregperlinli.utils.JDBCUtils;
 
 import java.math.BigDecimal;

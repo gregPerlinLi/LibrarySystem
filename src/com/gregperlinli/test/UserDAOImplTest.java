@@ -1,7 +1,7 @@
 package com.gregperlinli.test;
 
 import com.gregperlinli.bean.User;
-import com.gregperlinli.dao.UserDAOImpl;
+import com.gregperlinli.dao.impl.UserDAOImpl;
 import com.gregperlinli.utils.JDBCUtils;
 import org.junit.jupiter.api.Test;
 

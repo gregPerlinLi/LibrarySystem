@@ -2,8 +2,8 @@ package com.gregperlinli.view;
 
 import com.gregperlinli.bean.Curator;
 import com.gregperlinli.bean.User;
-import com.gregperlinli.dao.CommonStaffDAOImpl;
-import com.gregperlinli.dao.UserDAOImpl;
+import com.gregperlinli.dao.impl.CommonStaffDAOImpl;
+import com.gregperlinli.dao.impl.UserDAOImpl;
 import com.gregperlinli.utils.GetTime;
 import com.gregperlinli.utils.JDBCUtils;
 

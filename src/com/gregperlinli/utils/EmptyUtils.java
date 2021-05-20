@@ -3,9 +3,9 @@ package com.gregperlinli.utils;
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
-import com.gregperlinli.dao.BookDAOImpl;
-import com.gregperlinli.dao.CommonStaffDAOImpl;
-import com.gregperlinli.dao.UserDAOImpl;
+import com.gregperlinli.dao.impl.BookDAOImpl;
+import com.gregperlinli.dao.impl.CommonStaffDAOImpl;
+import com.gregperlinli.dao.impl.UserDAOImpl;
 
 import java.sql.Connection;
 import java.util.List;

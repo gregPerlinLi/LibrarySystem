@@ -3,7 +3,7 @@ package com.gregperlinli.view;
 import com.gregperlinli.bean.Book;
 import com.gregperlinli.bean.CommonStaff;
 import com.gregperlinli.bean.User;
-import com.gregperlinli.dao.CommonStaffDAOImpl;
+import com.gregperlinli.dao.impl.CommonStaffDAOImpl;
 import com.gregperlinli.utils.EmptyUtils;
 import com.gregperlinli.utils.JDBCUtils;
 
