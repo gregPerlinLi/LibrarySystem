@@ -29,7 +29,7 @@ public class CommonStaffDashboard {
             Date date = new Date(System.currentTimeMillis());
             System.out.print(formatter.format(date) + "\t\t");
             System.out.println("Good " + GetTime.getMorAftEveNig() + "!");
-            System.out.printf("Account: %s     Uid: %d     Authority: %d\n\n", cs.getStaffName(), user.getUid(), cs.getAuthority());
+            System.out.printf("Username: %s     Uid: %d     Authority: %d\n\n", cs.getStaffName(), user.getUid(), cs.getAuthority());
 
             System.out.println("Please select a function:");
             System.out.println("1. Query book information");

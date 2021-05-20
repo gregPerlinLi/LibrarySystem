@@ -39,7 +39,7 @@ public class CuratorDashboard {
             Date date = new Date(System.currentTimeMillis());
             System.out.print(formatter.format(date) + "\t\t");
             System.out.println("Good " + GetTime.getMorAftEveNig() + "!");
-            System.out.printf("Account: %s     Uid: %d     Authority: %d\n", ct.getCuratorName(), user.getUid(), ct.getAuthority());
+            System.out.printf("Username: %s     Uid: %d     Authority: %d\n", ct.getCuratorName(), user.getUid(), ct.getAuthority());
             Connection conn = null;
             try {
                 conn = JDBCUtils.getConnectionWithPool();
